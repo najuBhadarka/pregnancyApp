@@ -17,8 +17,9 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'access_token']
 }));
 
+
 app.get("/", (req, res) => {
-    res.send("Hello Server");
+    res.send("Hello Serverdsfsf");
 });
 
 app.use("/v1", route);
