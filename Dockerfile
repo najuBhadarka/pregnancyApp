@@ -1,6 +1,6 @@
-FROM mhart/alpine-node
-
+FROM public.ecr.aws/m9h7v0h3/node:18-alpine
+WORKDIR app
+COPY . .
+RUN npm install
 EXPOSE 3000
-WORKDIR /app
-COPY . /app
-CMD ["node", "app.js"]
+CMD ["node","server.js"]

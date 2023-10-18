@@ -1,8 +1,7 @@
-node-jenkins-app-example:
-  restart: always
-  image: node-jenkins-app-example
-  build: ./node-jenkins-app-example
-  container_name: node-jenkins-app-example
-  environment:
-    - VIRTUAL_HOST=PUTSUBDOMAINHERE.harveydelaney.com
-    - VIRTUAL_PORT=3000
+version: '3.3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
