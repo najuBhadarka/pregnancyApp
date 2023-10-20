@@ -1,7 +1,12 @@
+import { validationResult } from "express-validator";
 import questionModel from "../models/questions.js"
 
 const addQuestions = async (req, res) => {
     const { title, questions, timeline } = req.body;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array().map((ele) => ({ name: ele.path, msg: ele.msg })) });
+    }
     try {
         const newQuestion = new questionModel({
             title,
