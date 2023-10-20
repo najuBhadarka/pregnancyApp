@@ -18,7 +18,6 @@ const loginValidation = [
 const updateProfileValidation = [
   body('firstName').notEmpty().withMessage("Please Enter Valid First Name"),
   body('lastName').notEmpty().withMessage("Please Enter Valid Last Name"),
-  body('userName').notEmpty().withMessage("Please Enter Valid User Name"),
   body('DOB').notEmpty().withMessage("Please Enter Valid Date of Birth"),
   body('contact').notEmpty().withMessage("Please Enter Valid Contact Number"),
 ];
