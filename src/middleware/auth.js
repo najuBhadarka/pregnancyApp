@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
 function authenticateRoles(allowedRoles) {
     return (req, res, next) => {
