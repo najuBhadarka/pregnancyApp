@@ -43,11 +43,9 @@ const updateQuestion = async (req, res) => {
             },
             { new: true }
         );
-
         if (!findBookAndUpdate) {
             return res.status(404).json({ status: false, message: 'Question not found!' });
         }
-
         res.status(200).json({ status: true, message: 'Question updated successfully.' });
     } catch (error) {
         res.status(500).json({ message: error });
@@ -58,8 +56,6 @@ const deleteQuestion = async (req, res) => {
     try {
         const questionBookId = req.params.id;
         const questionId = req.query.questionId;
-
-        // Use findOneAndDelete to delete the specific question by its ID
         const deletedQuestionBook = await questionModel.findOneAndUpdate(
             { _id: questionBookId },
             {
@@ -67,11 +63,9 @@ const deleteQuestion = async (req, res) => {
             },
             { new: true }
         );
-
         if (!deletedQuestionBook) {
             return res.status(404).json({ status: false, message: 'Question book not found' });
         }
-
         res.status(200).json({ status: true, message: 'Question deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: 'An error occurred while deleting the question' });
@@ -79,4 +73,9 @@ const deleteQuestion = async (req, res) => {
 
 }
 
-export { addQuestions, getAllQuestions, updateQuestion, deleteQuestion }
+export {
+    addQuestions,
+    getAllQuestions,
+    updateQuestion,
+    deleteQuestion
+}
