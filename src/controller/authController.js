@@ -62,4 +62,51 @@ const adminRegister = (req, res) => {
     res.status(200).json({ adminDetails: newAdmin, token });
 };
 
-export { register, login, adminRegister };
+const updateProfile = async (req, res) => {
+    const { userId } = req.params;
+    const updateFields = req.body;
+
+    try {
+        const updatedUser = await userModel.findOneAndUpdate(
+            { _id: userId },
+            { $set: updateFields },
+            { new: true, maxTimeMS: 20000 }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ status: false, message: 'User not found' });
+        }
+
+        return res.status(200).json({ status: true, updatedUser: updatedUser, message: 'Profile updated successfully.' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: error.message }); // Use error.message to capture the error message
+    }
+}
+
+const forgotPassword = async (req, res) => {
+    const { email } = req?.body;
+    try {
+        const userData = await userModel.findOne({ email });
+        if (!userData) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const token = generateToken(email, userData.role);
+        refreshToken(userData.id.toString())
+        await userData.save();
+        // sendPasswordResetEmail(userData.email, token);
+        res.status(200).json({ status: true, message: 'Password reset email sent', token });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error });
+    }
+}
+
+
+export {
+    register,
+    login,
+    adminRegister,
+    updateProfile,
+    forgotPassword
+};

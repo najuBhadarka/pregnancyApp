@@ -1,12 +1,14 @@
 import express from 'express';
 import authenticateRoles from "../../middleware/auth.js"
 import { addQuestions, deleteQuestion, getAllQuestions, getQuestionOnTimeline, updateQuestion } from '../../controller/questionsControllar.js';
+import { addQuestionsValidation } from '../../validations/questionBookValidation.js';
 let questionnairesRoute = express.Router();
 
 // Get the questionBook as per the timeline
 questionnairesRoute.get("/getquestions", getQuestionOnTimeline);
 
 // To get all the qusetionsBooks
+questionnairesRoute.post("/questionform", authenticateRoles(['admin']), addQuestionsValidation, addQuestions);
 questionnairesRoute.get("/questionsList", getAllQuestions);
 
 // Questionaires API' for Admin only
@@ -15,4 +17,3 @@ questionnairesRoute.put("/updateQuestion/:id", authenticateRoles(['admin']), upd
 questionnairesRoute.delete("/deleteQuestion/:id", authenticateRoles(['admin']), deleteQuestion);
 
 export default questionnairesRoute;
-

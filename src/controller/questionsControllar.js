@@ -1,8 +1,17 @@
+import { validationResult } from "express-validator";
 import questionModel from "../models/questions.js";
 import moment from "moment";
 
 const addQuestions = async (req, res) => {
   const { title, questions, timeline } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res
+      .status(400)
+      .json({
+        errors: errors.array().map((ele) => ({ name: ele.path, msg: ele.msg })),
+      });
+  }
   try {
     const newQuestion = new questionModel({
       title,
@@ -46,13 +55,11 @@ const updateQuestion = async (req, res) => {
       },
       { new: true }
     );
-
     if (!findBookAndUpdate) {
       return res
         .status(404)
         .json({ status: false, message: "Question not found!" });
     }
-
     res
       .status(200)
       .json({ status: true, message: "Question updated successfully." });
@@ -74,13 +81,11 @@ const deleteQuestion = async (req, res) => {
       },
       { new: true }
     );
-
     if (!deletedQuestionBook) {
       return res
         .status(404)
         .json({ status: false, message: "Question book not found" });
     }
-
     res
       .status(200)
       .json({ status: true, message: "Question deleted successfully" });
@@ -104,7 +109,7 @@ const getQuestionOnTimeline = async (req, res) => {
     });
     res.status(200).json({ status: true, data: findQuestionBook });
   } catch (error) {
-    res.status(400).json({ status: false, message: 'Something went wrong' });
+    res.status(400).json({ status: false, message: "Something went wrong" });
   }
 };
 
