@@ -17,14 +17,11 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'access_token']
 }));
 
-app.get("/", (req, res) => {
-    res.send("Hello Server");
-});
-
 app.use("/v1", route);
 
-app.listen(3000, () => {
-    console.log("Server Running");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
 
 export default app;

@@ -3,16 +3,16 @@ import questionModel from "../models/questions.js";
 import moment from "moment";
 
 const addQuestions = async (req, res) => {
-  const { title, questions, timeline } = req.body;
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res
-      .status(400)
-      .json({
-        errors: errors.array().map((ele) => ({ name: ele.path, msg: ele.msg })),
-      });
-  }
   try {
+    const { title, questions, timeline } = req.body;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(400)
+        .json({
+          errors: errors.array().map((ele) => ({ name: ele.path, msg: ele.msg })),
+        });
+    }
     const newQuestion = new questionModel({
       title,
       questions,
