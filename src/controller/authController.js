@@ -46,6 +46,7 @@ const login = async (req, res) => {
 
 const adminRegister = (req, res) => {
     let { firstName, lastName, userName, DOB, contact, email, password } = req.body;
+    const hashPassword = bcrypt.hashSync(password, 10)
     const newAdmin = new userModel({
         firstName,
         lastName,
@@ -53,7 +54,7 @@ const adminRegister = (req, res) => {
         DOB,
         contact,
         email,
-        password,
+        password: hashPassword,
         role: 'admin'
     });
     const token = generateToken(email, newAdmin.role);
@@ -65,7 +66,10 @@ const adminRegister = (req, res) => {
 const updateProfile = async (req, res) => {
     const { userId } = req.params;
     const updateFields = req.body;
-
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array().map((ele) => ({ name: ele.path, msg: ele.msg })) });
+    }
     try {
         const updatedUser = await userModel.findOneAndUpdate(
             { _id: userId },
@@ -80,12 +84,16 @@ const updateProfile = async (req, res) => {
         return res.status(200).json({ status: true, updatedUser: updatedUser, message: 'Profile updated successfully.' });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: error.message }); // Use error.message to capture the error message
+        return res.status(500).json({ message: error.message });
     }
 }
 
 const forgotPassword = async (req, res) => {
     const { email } = req?.body;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array().map((ele) => ({ name: ele.path, msg: ele.msg })) });
+    }
     try {
         const userData = await userModel.findOne({ email });
         if (!userData) {

@@ -15,7 +15,21 @@ const loginValidation = [
   body('password').notEmpty().withMessage("Please Enter Valid Password"),
 ];
 
+const updateProfileValidation = [
+  body('firstName').notEmpty().withMessage("Please Enter Valid First Name"),
+  body('lastName').notEmpty().withMessage("Please Enter Valid Last Name"),
+  body('userName').notEmpty().withMessage("Please Enter Valid User Name"),
+  body('DOB').notEmpty().withMessage("Please Enter Valid Date of Birth"),
+  body('contact').notEmpty().withMessage("Please Enter Valid Contact Number"),
+];
+
+const forgotPasswordValidation = [
+  body('email').isEmail().withMessage("Please Enter Valid Email Address").normalizeEmail(),
+];
+
 export {
   registrationValidation,
-  loginValidation
+  loginValidation,
+  updateProfileValidation,
+  forgotPasswordValidation
 };
