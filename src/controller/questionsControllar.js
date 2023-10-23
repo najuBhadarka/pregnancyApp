@@ -1,7 +1,7 @@
 import { validationResult } from "express-validator";
 import questionModel from "../models/questions.js";
 import moment from "moment";
-import answerModel from "../models/answersheet.js";
+import answerModel from "../models/answerSheet.js";
 
 const addQuestions = async (req, res) => {
   try {
