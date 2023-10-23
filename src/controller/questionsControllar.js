@@ -87,6 +87,10 @@ const deleteQuestion = async (req, res) => {
 const getQuestionOnTimeline = async (req, res) => {
   try {
     const { startDate } = req.query;
+    if (startDate == undefined) {
+      res.status(404).json({ status: false, message: "Please enter valid start date." });
+    }
+
     const start = moment(startDate, "DD/MM/YYYY");
     const todayDate = moment(new Date(), "DD/MM/YYYY");
 
