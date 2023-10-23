@@ -1,23 +1,27 @@
 import mongoose, { Schema } from "mongoose";
 
-const questionSchema = new Schema({
-    title: {
-        type: String,
-        required: true
+const answerSchema = new Schema({
+    userId:{
+        type:String,
+        required:true
     },
-    questions: [
+    formData: [
         {
-            questionTitle: {
+            question: {
                 type: String,
                 required: true,
             },
-            optionType: {
+            answer: {
                 type: String,
                 required: true,
+            },
+            type: {
+                type: String,
+                required: true
             },
             options: {
                 type: [String || Number],
-            },
+            }
         },
     ],
     timeline: {
@@ -26,6 +30,6 @@ const questionSchema = new Schema({
     }
 })
 
-const questionModel = mongoose.model('questionsBook', questionSchema)
+const answerModel = mongoose.model('answerSheet', answerSchema)
 
-export default questionModel;
+export default answerModel;

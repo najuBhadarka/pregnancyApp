@@ -1,17 +1,16 @@
 import { validationResult } from "express-validator";
 import questionModel from "../models/questions.js";
 import moment from "moment";
+import answerModel from "../models/answersheet.js";
 
 const addQuestions = async (req, res) => {
   try {
     const { title, questions, timeline } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res
-        .status(400)
-        .json({
-          errors: errors.array().map((ele) => ({ name: ele.path, msg: ele.msg })),
-        });
+      return res.status(400).json({
+        errors: errors.array().map((ele) => ({ name: ele.path, msg: ele.msg })),
+      });
     }
     const newQuestion = new questionModel({
       title,
@@ -23,7 +22,7 @@ const addQuestions = async (req, res) => {
       .status(200)
       .json({ status: true, message: "Question added successfully." });
   } catch (error) {
-    res.status(500).json({ message: error });
+    res.status(500).json({ status: false, message: error });
   }
 };
 
@@ -32,7 +31,7 @@ const getAllQuestions = async (req, res) => {
     const questionsData = await questionModel.find({}, { __v: 0 });
     res.status(200).json({ status: true, questionsData });
   } catch (error) {
-    res.status(500).json({ message: error });
+    res.status(500).json({ status: false, message: error });
   }
 };
 
@@ -64,7 +63,7 @@ const updateQuestion = async (req, res) => {
       .status(200)
       .json({ status: true, message: "Question updated successfully." });
   } catch (error) {
-    res.status(500).json({ message: error });
+    res.status(500).json({ status: false, message: error });
   }
 };
 
@@ -90,9 +89,7 @@ const deleteQuestion = async (req, res) => {
       .status(200)
       .json({ status: true, message: "Question deleted successfully" });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "An error occurred while deleting the question" });
+    res.status(500).json({ status: false, message: error });
   }
 };
 
@@ -109,7 +106,26 @@ const getQuestionOnTimeline = async (req, res) => {
     });
     res.status(200).json({ status: true, data: findQuestionBook });
   } catch (error) {
-    res.status(400).json({ status: false, message: "Something went wrong" });
+    res.status(400).json({ status: false, message: error });
+  }
+};
+
+const submitAnswer = async (req, res) => {
+  try {
+    const { formData, timeline } = req.body;
+    const userId = req?.user?.id;
+    const answerForm = new answerModel({
+      userId,
+      formData,
+      timeline,
+    });
+    await answerForm.save();
+    res.status(200).json({
+      status: true,
+      message: "Your answer has been submited successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, message: error });
   }
 };
 
@@ -119,4 +135,5 @@ export {
   updateQuestion,
   deleteQuestion,
   getQuestionOnTimeline,
+  submitAnswer,
 };

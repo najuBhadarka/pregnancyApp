@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken"
 import refreshTokenModel from "../models/refreshTokens.js"
 
-const generateToken = (email, role) => {
-    return jwt.sign({ email: email, role: role }, process.env.JWT_SECRET, {
+const generateToken = (email, role, userId) => {
+    return jwt.sign({ email: email, role: role, id: userId }, process.env.JWT_SECRET, {
         expiresIn: '3600s'
     })
 }
