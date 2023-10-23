@@ -3,7 +3,6 @@ import authenticateRoles from "../../middleware/auth.js";
 import {
   addQuestions,
   deleteQuestion,
-  getAllQuestions,
   getQuestionOnTimeline,
   submitAnswer,
   updateQuestion,
@@ -21,8 +20,6 @@ questionnairesRoute.post(
   addQuestionsValidation,
   addQuestions
 );
-
-questionnairesRoute.get("/questionsList", getAllQuestions);
 
 // Questionaires API' for Admin only
 questionnairesRoute.post(

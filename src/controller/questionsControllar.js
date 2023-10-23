@@ -26,15 +26,6 @@ const addQuestions = async (req, res) => {
   }
 };
 
-const getAllQuestions = async (req, res) => {
-  try {
-    const questionsData = await questionModel.find({}, { __v: 0 });
-    res.status(200).json({ status: true, questionsData });
-  } catch (error) {
-    res.status(500).json({ status: false, message: error });
-  }
-};
-
 const updateQuestion = async (req, res) => {
   try {
     const questionBookId = req?.params?.id;
@@ -52,7 +43,7 @@ const updateQuestion = async (req, res) => {
           "questions.$.options": options,
         },
       },
-      { new: true }
+      { new: true },
     );
     if (!findBookAndUpdate) {
       return res
@@ -78,7 +69,7 @@ const deleteQuestion = async (req, res) => {
       {
         $pull: { questions: { _id: questionId } },
       },
-      { new: true }
+      { new: true },
     );
     if (!deletedQuestionBook) {
       return res
@@ -101,9 +92,12 @@ const getQuestionOnTimeline = async (req, res) => {
 
     // Calculate the difference in months
     const monthsDiff = todayDate.diff(start, "months");
-    const findQuestionBook = await questionModel.find({
-      timeline: { $lte: monthsDiff },
-    });
+    const findQuestionBook = await questionModel.find(
+      {
+        timeline: { $lte: monthsDiff },
+      },
+      { __v: 0 },
+    );
     res.status(200).json({ status: true, data: findQuestionBook });
   } catch (error) {
     res.status(400).json({ status: false, message: error });
@@ -131,7 +125,6 @@ const submitAnswer = async (req, res) => {
 
 export {
   addQuestions,
-  getAllQuestions,
   updateQuestion,
   deleteQuestion,
   getQuestionOnTimeline,
