@@ -2,7 +2,7 @@ import { validationResult } from "express-validator";
 import bcrypt from "bcrypt";
 import userModel from "../models/user.js";
 import { generateToken, refreshToken } from "../utils/generateToken.js";
-import sendMail from "../util/sendmail.js";
+import sendMail from "../utils/sendmail.js";
 
 const register = (req, res) => {
   try {

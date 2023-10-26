@@ -9,6 +9,8 @@ import {
   updateQuestion,
 } from "../../controller/questionsControllar.js";
 import { addQuestionsValidation } from "../../validations/questionBookValidation.js";
+import guard from "express-jwt-permissions";
+let guardCheck = guard();
 let questionnairesRoute = express.Router();
 
 // Get the questionBook as per the timeline
