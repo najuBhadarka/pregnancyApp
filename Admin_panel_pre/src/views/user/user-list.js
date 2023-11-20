@@ -1,0 +1,274 @@
+import React, { useState, useEffect } from "react";
+import { Row, Col, Image } from "react-bootstrap";
+import { bindActionCreators } from "redux";
+import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
+
+import { API_URL } from "../../utils/api";
+import { actions as user } from "../../redux/user/userAction";
+import TableWrapper from "../../components/wrapper/table-wrapper";
+import { ReactComponent as SortIcon } from "../../assets/images/icons/Sort-Icon.svg";
+import { ReactComponent as EyeIcon } from "../../assets/images/icons/Eye-Icon.svg";
+import DefaultImageUser from "../../assets/images/avatars/default-user-img.png";
+
+const UserList = (props) => {
+  const [showItems, setShowItems] = useState(10);
+  const [inputText, setInputText] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortConfig, setSortConfig] = useState({ key: "", sortDirection: "" });
+  const [toggleSort, setToggleSort] = useState(true);
+  const [allUser, setAllUser] = useState([]);
+
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const userList = props?.user?.userData;
+    setAllUser(userList);
+  }, [props?.user?.userData]);
+
+  const nameSort = () => {
+    setToggleSort(!toggleSort);
+    setSortConfig({ sortDirection: toggleSort });
+    let newMenuItems = [...props?.user?.userData];
+    const sortedUsers = newMenuItems?.sort((a, b) => {
+      return sortConfig.sortDirection
+        ? a?.first_name?.toLowerCase()?.charCodeAt() -
+            b?.first_name?.toLowerCase()?.charCodeAt() ||
+            a?.last_name?.toLowerCase()?.charCodeAt() -
+              b?.last_name?.toLowerCase()?.charCodeAt()
+        : b?.first_name?.toLowerCase()?.charCodeAt() -
+            a?.first_name?.toLowerCase()?.charCodeAt() ||
+            b?.last_name?.toLowerCase()?.charCodeAt() -
+              a?.last_name?.toLowerCase()?.charCodeAt();
+    });
+
+    setAllUser(sortedUsers);
+  };
+
+  const nameSorts = (key) => {
+    setToggleSort(!toggleSort);
+    setSortConfig({ sortDirection: toggleSort });
+    let newMenuItems = [...props?.user?.userData];
+    const sortedArrr = newMenuItems?.sort((a, b) => {
+      return sortConfig.sortDirection
+        ? a?.[key]?.toLowerCase()?.localeCompare(b?.[key]?.toLowerCase())
+        : b?.[key]?.toLowerCase()?.localeCompare(a?.[key]?.toLowerCase());
+    });
+    setAllUser(sortedArrr);
+  };
+
+  const inputHandler = (e) => {
+    setInputText(e.target.value);
+  };
+
+  const filteredData = allUser?.filter((user) => {
+    const firstName = user?.first_name?.toLowerCase();
+    const lastName = user?.last_name?.toLowerCase();
+    const email = user?.email?.toLowerCase();
+    const status = user?.status?.toLowerCase();
+
+    if (!inputText) {
+      return user;
+    } else {
+      return (
+        firstName?.includes(inputText.toLowerCase()) ||
+        lastName?.includes(inputText.toLowerCase()) ||
+        email?.includes(inputText.toLowerCase()) ||
+        status?.includes(inputText.toLowerCase())
+      );
+    }
+  });
+
+  const NUM_OF_RECORDS = filteredData?.length;
+
+  const currentData = filteredData?.slice(
+    parseInt(currentPage - 1) * parseInt(showItems),
+    parseInt((currentPage - 1) * showItems) + parseInt(showItems)
+  );
+
+  useEffect(() => {
+    if (currentData?.length < 1) {
+      setCurrentPage(1);
+    }
+  }, [currentData]);
+
+  const handleShowItemChange = (e) => {
+    setShowItems(e.target.value);
+  };
+
+  useEffect(() => {
+    props.actions.getUserList({ role_type: "customer" });
+  }, [props.actions]);
+
+  const handleClick = (user) => {
+    navigate(`/user/details/${user.id}`);
+  };
+
+  return (
+    <Row>
+      <Col sm="12">
+        <TableWrapper
+          title="User List"
+          handleShowItemChange={handleShowItemChange}
+          inputHandler={inputHandler}
+          isData={allUser?.length}
+        >
+          <div className="table-responsive image-tbl">
+            <table
+              id="user-list-table"
+              className="table table-striped"
+              role="grid"
+              data-toggle="data-table"
+            >
+              {props?.user?.loading ? (
+                <div
+                className="spinner-border"
+                  style={{
+                    position: "fixed",
+                    left: "600px",
+
+                    width: "2rem",
+                    height: " 2rem",
+                    zIndex: "9999",
+                  }}
+                ></div>
+              ) : !currentData?.length ? (
+                <tbody>
+                  <tr
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <td>
+                      <h3>No Record Found</h3>
+                    </td>
+                  </tr>
+                </tbody>
+              ) : (
+                <>
+                  <thead>
+                    <tr className="ligth">
+                      <th className="text-center col-2">Profile</th>
+                      <th className="text-center">
+                        Name
+                        <SortIcon onClick={() => nameSort("first_name")} />
+                      </th>
+                      <th className="text-center">
+                        Email
+                        <SortIcon onClick={() => nameSorts("email")} />
+                      </th>
+                      <th className="text-center">
+                        Phone No
+                       </th>
+                      <th className="text-center">
+                        Gender
+                       </th>
+                      <th className="text-center">Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentData?.map((item) => (
+                      <tr key={item?.id}>
+                        <td className="text-center ">
+                          {!item.image ? (
+                            <div className=" bg-soft-primary rounded img-fluid avatar-40 me-3">
+                              <span>{item?.first_name[0]?.toUpperCase()}</span>
+                            </div>
+                          ) : (
+                            <Image
+                              className="bg-soft-primary rounded img-fluid avatar-40 me-3"
+                              src={`${API_URL}/static/profile/${item.image}`}
+                              onError={(e) =>
+                                (e.target.src = DefaultImageUser)
+                              }
+                            />
+                          )}
+                        </td>
+
+                        <td className="text-center">
+                          {item?.first_name + " " + item?.last_name}
+                        </td>
+                        <td className="text-center">{item?.email}</td>
+                        <td className="text-center">{item?.mobile == null ? '-':item?.mobile}</td>
+                        <td className="text-center">{item?.gender == null ? '-': item?.gender}</td>
+                        <td className="text-center">
+                          <span
+                            className="badge"
+                            style={{
+                              backgroundColor:
+                                item?.status === "Active" ? "green" : "red",
+                            }}
+                          >
+                            {item?.status}
+                          </span>
+                        </td>
+                        <td>
+                        <button
+                              className="btn btn-sm btn-icon btn-warning"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="View User Details"
+                              navigate="/user/profile"
+                              data-original-title="View"
+                              onClick={() => handleClick(item)}
+                              style={{ marginLeft: "0.5rem" }}
+                            >
+                              <span className="btn-inner">
+                                <EyeIcon />
+                              </span>
+                            </button>
+                        </td>
+                      </tr>
+                    ))}
+
+                    {props?.user?.error ? (
+                      <span
+                        style={{
+                          color: "Red",
+                          fontSize: "smaller",
+                        }}
+                      >
+                        {props?.user?.error}
+                      </span>
+                    ) : null}
+                  </tbody>
+                </>
+              )}
+            </table>
+          </div>
+        </TableWrapper>
+      </Col>
+
+      {filteredData?.length > showItems ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <span className="col-md-6">
+            Showing {(currentPage - 1) * showItems + 1} to{" "}
+            {currentData?.length < showItems
+              ? NUM_OF_RECORDS
+              : parseInt((currentPage - 1) * showItems) +
+                parseInt(showItems)}{" "}
+            of {NUM_OF_RECORDS} entries
+          </span>
+        </div>
+      ) : null}
+    </Row>
+  );
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: { ...bindActionCreators(user, dispatch) },
+});
+
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserList);
