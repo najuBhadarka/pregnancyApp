@@ -13,10 +13,9 @@ function* getUser() {
 
 function* getUserList({ payload }) {
   try {
-    const response = yield call(api.get, endPoints.GET_USER_LIST, {
-      params: { role_type: payload.role_type },
-    });
-    yield put(actions.setUserList(response.data));
+    const response = yield call(api.get, endPoints.GET_USER_LIST);
+    console.log("🚀 ~ file: userSaga.js:17 ~ function*getUserList ~ response:", response)
+    yield put(actions.setUserList(response.data.userList));
   } catch (error) {
     yield put(actions.actionFalied(error));
   }

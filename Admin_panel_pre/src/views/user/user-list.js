@@ -19,6 +19,7 @@ const UserList = (props) => {
   const navigate = useNavigate();
 
 
+  console.log("🚀 ~ file: user-list.js:27 ~ useEffect ~ props:", props)
   useEffect(() => {
     const userList = props?.user?.userData;
     setAllUser(userList);
@@ -60,10 +61,9 @@ const UserList = (props) => {
   };
 
   const filteredData = allUser?.filter((user) => {
-    const firstName = user?.first_name?.toLowerCase();
-    const lastName = user?.last_name?.toLowerCase();
+    const firstName = user?.firstName?.toLowerCase();
+    const lastName = user?.lastName?.toLowerCase();
     const email = user?.email?.toLowerCase();
-    const status = user?.status?.toLowerCase();
 
     if (!inputText) {
       return user;
@@ -71,18 +71,13 @@ const UserList = (props) => {
       return (
         firstName?.includes(inputText.toLowerCase()) ||
         lastName?.includes(inputText.toLowerCase()) ||
-        email?.includes(inputText.toLowerCase()) ||
-        status?.includes(inputText.toLowerCase())
+        email?.includes(inputText.toLowerCase())
       );
     }
   });
 
   const NUM_OF_RECORDS = filteredData?.length;
-
-  const currentData = filteredData?.slice(
-    parseInt(currentPage - 1) * parseInt(showItems),
-    parseInt((currentPage - 1) * showItems) + parseInt(showItems)
-  );
+  const currentData = filteredData
 
   useEffect(() => {
     if (currentData?.length < 1) {
@@ -130,7 +125,7 @@ const UserList = (props) => {
                     zIndex: "9999",
                   }}
                 ></div>
-              ) : !currentData?.length ? (
+              ) : !filteredData?.length ? (
                 <tbody>
                   <tr
                     style={{
@@ -158,19 +153,17 @@ const UserList = (props) => {
                         Phone No
                        </th>
                       <th className="text-center">
-                        Gender
+                        userName
                        </th>
-                      <th className="text-center">Status</th>
-                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {currentData?.map((item) => (
+                    {filteredData?.map((item) => (
                       <tr key={item?.id}>
                         <td className="text-center ">
                           {!item.image ? (
                             <div className=" bg-soft-primary rounded img-fluid avatar-40 me-3">
-                              <span>{item?.first_name[0]?.toUpperCase()}</span>
+                              <span>{item?.firstName[0]?.toUpperCase()}</span>
                             </div>
                           ) : (
                             <Image
@@ -181,37 +174,12 @@ const UserList = (props) => {
                         </td>
 
                         <td className="text-center">
-                          {item?.first_name + " " + item?.last_name}
+                          {item?.firstName + " " + item?.lastName}
                         </td>
                         <td className="text-center">{item?.email}</td>
-                        <td className="text-center">{item?.mobile == null ? '-':item?.mobile}</td>
-                        <td className="text-center">{item?.gender == null ? '-': item?.gender}</td>
-                        <td className="text-center">
-                          <span
-                            className="badge"
-                            style={{
-                              backgroundColor:
-                                item?.status === "Active" ? "green" : "red",
-                            }}
-                          >
-                            {item?.status}
-                          </span>
-                        </td>
-                        <td>
-                        <button
-                              className="btn btn-sm btn-icon btn-warning"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="View User Details"
-                              navigate="/user/profile"
-                              data-original-title="View"
-                              onClick={() => handleClick(item)}
-                              style={{ marginLeft: "0.5rem" }}
-                            >
-                              <span className="btn-inner">
-                              </span>
-                            </button>
-                        </td>
+                        <td className="text-center">{item?.contact == null ? '-':item?.contact}</td>
+                        <td className="text-center">{item?.userName == null ? '-': item?.userName}</td>
+
                       </tr>
                     ))}
 

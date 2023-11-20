@@ -24,8 +24,9 @@ const userReducer = createSlice({
       state.loading = true;
     },
     setUserList(state, { payload }) {
+      console.log("🚀 ~ file: userAction.js:27 ~ setUserList ~ payload:", payload)
       state.loading = false;
-      state.userData = payload.data;
+      state.userData = payload;
     },
     updateUser(state) {
       state.loading = false;
@@ -43,11 +44,7 @@ const userReducer = createSlice({
       state.userData = state?.userData?.filter((item)=> {
         return  item?.id !== payload?.id ? item : ""  
       })
-    },
-    deleteDeliveryboy(state){
-      state.loading = false
-      },
-
+    }
   },
 });
 
