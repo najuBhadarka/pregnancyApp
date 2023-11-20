@@ -18,8 +18,6 @@ const UserList = (props) => {
 
   const navigate = useNavigate();
 
-
-  console.log("🚀 ~ file: user-list.js:27 ~ useEffect ~ props:", props)
   useEffect(() => {
     const userList = props?.user?.userData;
     setAllUser(userList);
@@ -93,8 +91,8 @@ const UserList = (props) => {
     props.actions.getUserList({ role_type: "customer" });
   }, [props.actions]);
 
-  const handleClick = (user) => {
-    navigate(`/user/details/${user.id}`);
+  const handleDeleteUser = (userId) => {
+    props.actions.deleteUser({id:userId});
   };
 
   return (
@@ -155,6 +153,9 @@ const UserList = (props) => {
                       <th className="text-center">
                         userName
                        </th>
+                       <th className="text-center">
+                        Action
+                       </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -179,7 +180,10 @@ const UserList = (props) => {
                         <td className="text-center">{item?.email}</td>
                         <td className="text-center">{item?.contact == null ? '-':item?.contact}</td>
                         <td className="text-center">{item?.userName == null ? '-': item?.userName}</td>
-
+                        <td className="text-center">
+                          <button>Edit</button>
+                          <button onClick={()=>handleDeleteUser(item?._id)}>Delete</button>
+                        </td>
                       </tr>
                     ))}
 

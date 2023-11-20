@@ -38,7 +38,8 @@ export const endPoints = {
   FORGOT_PASSWORD: "/api/v1/auth/forgot_password",
   NEW_PASSWORD: "/api/v1/auth/confirm_forgot_password",
   GET_USER: "/auth/user-profile",
-  UPDATE_USER: "/api/v1/auth/update_profile/:id",
+  UPDATE_USER: "/auth/update-profile/:id",
+  DELETE_USER: "/user/delete-user/:id",
   GET_USER_LIST: "/user/user-list",
   DELETE_DELIVERY_USER: "/api/v1/admin/deleteusers/:id",
 

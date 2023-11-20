@@ -12,49 +12,42 @@ import { API_URL } from "../../utils/api";
 import Card from "../../components/card";
 
 const initialState = {
-  first_name: "",
-  last_name: "",
-  description: "",
-  mobile: "",
-  username: "",
+  firstName: "",
+  lastName: "",
+  contact: "",
+  userName: "",
   email: "",
-  file: [],
+  DOB: ""
 };
 
 const UserProfile = (props) => {
-  const [image, setImage] = useState("");
   const [userData, setUserData] = useState({});
   const [state, setState] = useState("loading");
   const [fieldDisabled, setFieldDisabled] = useState(true);
   const [initFormData, setInitFormData] = useState(initialState);
 
   const token = document?.cookie
-    ?.split(";")
-    ?.find((row) => row.startsWith("token="))
-    ?.split("=")[1];
+  ?.split(";")
+  ?.find((row) => row.startsWith("token="))
+  ?.split("=")[1];
 
   useEffect(() => {
     const user = {
-      first_name: props?.user?.data?.firstName,
-      last_name: props?.user?.data?.lastName,
-      mobile: props?.user?.data?.contact,
-      username: props?.user?.data?.userName,
+      firstName: props?.user?.data?.firstName,
+      lastName: props?.user?.data?.lastName,
+      contact: props?.user?.data?.contact,
+      userName: props?.user?.data?.userName,
       email: props?.user?.data?.email,
+      DOB: props?.user?.data?.DOB,
     };
     setUserData(props?.user?.data);
     setInitFormData(user);
   }, [props?.user, props.actions]);
 
   const validationSchema = Yup.object({
-    first_name: Yup.string().required().min(3).label("Full Name"),
-    last_name: Yup.string().required().min(3).label("Last Name"),
-    mobile: Yup.string().required().min(10).label("Contact Number"),
-    username: Yup.string().required().min(3).label("User Name"),
-    email: Yup.string()
-      .email("Enter a valid email address")
-      .required()
-      .label("Email"),
-    // file: Yup.string().required().label("Image"),
+    firstName: Yup.string().required().min(3).label("Full Name"),
+    lastName: Yup.string().required().min(3).label("Last Name"),
+    contact: Yup.string().required().min(10).label("Contact Number")
   });
 
   const handleClick = () => {
@@ -64,7 +57,6 @@ const UserProfile = (props) => {
 
   const handleCancel = () => {
     setFieldDisabled(true);
-    setImage("");
     setInitFormData(props?.user?.data);
   };
 
@@ -72,20 +64,9 @@ const UserProfile = (props) => {
     setFieldDisabled(true);
     setState("loading");
 
-    const formData = new FormData();
-
-    formData.append("first_name", values.firstName);
-    formData.append("last_name", values.lastName);
-    formData.append("mobile", values.contact);
-    formData.append("username", values.userName);
-    formData.append("email", values.email);
-    if (values.file) {
-      formData.append("file", image ? image : values.file);
-    }
-
     props.actions.updateUser({
-      body: formData,
-      ids: userData.id,
+      body: values,
+      ids: userData._id,
       callback: () => {
         props.actions.getUser(token);
       },
@@ -100,29 +81,6 @@ const UserProfile = (props) => {
   });
 
   const { handleChange, handleSubmit } = formik;
-
-  let role_type;
-
-  switch (userData?.role_id) {
-    case 1:
-      role_type = "Admin";
-      break;
-
-    case 2:
-      role_type = "Restaurant Admin";
-      break;
-
-    case 3:
-      role_type = "Customer";
-      break;
-
-    case 4:
-      role_type = "Delivery Partner";
-      break;
-
-    default:
-      break;
-  }
 
   return (
     <Row>
@@ -175,9 +133,9 @@ const UserProfile = (props) => {
                       <FormikController
                         control="input"
                         type="text"
-                        name="first_name"
+                        name="firstName"
                         classname="form-control"
-                        label="Full Name "
+                        label="First Name "
                         onChange={handleChange}
                         disabled={fieldDisabled}
                       />
@@ -186,7 +144,7 @@ const UserProfile = (props) => {
                       <FormikController
                         control="input"
                         type="text"
-                        name="last_name"
+                        name="lastName"
                         classname="form-control"
                         label="Last Name "
                         onChange={handleChange}
@@ -200,7 +158,7 @@ const UserProfile = (props) => {
                       <FormikController
                         control="input"
                         type="text"
-                        name="username"
+                        name="userName"
                         classname="form-control"
                         label="User Name "
                         onChange={handleChange}
@@ -212,11 +170,11 @@ const UserProfile = (props) => {
                       <FormikController
                         control="input"
                         type="text"
-                        name="mobile"
+                        name="contact"
                         classname="form-control"
                         label=" Contact Number "
                         onChange={handleChange}
-                        disabled={true}
+                        disabled={fieldDisabled}
                       />
                     </div>
                   </div>
@@ -231,6 +189,17 @@ const UserProfile = (props) => {
                         label="Email "
                         onChange={handleChange}
                         disabled={true}
+                      />
+                    </div>
+                    <div className="col-6">
+                      <FormikController
+                        control="input"
+                        type=""
+                        name="DOB"
+                        classname="form-control"
+                        label="DOB "
+                        onChange={handleChange}
+                        disabled={fieldDisabled}
                       />
                     </div>
 

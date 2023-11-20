@@ -24,7 +24,6 @@ const userReducer = createSlice({
       state.loading = true;
     },
     setUserList(state, { payload }) {
-      console.log("🚀 ~ file: userAction.js:27 ~ setUserList ~ payload:", payload)
       state.loading = false;
       state.userData = payload;
     },
@@ -43,6 +42,15 @@ const userReducer = createSlice({
       state.loading = false;
       state.userData = state?.userData?.filter((item)=> {
         return  item?.id !== payload?.id ? item : ""  
+      })
+    },
+    deleteUser(state) {
+      state.loading = false;
+    },
+    setDeleteUser(state,{payload}){
+      state.loading = false;
+      state.userData = state?.userData?.filter((item)=> {
+        return  item?._id != payload ? item : ""  
       })
     }
   },

@@ -14,7 +14,6 @@ function* getUser() {
 function* getUserList({ payload }) {
   try {
     const response = yield call(api.get, endPoints.GET_USER_LIST);
-    console.log("🚀 ~ file: userSaga.js:17 ~ function*getUserList ~ response:", response)
     yield put(actions.setUserList(response.data.userList));
   } catch (error) {
     yield put(actions.actionFalied(error));
@@ -51,9 +50,23 @@ function* updateUser({ payload }) {
   }
 }
 
+function* deleteUser({payload}) {
+  try {
+    const response = yield call(api.delete, endPoints.DELETE_USER ,{
+      urlParams: { id: payload.id },
+    });
+    if(response.status == 200){
+      yield put(actions.setDeleteUser(payload.id));
+    }
+  } catch (error) {
+    yield put(actions.actionFalied(error));
+  }
+}
+
 export function* userSaga() {
   yield takeEvery(actions.getUser, getUser);
   yield takeEvery(actions.updateUser, updateUser);
   yield takeEvery(actions.getUserList, getUserList);
   yield takeEvery(actions.setdeleteDeliveryboy, setdeleteDeliveryboy);
+  yield takeEvery(actions.deleteUser, deleteUser);
 }
