@@ -6,7 +6,6 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Form, FormikProvider, useFormik } from "formik";
 
-import defaultImage from "../../assets/images/avatars/default-user-img.png";
 import FormikController from "../../components/controls/FormikController";
 import { actions as user } from "../../redux/user/userAction";
 import { API_URL } from "../../utils/api";
@@ -137,11 +136,7 @@ const UserProfile = (props) => {
               <div className="d-flex flex-wrap align-items-center">
                 <div className="profile-img22 position-relative me-3 mb-3 mb-lg-0">
                   <img
-                    src={
-                      userData.image
-                        ? `${API_URL}/static/profile/${userData.image}`
-                        : defaultImage
-                    }
+                    src={""}
                     className="img-fluid avatar avatar-100 avatar-rounded"
                     alt="img"
                   />

@@ -1,7 +1,6 @@
 import React from "react";
 
 import Card from "../card";
-import { ReactComponent as SearchIcon } from "../../assets/images/icons/Search-icons.svg";
 
 const DataPerPage = (props) => {
   const { handleShowItemChange } = props;
@@ -116,7 +115,6 @@ const TableWrapper = (props) => {
             style={{ marginRight: "22px" }}
           >
             <span className="input-group-text" id="search-input">
-              <SearchIcon />
             </span>
             <input
               className="form-control"

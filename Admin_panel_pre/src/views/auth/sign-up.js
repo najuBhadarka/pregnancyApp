@@ -4,13 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import Card from "../../components/card";
-
-// img
-import fb from "../../assets/images/brands/fb.svg";
-import gm from "../../assets/images/brands/gm.svg";
-import im from "../../assets/images/brands/im.svg";
-import li from "../../assets/images/brands/li.svg";
-import auth09 from "../../assets/images/auth/09.png";
 import TextField from "../../components/controls/TextField";
 
 const SignUp = () => {
@@ -168,22 +161,22 @@ const SignUp = () => {
                     <ul className="list-group list-group-horizontal list-group-flush">
                       <li className="list-group-item border-0 pb-0">
                         <Link to="#">
-                          <img src={gm} alt="gm" />
+                          <img src={""} alt="gm" />
                         </Link>
                       </li>
                       <li className="list-group-item border-0 pb-0">
                         <Link to="#">
-                          <img src={fb} alt="fb" />
+                          <img src={""} alt="fb" />
                         </Link>
                       </li>
                       <li className="list-group-item border-0 pb-0">
                         <Link to="#">
-                          <img src={im} alt="im" />
+                          <img src={""} alt="im" />
                         </Link>
                       </li>
                       <li className="list-group-item border-0 pb-0">
                         <Link to="#">
-                          <img src={li} alt="li" />
+                          <img src={""} alt="li" />
                         </Link>
                       </li>
                     </ul>
@@ -205,7 +198,7 @@ const SignUp = () => {
           xl="8"
           className="d-lg-block d-none vh-100 overflow-hidden"
         >
-          <img src={auth09} className="img-fluid sign-in-img" alt="images" />
+          <img src={""} className="img-fluid sign-in-img" alt="images" />
         </Col>
       </Row>
     </section>

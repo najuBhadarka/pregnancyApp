@@ -11,13 +11,6 @@ import { actions } from "../../redux/auth/authAction";
 import { gsap } from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
-// img
-import auth01 from "../../assets/images/auth/01.png";
-import auth02 from "../../assets/images/auth/02.png";
-import auth03 from "../../assets/images/auth/03.png";
-import auth04 from "../../assets/images/auth/04.png";
-import auth05 from "../../assets/images/auth/05.png";
-import auth06 from "../../assets/images/auth/06.png";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -332,42 +325,42 @@ const SetPassword = (props) => {
           >
             <div>
               <img
-                src={auth01}
+                src={""}
                 className="hover-img rounded-circle first-img"
                 alt="images"
               />
               <img
-                src={auth02}
+                src={""}
                 className="hover-img rounded-circle second-img"
                 alt="images"
               />
               <img
-                src={auth03}
+                src={""}
                 className="hover-img rounded-circle third-img"
                 alt="images"
               />
               <img
-                src={auth04}
+                src={""}
                 className="hover-img rounded-circle fourth-img"
                 alt="images"
               />
               <img
-                src={auth05}
+                src={""}
                 className="hover-img rounded-circle fifth-img"
                 alt="images"
               />
               <img
-                src={auth06}
+                src={""}
                 className="hover-img rounded-circle six-img"
                 alt="images"
               />
               <img
-                src={auth01}
+                src={""}
                 className="hover-img rounded-circle seventh-img"
                 alt="images"
               />
               <img
-                src={auth02}
+                src={""}
                 className="hover-img rounded-circle eight-img"
                 alt="images"
               />

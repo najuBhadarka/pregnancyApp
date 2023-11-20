@@ -1,10 +1,7 @@
-import { ReactComponent as DashboardIcon } from "../../../../assets/images/icons/Dashboard-Icon.svg";
-import { ReactComponent as UsersIcon } from "../../../../assets/images/icons/Users-Icon.svg";
-
 export const sidebarItems = [
   {
     name: "Dashboard",
-    icon: DashboardIcon,
+    icon: '',
     roleTypes: ["Admin"],
     isMenu: false,
     path: "/Admin",
@@ -12,7 +9,7 @@ export const sidebarItems = [
   },
   {
     name: "Users",
-    icon: UsersIcon,
+    icon: "",
     roleTypes: ["Admin", "user"],
     isMenu: false,
     eventKey: "users",

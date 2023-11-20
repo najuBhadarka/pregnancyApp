@@ -9,12 +9,6 @@ import { connect } from "react-redux";
 import { actions as auth } from "../../../../redux/auth/authAction";
 import { actions as user } from "../../../../redux/user/userAction";
 
-//img
-import defaultImage from "../../../../assets/images/avatars/default-user-img.png";
-
-// icons
-import { ReactComponent as RightIcon } from "../../../../assets/images/icons/Right-Arrow-2.svg";
-
 import { API_URL } from "../../../../utils/api";
 import Cookies from "js-cookie";
 
@@ -85,7 +79,6 @@ const Header = (props) => {
           onClick={minisidebar}
         >
           <i className="icon">
-            <RightIcon />
           </i>
         </div>
         {/* <div className="input-group search-input">
@@ -104,100 +97,6 @@ const Header = (props) => {
             as="ul"
             className="navbar-nav ms-auto align-items-center navbar-list mb-2 mb-lg-0"
           >
-            {/* <Dropdown as="li" className="nav-item">
-              <Dropdown.Toggle
-                as={CustomToggle}
-                variant="search-toggle nav-link"
-              >
-                <NotificationIcon />
-                <span className="bg-danger dots"></span>
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="sub-drop dropdown-menu-end p-0">
-                <Card className="shadow-none m-0">
-                  <Card.Header className="bg-primary mx-0 px-4">
-                    <Card.Header.Title>
-                      <h5 className="mb-0 text-white">All Notifications</h5>
-                    </Card.Header.Title>
-                  </Card.Header>
-                  <Card.Body className="p-0">
-                    <Link to="#" className="iq-sub-card">
-                      <div className="d-flex align-items-center">
-                        <img
-                          className="avatar-40 rounded-pill"
-                          src={lay01}
-                          alt=""
-                        />
-                        <div className="ms-3 w-100">
-                          <h6 className="mb-0 ">Emma Watson Bni</h6>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <p className="mb-0">95 MB</p>
-                            <small className="float-end font-size-12">
-                              Just Now
-                            </small>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                    <Link to="#" className="iq-sub-card">
-                      <div className="d-flex align-items-center">
-                        <div>
-                          <img
-                            className="avatar-40 rounded-pill"
-                            src={lay02}
-                            alt=""
-                          />
-                        </div>
-                        <div className="ms-3 w-100">
-                          <h6 className="mb-0 ">New customer is join</h6>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <p className="mb-0">Cyst Bni</p>
-                            <small className="float-end font-size-12">
-                              5 days ago
-                            </small>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                    <Link to="#" className="iq-sub-card">
-                      <div className="d-flex align-items-center">
-                        <img
-                          className="avatar-40 rounded-pill"
-                          src={lay03}
-                          alt=""
-                        />
-                        <div className="ms-3 w-100">
-                          <h6 className="mb-0 ">Two customer is left</h6>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <p className="mb-0">Cyst Bni</p>
-                            <small className="float-end font-size-12">
-                              2 days ago
-                            </small>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                    <Link to="#" className="iq-sub-card">
-                      <div className="d-flex align-items-center">
-                        <img
-                          className="avatar-40 rounded-pill"
-                          src={lay04}
-                          alt=""
-                        />
-                        <div className="w-100 ms-3">
-                          <h6 className="mb-0 ">New Mail from Fenny</h6>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <p className="mb-0">Cyst Bni</p>
-                            <small className="float-end font-size-12">
-                              3 days ago
-                            </small>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </Card.Body>
-                </Card>
-              </Dropdown.Menu>
-            </Dropdown> */}
 
             <Dropdown as="li" className="nav-item">
               <Dropdown.Toggle
@@ -210,11 +109,7 @@ const Header = (props) => {
                 aria-expanded="false"
               >
                 <img
-                  src={
-                    userData.image
-                      ? `${API_URL}/static/profile/${userData.image}`
-                      : defaultImage
-                  }
+                  src={""}
                   alt="User-Profile"
                   className="img-fluid avatar avatar-50 avatar-rounded"
                 />

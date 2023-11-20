@@ -6,7 +6,6 @@ import {
   AccordionContext,
 } from "react-bootstrap";
 
-import { ReactComponent as RightIcon } from "../../../../assets/images/icons/Right-Arrow.svg";
 import { sidebarItems } from "./sidebarItems";
 
 const CustomToggle = ({ children, eventKey, onClick, isGrouped }) => {
@@ -93,7 +92,6 @@ const VerticalNav = () => {
                   <span className="item-name">{sidebarItem.name}</span>
                   {sidebarItem.eventKey === "dashboard" ? null : (
                     <i className="right-ico">
-                      <RightIcon />
                     </i>
                   )}
                 </CustomToggle>

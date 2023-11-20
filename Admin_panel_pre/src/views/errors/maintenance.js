@@ -2,14 +2,6 @@ import React, { useEffect } from "react";
 import { Container, InputGroup, FormControl } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-// img
-import auth01 from "../../assets/images/auth/01.png";
-import auth02 from "../../assets/images/auth/02.png";
-import auth03 from "../../assets/images/auth/03.png";
-import auth04 from "../../assets/images/auth/04.png";
-import auth05 from "../../assets/images/auth/05.png";
-import auth06 from "../../assets/images/auth/06.png";
-
 const Maintenance = () => {
   useEffect(() => {
     //count down plugin js
@@ -66,25 +58,25 @@ const Maintenance = () => {
     <Container fluid className="p-0">
       <div className="iq-maintenance text-center">
         <div>
-          <img src={auth02} className="rounded-circle nine-img" alt="images" />
-          <img src={auth01} className="rounded-circle ten-img" alt="images" />
+          <img src={""} className="rounded-circle nine-img" alt="images" />
+          <img src={""} className="rounded-circle ten-img" alt="images" />
           <img
-            src={auth06}
+            src={""}
             className="rounded-circle eleven-img"
             alt="images"
           />
           <img
-            src={auth05}
+            src={""}
             className="rounded-circle twelve-img"
             alt="images"
           />
           <img
-            src={auth03}
+            src={""}
             className="rounded-circle thirteen-img"
             alt="images"
           />
           <img
-            src={auth04}
+            src={""}
             className="rounded-circle fifteen-img"
             alt="images"
           />

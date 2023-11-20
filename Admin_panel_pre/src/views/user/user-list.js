@@ -7,9 +7,6 @@ import { connect } from "react-redux";
 import { API_URL } from "../../utils/api";
 import { actions as user } from "../../redux/user/userAction";
 import TableWrapper from "../../components/wrapper/table-wrapper";
-import { ReactComponent as SortIcon } from "../../assets/images/icons/Sort-Icon.svg";
-import { ReactComponent as EyeIcon } from "../../assets/images/icons/Eye-Icon.svg";
-import DefaultImageUser from "../../assets/images/avatars/default-user-img.png";
 
 const UserList = (props) => {
   const [showItems, setShowItems] = useState(10);
@@ -153,11 +150,9 @@ const UserList = (props) => {
                       <th className="text-center col-2">Profile</th>
                       <th className="text-center">
                         Name
-                        <SortIcon onClick={() => nameSort("first_name")} />
                       </th>
                       <th className="text-center">
                         Email
-                        <SortIcon onClick={() => nameSorts("email")} />
                       </th>
                       <th className="text-center">
                         Phone No
@@ -181,9 +176,6 @@ const UserList = (props) => {
                             <Image
                               className="bg-soft-primary rounded img-fluid avatar-40 me-3"
                               src={`${API_URL}/static/profile/${item.image}`}
-                              onError={(e) =>
-                                (e.target.src = DefaultImageUser)
-                              }
                             />
                           )}
                         </td>
@@ -217,7 +209,6 @@ const UserList = (props) => {
                               style={{ marginLeft: "0.5rem" }}
                             >
                               <span className="btn-inner">
-                                <EyeIcon />
                               </span>
                             </button>
                         </td>
