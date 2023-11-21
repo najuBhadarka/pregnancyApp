@@ -22,7 +22,7 @@ function* getUserList({ payload }) {
 
 function* setdeleteDeliveryboy({ payload }) {
   try {
-    const response = yield call(api.delete, endPoints.DELETE_DELIVERY_USER ,{
+    const response = yield call(api.delete, endPoints.DELETE_DELIVERY_USER, {
       urlParams: { id: payload.id },
     });
     yield put(actions.deleteDeliveryboy(response.data));
@@ -50,13 +50,25 @@ function* updateUser({ payload }) {
   }
 }
 
-function* deleteUser({payload}) {
+function* deleteUser({ payload }) {
   try {
-    const response = yield call(api.delete, endPoints.DELETE_USER ,{
+    const response = yield call(api.put, endPoints.DELETE_USER, payload.body, {
       urlParams: { id: payload.id },
     });
-    if(response.status == 200){
+    if (response.status == 200) {
       yield put(actions.setDeleteUser(payload.id));
+    }
+  } catch (error) {
+    yield put(actions.actionFalied(error));
+  }
+}
+
+function* addUser({ payload }) {
+  try {
+    const response = yield call(api.post, endPoints.ADD_USER, payload.body);
+    yield put(actions.setUser(response));
+    if (response?.data?.data?._id) {
+      yield call(payload.callback(response?.data?.data?.id));
     }
   } catch (error) {
     yield put(actions.actionFalied(error));
@@ -69,4 +81,5 @@ export function* userSaga() {
   yield takeEvery(actions.getUserList, getUserList);
   yield takeEvery(actions.setdeleteDeliveryboy, setdeleteDeliveryboy);
   yield takeEvery(actions.deleteUser, deleteUser);
+  yield takeEvery(actions.addUser, addUser);
 }

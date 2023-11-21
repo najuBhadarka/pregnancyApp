@@ -52,6 +52,9 @@ const userReducer = createSlice({
       state.userData = state?.userData?.filter((item)=> {
         return  item?._id != payload ? item : ""  
       })
+    },
+    addUser(state) {
+      state.loading = true;
     }
   },
 });

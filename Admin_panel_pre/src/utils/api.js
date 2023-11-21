@@ -40,6 +40,7 @@ export const endPoints = {
   GET_USER: "/auth/user-profile",
   UPDATE_USER: "/auth/update-profile/:id",
   DELETE_USER: "/user/delete-user/:id",
+  ADD_USER: "/auth/register",
   GET_USER_LIST: "/user/user-list",
   DELETE_DELIVERY_USER: "/api/v1/admin/deleteusers/:id",
 

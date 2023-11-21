@@ -91,8 +91,8 @@ const UserList = (props) => {
     props.actions.getUserList({ role_type: "customer" });
   }, [props.actions]);
 
-  const handleDeleteUser = (userId) => {
-    props.actions.deleteUser({id:userId});
+  const handleDeleteUser = (userId, isDeleted) => {
+    props.actions.deleteUser({id:userId, body:{isDeleted:isDeleted}});
   };
 
   return (
@@ -103,6 +103,8 @@ const UserList = (props) => {
           handleShowItemChange={handleShowItemChange}
           inputHandler={inputHandler}
           isData={allUser?.length}
+          buttonTitle="Add User"
+          buttonAction={() => navigate("/user/add")}
         >
           <div className="table-responsive image-tbl">
             <table
@@ -160,7 +162,7 @@ const UserList = (props) => {
                   </thead>
                   <tbody>
                     {filteredData?.map((item) => (
-                      <tr key={item?.id}>
+                      <tr key={item?._id}>
                         <td className="text-center ">
                           {!item.image ? (
                             <div className=" bg-soft-primary rounded img-fluid avatar-40 me-3">
@@ -182,7 +184,7 @@ const UserList = (props) => {
                         <td className="text-center">{item?.userName == null ? '-': item?.userName}</td>
                         <td className="text-center">
                           <button>Edit</button>
-                          <button onClick={()=>handleDeleteUser(item?._id)}>Delete</button>
+                          <button onClick={()=>handleDeleteUser(item?._id, true)}>Delete</button>
                         </td>
                       </tr>
                     ))}

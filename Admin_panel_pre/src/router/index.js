@@ -19,6 +19,7 @@ import SetPassword from "../views/auth/setpassword";
 import Error500 from "../views/errors/error500";
 import Maintenance from "../views/errors/maintenance";
 import Default from "../layouts/dashboard/default";
+import UserAdd from "../views/user/user-add";
 
 const Routers = [
   {
@@ -30,6 +31,7 @@ const Routers = [
       // User
       { path: "/user/profile", element: <UserProfile /> },
       { path: "/user/list", element: <UserList /> },
+      { path: "/user/add", element: <UserAdd /> },
 
       { path: "/", element: <Admin /> },
       { path: "*", element: <Error404 /> },

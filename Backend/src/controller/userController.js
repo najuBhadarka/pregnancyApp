@@ -3,7 +3,8 @@ import userModel from "../models/user.js";
 const userList = async (req, res) => {
   try {
     let allUsers = await userModel.find({
-     role: "user"
+      role: "user",
+      isDeleted: false
     })
     res.status(200).json({ status: true, userList: allUsers });
   } catch (error) {
@@ -14,10 +15,14 @@ const userList = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const userId = req.params.id;
+    const { isDeleted } = req.body;
 
-    // Use findOneAndDelete to delete the specific question by its ID
-    const deletedUser = await userModel.findByIdAndDelete({ _id: userId });
-    if (!deletedUser) {
+    const findUserAndUpdate = await userModel.findOneAndUpdate({
+      _id: userId,
+    },{
+      isDeleted: isDeleted
+    });
+    if (!findUserAndUpdate) {
       return res
         .status(404)
         .json({ status: false, message: "User not found" });

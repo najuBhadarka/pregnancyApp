@@ -5,6 +5,6 @@ let userRoute = express.Router();
 
 // User Register
 userRoute.get("/user-list", authenticateRoles(['admin']), userList);
-userRoute.delete("/delete-user/:id", authenticateRoles(['admin']), deleteUser);
+userRoute.put("/delete-user/:id", authenticateRoles(['admin']), deleteUser);
 
 export default userRoute;
