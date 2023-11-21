@@ -75,7 +75,7 @@ const UserList = (props) => {
   });
 
   const NUM_OF_RECORDS = filteredData?.length;
-  const currentData = filteredData
+  const currentData = filteredData;
 
   useEffect(() => {
     if (currentData?.length < 1) {
@@ -95,6 +95,14 @@ const UserList = (props) => {
     props.actions.deleteUser({id:userId, body:{isDeleted:isDeleted}});
   };
 
+  const handleUpdateState = (e, id) => {
+    console.log("🚀 ~ file: user-list.js:100 ~ handleUpdateState ~ e:", e.target.value)
+    console.log("🚀 ~ file: user-list.js:100 ~ handleUpdateState ~ id:", id)
+    props.actions.updateUserStatus({
+      body: { status: e.target.value },
+      ids: id
+    });
+  };
   return (
     <Row>
       <Col sm="12">
@@ -115,7 +123,7 @@ const UserList = (props) => {
             >
               {props?.user?.loading ? (
                 <div
-                className="spinner-border"
+                  className="spinner-border"
                   style={{
                     position: "fixed",
                     left: "600px",
@@ -143,19 +151,12 @@ const UserList = (props) => {
                   <thead>
                     <tr className="ligth">
                       <th className="text-center col-2">Profile</th>
+                      <th className="text-center">Name</th>
+                      <th className="text-center">Email</th>
+                      <th className="text-center">Phone No</th>
+                      <th className="text-center">userName</th>
+                      <th className="text-center">Status</th>
                       <th className="text-center">
-                        Name
-                      </th>
-                      <th className="text-center">
-                        Email
-                      </th>
-                      <th className="text-center">
-                        Phone No
-                       </th>
-                      <th className="text-center">
-                        userName
-                       </th>
-                       <th className="text-center">
                         Action
                        </th>
                     </tr>
@@ -180,10 +181,23 @@ const UserList = (props) => {
                           {item?.firstName + " " + item?.lastName}
                         </td>
                         <td className="text-center">{item?.email}</td>
-                        <td className="text-center">{item?.contact == null ? '-':item?.contact}</td>
-                        <td className="text-center">{item?.userName == null ? '-': item?.userName}</td>
                         <td className="text-center">
-                          <button>Edit</button>
+                          {item?.contact == null ? "-" : item?.contact}
+                        </td>
+                        <td className="text-center">
+                          {item?.userName == null ? "-" : item?.userName}
+                        </td>
+                        <td className="text-center">
+                          <button
+                            className={item?.status == "active" ? "text-danger" : "text-primary"}
+                            onClick={(e) => handleUpdateState(e, item?._id)}
+                            value={item?.status == "active" ? "inactive" : "active"}
+                          >
+                            {item?.status == "active" ? "InActive" : "active"}
+                          </button>
+                        </td>
+                        <td>
+                        <button>Edit</button>
                           <button onClick={()=>handleDeleteUser(item?._id, true)}>Delete</button>
                         </td>
                       </tr>

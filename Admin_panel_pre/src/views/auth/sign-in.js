@@ -7,7 +7,7 @@ import Card from "../../components/card";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { actions } from "../../redux/auth/authAction";
-
+import home from "../../assets/image/home1.jpg"
 // img
 import TextField from "../../components/controls/TextField";
 
@@ -117,7 +117,7 @@ const SignIn = (props) => {
           xl="8"
           className="d-lg-block d-none vh-100 overflow-hidden"
         >
-          <img src={""} className="img-fluid sign-in-img" alt="images" />
+          <img src={home} className="img-fluid sign-in-img" alt="images" />
         </Col>
       </Row>
     </section>

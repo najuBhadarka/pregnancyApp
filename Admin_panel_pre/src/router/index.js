@@ -33,6 +33,10 @@ const Routers = [
       { path: "/user/list", element: <UserList /> },
       { path: "/user/add", element: <UserAdd /> },
 
+      // QuestionBook
+      { path: "/question/form", element: <UserList /> },
+
+
       { path: "/", element: <Admin /> },
       { path: "*", element: <Error404 /> },
     ],

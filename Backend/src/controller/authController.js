@@ -46,6 +46,9 @@ const login = async (req, res) => {
     let userData = await userModel.findOne({
       userName: userName,
     });
+    if(userData.status == "inactive"){
+      return res.status(403).json({status: false, message: "You don't have permission to access, Please contact admin"})
+    }
     if (userData && bcrypt.compareSync(password, userData.password)) {
       const token = generateToken(userData.email, userData.role, userData.id);
       refreshToken(userData.id.toString());

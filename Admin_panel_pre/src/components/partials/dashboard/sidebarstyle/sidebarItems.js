@@ -14,5 +14,13 @@ export const sidebarItems = [
     isMenu: false,
     eventKey: "users",
     path: "/user/list",
+  },
+  {
+    name: "Questioneries",
+    icon: "",
+    roleTypes: ["Admin", "user"],
+    isMenu: false,
+    eventKey: "questions",
+    path: "/question/form",
   }
 ];

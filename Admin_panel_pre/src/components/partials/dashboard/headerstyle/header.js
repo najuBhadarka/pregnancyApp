@@ -8,6 +8,8 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { actions as auth } from "../../../../redux/auth/authAction";
 import { actions as user } from "../../../../redux/user/userAction";
+import profile from "../../../../assets/image/profile.jpg"
+
 
 import { API_URL } from "../../../../utils/api";
 import Cookies from "js-cookie";
@@ -109,7 +111,7 @@ const Header = (props) => {
                 aria-expanded="false"
               >
                 <img
-                  src={""}
+                  src={profile}
                   alt="User-Profile"
                   className="img-fluid avatar avatar-50 avatar-rounded"
                 />

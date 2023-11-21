@@ -38,24 +38,36 @@ const userReducer = createSlice({
       state.loading = false;
       state.error = payload?.response?.data?.message;
     },
-    setdeleteDeliveryboy(state,{payload}){
+    setdeleteDeliveryboy(state, { payload }) {
       state.loading = false;
-      state.userData = state?.userData?.filter((item)=> {
-        return  item?.id !== payload?.id ? item : ""  
-      })
+      state.userData = state?.userData?.filter((item) => {
+        return item?.id !== payload?.id ? item : "";
+      });
     },
     deleteUser(state) {
       state.loading = false;
     },
-    setDeleteUser(state,{payload}){
+    setDeleteUser(state, { payload }) {
       state.loading = false;
-      state.userData = state?.userData?.filter((item)=> {
-        return  item?._id != payload ? item : ""  
-      })
+      state.userData = state?.userData?.filter((item) => {
+        return item?._id != payload ? item : "";
+      });
     },
     addUser(state) {
       state.loading = true;
-    }
+    },
+    updateUserStatus(state) {
+      state.loading = true;
+    },
+    setUpdatedUserStatus(state, { payload }) {
+      state.loading = false;
+      state.userData = state?.userData?.map((ele) => {
+        if (ele._id == payload.data.userList._id) {
+          ele.status = payload.data.userList.status;
+        }
+        return ele;
+      });
+    },
   },
 });
 

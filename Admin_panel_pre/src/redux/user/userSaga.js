@@ -39,7 +39,7 @@ function* updateUser({ payload }) {
       payload.body,
       {
         urlParams: { id: payload.ids },
-      }
+      },
     );
     yield put(actions.setUpdateUser(payload.body));
     if (updateUser.data) {
@@ -74,6 +74,24 @@ function* addUser({ payload }) {
     yield put(actions.actionFalied(error));
   }
 }
+function* updateUserStatus({ payload }) {
+  try {
+    const updateUser = yield call(
+      api.put,
+      endPoints.UPDATE_STATUS,
+      payload.body,
+      {
+        urlParams: { id: payload.ids },
+      },
+    );
+    yield put(actions.setUpdatedUserStatus(updateUser));
+    if (updateUser.data) {
+      payload.callback();
+    }
+  } catch (error) {
+    yield put(actions.actionFalied(error));
+  }
+}
 
 export function* userSaga() {
   yield takeEvery(actions.getUser, getUser);
@@ -82,4 +100,5 @@ export function* userSaga() {
   yield takeEvery(actions.setdeleteDeliveryboy, setdeleteDeliveryboy);
   yield takeEvery(actions.deleteUser, deleteUser);
   yield takeEvery(actions.addUser, addUser);
+  yield takeEvery(actions.updateUserStatus, updateUserStatus);
 }

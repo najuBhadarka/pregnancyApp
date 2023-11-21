@@ -1,11 +1,12 @@
 import React from "react";
+import home from "../../../assets/image/nav.jpg"
 
 const Logo = (props) => {
   return (
     <>
       <div className="logo">
         <img
-          src={""}
+          src={home}
           style={{ width: "50px" }}
           className="img-fluid logo-img"
           alt="img4"
@@ -21,12 +22,12 @@ const Logo = (props) => {
       </div>
       <div className="logo-hover">
         <img
-          src={""}
+          src={home}
           className="img-fluid logo-img"
           style={{ width: "50px" }}
           alt="img4"
         />
-        <span>Aanch</span>
+        <span>Admin panel</span>
       </div>
     </>
   );

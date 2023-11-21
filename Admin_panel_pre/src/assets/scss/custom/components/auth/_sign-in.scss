@@ -116,16 +116,14 @@
 
 .sign-in-img {
   position: relative;
-  width: 58%;
-  bottom: -14%;
-  left: 27%;
+  width: 100%;
+  height: 900px;
 }
 @media (min-width: 1400px) {
   .sign-in-img {
     position: relative;
-    width: 53%;
-    bottom: -23%;
-    left: 23%;
+    width: 100%;
+    height: 900px;
   }
   .bg-circle-login {
     position: absolute;
