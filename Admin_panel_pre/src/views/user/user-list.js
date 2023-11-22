@@ -96,11 +96,6 @@ const UserList = (props) => {
   };
 
   const handleUpdateState = (e, id) => {
-    console.log(
-      "🚀 ~ file: user-list.js:100 ~ handleUpdateState ~ e:",
-      e.target.value,
-    );
-    console.log("🚀 ~ file: user-list.js:100 ~ handleUpdateState ~ id:", id);
     props.actions.updateUserStatus({
       body: { status: e.target.value },
       ids: id,
@@ -209,7 +204,7 @@ const UserList = (props) => {
                           </button>
                         </td>
                         <td>
-                          <button onClick={() => handleEditUser(item?._id)}>
+                          <button className="m-1" onClick={() => handleEditUser(item?._id)}>
                             Edit
                           </button>
                           <button

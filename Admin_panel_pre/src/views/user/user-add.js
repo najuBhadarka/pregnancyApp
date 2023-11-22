@@ -24,8 +24,8 @@ const UserAdd = (props) => {
   const navigate = useNavigate();
   const [initFormData, setInitFormData] = useState(initialState);
 
-  if (props.mode == "Update" && id) {
-    useEffect(() => {
+  useEffect(() => {
+    if (props.mode == "Update" && id) {
       const user = {
         firstName: props?.user?.editUserDetails?.firstName || "",
         lastName: props?.user?.editUserDetails?.lastName || "",
@@ -35,8 +35,8 @@ const UserAdd = (props) => {
         DOB: props?.user?.editUserDetails?.DOB || "",
       };
       setInitFormData(user);
-    }, [props?.user?.editUserDetails]);
-  }
+    }
+  }, [props?.user?.editUserDetails]);
 
   const validationSchema = Yup.object({
     firstName: Yup.string().required().min(3).label("Full Name"),
@@ -45,22 +45,22 @@ const UserAdd = (props) => {
   });
 
   const onSubmit = (values) => {
-    if(props.mode == 'Update'){
+    if (props.mode == "Update") {
       props.actions.updateUser({
         body: values,
         ids: id,
         callback: () => {
-          navigate('/user/list')
+          navigate("/user/list");
         },
       });
-    } else{
-      props.actions.addUser({body: values});
-      navigate('/user/list')
+    } else {
+      props.actions.addUser({ body: values });
+      navigate("/user/list");
     }
   };
 
   useEffect(() => {
-    if(props.mode == 'Update'){
+    if (props.mode == "Update") {
       props.actions.getSelectedUserDetails(id);
     }
   }, [id]);
@@ -73,7 +73,7 @@ const UserAdd = (props) => {
   });
 
   const { handleChange, handleSubmit } = formik;
-  console.log("props?.mode", props?.mode)
+  console.log("props?.mode", props?.mode);
   return (
     <Row>
       <Col xl="9" lg="8" style={{ width: "100%" }}>
@@ -146,7 +146,7 @@ const UserAdd = (props) => {
                         onChange={handleChange}
                       />
                     </div>
-                  
+
                     {props?.mode == "Add" ? (
                       <div className="col-6">
                         <FormikController
@@ -183,7 +183,7 @@ const UserAdd = (props) => {
                       marginRight: "5px",
                     }}
                   >
-                   Save
+                    Save
                   </button>
                   <button
                     type="text"
@@ -192,7 +192,7 @@ const UserAdd = (props) => {
                       width: "150px",
                       marginRight: "5px",
                     }}
-                    onClick={()=>navigate('/user/list')}
+                    onClick={() => navigate("/user/list")}
                   >
                     Cancel
                   </button>
