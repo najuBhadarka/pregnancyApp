@@ -26,8 +26,11 @@ const UserProfile = (props) => {
   const [fieldDisabled, setFieldDisabled] = useState(true);
   const [initFormData, setInitFormData] = useState(initialState);
 
-  const token = document?.cookie?.split(";")[2].split("=")[1]
-
+  const token = document?.cookie
+  ?.split("; ")
+  ?.find((row) => row.startsWith("token="))
+  ?.split("=")[1];
+  
   useEffect(() => {
     const user = {
       firstName: props?.user?.data?.firstName,
