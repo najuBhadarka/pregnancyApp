@@ -54,4 +54,25 @@ const updateUserStatus = async (req, res) => {
   }
 };
 
-export { userList, deleteUser, updateUserStatus };
+const getUserById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    let userDetails = await userModel.findById({
+      _id: userId
+    })
+    if (!userDetails) {
+      return res
+        .status(404)
+        .json({ status: false, message: "User not found" });
+    }
+    res
+      .status(200)
+      .json({ status: true, userDetails });
+  }
+  catch (error) {
+    res.status(500).json({ status: false, message: error });
+  }
+}
+
+export { userList, deleteUser, updateUserStatus, getUserById };

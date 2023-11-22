@@ -93,6 +93,24 @@ function* updateUserStatus({ payload }) {
   }
 }
 
+function* getSelectedUserDetails({payload}) {
+  try {
+    const response = yield call(
+      api.get,
+      endPoints.GET_USER_BY_ID,
+      {
+        urlParams: { id: payload },
+      },
+    );
+    yield put(actions.setSelectedUserDetails(response.data.userDetails));
+    if (updateUser.data) {
+      payload.callback();
+    }
+  } catch (error) {
+    yield put(actions.actionFalied(error));
+  }
+}
+
 export function* userSaga() {
   yield takeEvery(actions.getUser, getUser);
   yield takeEvery(actions.updateUser, updateUser);
@@ -101,4 +119,5 @@ export function* userSaga() {
   yield takeEvery(actions.deleteUser, deleteUser);
   yield takeEvery(actions.addUser, addUser);
   yield takeEvery(actions.updateUserStatus, updateUserStatus);
+  yield takeEvery(actions.getSelectedUserDetails, getSelectedUserDetails);
 }

@@ -1,202 +1,208 @@
-import React from "react";
-import { Row, Col, Image, Form, Button } from "react-bootstrap";
-import Card from "../../components/card";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Row, Col } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import { Formik } from "formik";
-import { actions as user } from "../../redux/user/userAction";
-
-// img
-
-import TextField from "../../components/controls/TextField";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { Form, FormikProvider, useFormik } from "formik";
+
+import FormikController from "../../components/controls/FormikController";
+import { actions as user } from "../../redux/user/userAction";
+import Card from "../../components/card";
+
+const initialState = {
+  firstName: "",
+  lastName: "",
+  contact: "",
+  userName: "",
+  email: "",
+  DOB: "",
+};
 
 const UserAdd = (props) => {
+  const { id } = useParams();
   const navigate = useNavigate();
+  const [initFormData, setInitFormData] = useState(initialState);
 
-  const userAdd = Yup.object().shape({
+  if (props.mode == "Update" && id) {
+    useEffect(() => {
+      const user = {
+        firstName: props?.user?.editUserDetails?.firstName || "",
+        lastName: props?.user?.editUserDetails?.lastName || "",
+        contact: props?.user?.editUserDetails?.contact || "",
+        userName: props?.user?.editUserDetails?.userName || "",
+        email: props?.user?.editUserDetails?.email || "",
+        DOB: props?.user?.editUserDetails?.DOB || "",
+      };
+      setInitFormData(user);
+    }, [props?.user?.editUserDetails]);
+  }
+
+  const validationSchema = Yup.object({
     firstName: Yup.string().required().min(3).label("Full Name"),
     lastName: Yup.string().required().min(3).label("Last Name"),
     contact: Yup.string().required().min(10).label("Contact Number"),
-    email: Yup.string()
-      .email("Enter a valid email address")
-      .required()
-      .label("Email"),
-    userName: Yup.string().required().min(3).label("User Name"),
-    password: Yup.string()
-      .required()
-      .matches(
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,20}$/,
-        "Password should contains atleast 8 charaters and containing uppercase,lowercase and numbers !"
-      )
-      .label("Password"),
   });
 
-  const handleSubmit = (values) => {
-    props.actions.addUser({body: values});
-    navigate("/user/list");
+  const onSubmit = (values) => {
+    if(props.mode == 'Update'){
+      props.actions.updateUser({
+        body: values,
+        ids: id,
+        callback: () => {
+          navigate('/user/list')
+        },
+      });
+    } else{
+      props.actions.addUser({body: values});
+      navigate('/user/list')
+    }
   };
 
+  useEffect(() => {
+    if(props.mode == 'Update'){
+      props.actions.getSelectedUserDetails(id);
+    }
+  }, [id]);
+
+  const formik = useFormik({
+    initialValues: initFormData,
+    validationSchema: validationSchema,
+    enableReinitialize: true,
+    onSubmit: (values) => onSubmit(values),
+  });
+
+  const { handleChange, handleSubmit } = formik;
+  console.log("props?.mode", props?.mode)
   return (
-    <div>
-      <Row>
-        <Col xl="12" lg="8">
-          <Card>
-            <Card.Header className="d-flex justify-content-between">
-              <div className="header-title">
-                <h4 className="card-title">Add New User</h4>
-              </div>
-            </Card.Header>
-            <Card.Body>
-              <Formik
-                initialValues={{
-                  firstName: "",
-                  lastName: "",
-                  contact: "",
-                  email: "",
-                  userName: "",
-                  password: "",
-                  DOB:""
-                }}
-                validationSchema={userAdd}
-                onSubmit={async (values, errors) => {
-                  handleSubmit(values, errors);
-                }}
-              >
-                {({ handleSubmit, handleChange, values }) => (
-                  <div className="new-user-info">
-                    <Form onSubmit={handleSubmit}>
-                      <div className="row">
-                        <Form.Group className="col-md-6 form-group">
-                          <TextField
-                            id="firstName"
-                            name="firstName"
-                            value={values.firstName}
-                            onChange={handleChange}
-                            type="text"
-                            placeholder=""
-                            fieldLabel="First Name"
-                            style={{
-                              color: "red",
-                              fontSize: "smaller",
-                            }}
-                            classname="form-control form-control-sm"
-                          />
-                        </Form.Group>
-                        <Form.Group className="col-md-6 form-group">
-                          <TextField
-                            id="lastName"
-                            name="lastName"
-                            value={values.lastName}
-                            onChange={handleChange}
-                            type="text"
-                            placeholder=""
-                            fieldLabel="Last Name"
-                            style={{
-                              color: "red",
-                              fontSize: "smaller",
-                            }}
-                            classname="form-control form-control-sm"
-                          />
-                        </Form.Group>
-                        <Form.Group className="col-md-6 form-group">
-                          <TextField
-                            id="userName"
-                            name="userName"
-                            value={values.userName}
-                            onChange={handleChange}
-                            type="text"
-                            placeholder=""
-                            fieldLabel="User Name"
-                            style={{
-                              color: "red",
-                              fontSize: "smaller",
-                            }}
-                            classname="form-control form-control-sm"
-                          />
-                        </Form.Group>
-                        <Form.Group className="col-md-6  form-group">
-                          <TextField
-                            id="contact"
-                            name="contact"
-                            value={values.contact}
-                            onChange={handleChange}
-                            type="text"
-                            placeholder=""
-                            fieldLabel="Contact Number"
-                            style={{
-                              color: "red",
-                              fontSize: "smaller",
-                            }}
-                            classname="form-control form-control-sm"
-                            maxLength={10}
-                          />
-                        </Form.Group>
-                        <Form.Group className="col-md-6  form-group">
-                          <TextField
-                            id="DOB"
-                            name="DOB"
-                            value={values.DOB}
-                            onChange={handleChange}
-                            type="text"
-                            placeholder=""
-                            fieldLabel="Date of Birth"
-                            style={{
-                              color: "red",
-                              fontSize: "smaller",
-                            }}
-                            classname="form-control form-control-sm"
-                            maxLength={10}
-                          />
-                        </Form.Group>
-                        <Form.Group className="col-md-6  form-group">
-                          <TextField
-                            id="email"
-                            name="email"
-                            value={values.email}
-                            onChange={handleChange}
-                            type="email"
-                            placeholder=""
-                            fieldLabel="Email"
-                            style={{
-                              color: "red",
-                              fontSize: "smaller",
-                            }}
-                            classname="form-control form-control-sm"
-                          />
-                        </Form.Group>
-                      </div>
-                      <div className="row">
-                        <Form.Group className="col-md-6 form-group">
-                          <TextField
-                            id="password"
-                            name="password"
-                            value={values.password}
-                            onChange={handleChange}
-                            type="password"
-                            placeholder=""
-                            fieldLabel="Password"
-                            style={{
-                              color: "red",
-                              fontSize: "smaller",
-                            }}
-                            classname="form-control form-control-sm"
-                          />
-                        </Form.Group>
-                      </div>
-                      <Button type="submit" variant="btn btn-primary">
-                        Add New User
-                      </Button>
-                    </Form>
+    <Row>
+      <Col xl="9" lg="8" style={{ width: "100%" }}>
+        <Card>
+          <Card.Header className="d-flex justify-content-between">
+            <div className="header-title">
+              <h4 className="card-title">
+                {props?.mode == "Add" ? "Add User" : "Update User"}
+              </h4>
+            </div>
+          </Card.Header>
+          <Card.Body>
+            <div className="new-user-info">
+              <FormikProvider value={formik}>
+                <Form onSubmit={handleSubmit}>
+                  <div className="row">
+                    <div className="col-6">
+                      <FormikController
+                        control="input"
+                        type="text"
+                        name="firstName"
+                        classname="form-control"
+                        label="First Name "
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="col-6">
+                      <FormikController
+                        control="input"
+                        type="text"
+                        name="lastName"
+                        classname="form-control"
+                        label="Last Name "
+                        onChange={handleChange}
+                      />
+                    </div>
                   </div>
-                )}
-              </Formik>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </div>
+
+                  <div className="row">
+                    {props?.mode == "Add" ? (
+                      <div className="col-6">
+                        <FormikController
+                          control="input"
+                          type="text"
+                          name="userName"
+                          classname="form-control"
+                          label="User Name "
+                          onChange={handleChange}
+                        />
+                      </div>
+                    ) : null}
+
+                    <div className="col-6">
+                      <FormikController
+                        control="input"
+                        type="number"
+                        name="contact"
+                        classname="form-control"
+                        label=" Contact Number "
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="col-6">
+                      <FormikController
+                        control="input"
+                        type="date"
+                        name="DOB"
+                        classname="form-control"
+                        label="DOB "
+                        onChange={handleChange}
+                      />
+                    </div>
+                  
+                    {props?.mode == "Add" ? (
+                      <div className="col-6">
+                        <FormikController
+                          control="input"
+                          type="email"
+                          name="email"
+                          classname="form-control"
+                          label="Email "
+                          onChange={handleChange}
+                        />
+                      </div>
+                    ) : null}
+
+                    {props?.mode == "Add" ? (
+                      <div className="col-6">
+                        <FormikController
+                          control="input"
+                          type="password"
+                          name="password"
+                          classname="form-control"
+                          label="Password "
+                          onChange={handleChange}
+                        />
+                      </div>
+                    ) : null}
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="btn btn-btn btn-primary"
+                    style={{
+                      width: "150px",
+                      marginLeft: "auto",
+                      marginRight: "5px",
+                    }}
+                  >
+                   Save
+                  </button>
+                  <button
+                    type="text"
+                    className="btn btn-btn btn-primary"
+                    style={{
+                      width: "150px",
+                      marginRight: "5px",
+                    }}
+                    onClick={()=>navigate('/user/list')}
+                  >
+                    Cancel
+                  </button>
+                </Form>
+              </FormikProvider>
+            </div>
+          </Card.Body>
+        </Card>
+      </Col>
+    </Row>
   );
 };
 

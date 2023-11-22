@@ -31,7 +31,8 @@ const Routers = [
       // User
       { path: "/user/profile", element: <UserProfile /> },
       { path: "/user/list", element: <UserList /> },
-      { path: "/user/add", element: <UserAdd /> },
+      { path: "/user/add", element: <UserAdd mode={'Add'} /> },
+      { path: "/user/edit-user/:id", element: <UserAdd mode={"Update"}/> },
 
       // QuestionBook
       { path: "/question/form", element: <UserList /> },

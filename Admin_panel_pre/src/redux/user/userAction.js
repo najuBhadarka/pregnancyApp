@@ -5,6 +5,7 @@ export const initialState = {
   loading: false,
   data: [],
   userData: [],
+  editUserDetails: null,
   token: null,
 };
 
@@ -68,6 +69,13 @@ const userReducer = createSlice({
         return ele;
       });
     },
+    getSelectedUserDetails(state) {
+      state.loading = true;
+    },
+    setSelectedUserDetails(state, { payload }){
+      state.loading = true;
+      state.editUserDetails = payload;
+    }
   },
 });
 

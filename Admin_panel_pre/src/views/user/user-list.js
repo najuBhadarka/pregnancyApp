@@ -92,17 +92,25 @@ const UserList = (props) => {
   }, [props.actions]);
 
   const handleDeleteUser = (userId, isDeleted) => {
-    props.actions.deleteUser({id:userId, body:{isDeleted:isDeleted}});
+    props.actions.deleteUser({ id: userId, body: { isDeleted: isDeleted } });
   };
 
   const handleUpdateState = (e, id) => {
-    console.log("🚀 ~ file: user-list.js:100 ~ handleUpdateState ~ e:", e.target.value)
-    console.log("🚀 ~ file: user-list.js:100 ~ handleUpdateState ~ id:", id)
+    console.log(
+      "🚀 ~ file: user-list.js:100 ~ handleUpdateState ~ e:",
+      e.target.value,
+    );
+    console.log("🚀 ~ file: user-list.js:100 ~ handleUpdateState ~ id:", id);
     props.actions.updateUserStatus({
       body: { status: e.target.value },
-      ids: id
+      ids: id,
     });
   };
+
+  const handleEditUser = (id) => {
+    navigate(`/user/edit-user/${id}`);
+  };
+
   return (
     <Row>
       <Col sm="12">
@@ -156,9 +164,7 @@ const UserList = (props) => {
                       <th className="text-center">Phone No</th>
                       <th className="text-center">userName</th>
                       <th className="text-center">Status</th>
-                      <th className="text-center">
-                        Action
-                       </th>
+                      <th className="text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -189,30 +195,32 @@ const UserList = (props) => {
                         </td>
                         <td className="text-center">
                           <button
-                            className={item?.status == "active" ? "text-danger" : "text-primary"}
+                            className={
+                              item?.status == "active"
+                                ? "text-danger"
+                                : "text-primary"
+                            }
                             onClick={(e) => handleUpdateState(e, item?._id)}
-                            value={item?.status == "active" ? "inactive" : "active"}
+                            value={
+                              item?.status == "active" ? "inactive" : "active"
+                            }
                           >
                             {item?.status == "active" ? "InActive" : "active"}
                           </button>
                         </td>
                         <td>
-                        <button>Edit</button>
-                          <button onClick={()=>handleDeleteUser(item?._id, true)}>Delete</button>
+                          <button onClick={() => handleEditUser(item?._id)}>
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeleteUser(item?._id, true)}
+                          >
+                            Delete
+                          </button>
                         </td>
                       </tr>
                     ))}
 
-                    {props?.user?.error ? (
-                      <span
-                        style={{
-                          color: "Red",
-                          fontSize: "smaller",
-                        }}
-                      >
-                        {props?.user?.error}
-                      </span>
-                    ) : null}
                   </tbody>
                 </>
               )}
