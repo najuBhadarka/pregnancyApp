@@ -20,6 +20,7 @@ import Error500 from "../views/errors/error500";
 import Maintenance from "../views/errors/maintenance";
 import Default from "../layouts/dashboard/default";
 import UserAdd from "../views/user/user-add";
+import QuestionForm from "../views/Question/QuestionForm";
 
 const Routers = [
   {
@@ -35,7 +36,7 @@ const Routers = [
       { path: "/user/edit-user/:id", element: <UserAdd mode={"Update"}/> },
 
       // QuestionBook
-      { path: "/question/form", element: <UserList /> },
+      { path: "/question/form", element: <QuestionForm /> },
 
 
       { path: "/", element: <Admin /> },
