@@ -1,40 +1,58 @@
-// FormComponent.js
-import React, { useRef } from 'react';
-import { FormBuilder, Form } from 'react-formio';
+import React, { useState } from "react";
+import { FormBuilder } from "react-formio";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { actions } from "../../redux/questionaries/questionariesAction.js";
 
 const formDefinition = {};
 
-function QuestionForm() {
-  const formRef = useRef();
+function QuestionForm(props) {
+  const [state, setState] = useState({ formData: [] });
 
-  const handleExternalSubmit = async () => {
-    // Manually trigger form submission
-    if (formRef.current) {
-      const formInstance = formRef.current;
-
-
-        // Get the form data after validation
-        const formData = formInstance;
-
-        // You can now use formData as needed, e.g., send it to a server
-        console.log('Form Data:', formData);
-
-        // If you want to submit the form programmatically, you can use formInstance.submit()
-        // formInstance.submit();
-    }
+  const handleSubmit = () => {
+    props.actions.createForm(state);
+    console.log("State-----", state);
   };
 
-  console.log("formDefinition:", formDefinition);
+  const handleChange = (e) => {
+    setState((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   return (
     <div>
-      {/* FormBuilder with submitButton set to false */}
-      <FormBuilder form={formDefinition} ref={formRef} />
-
-      {/* Custom external submit button */}
-      <button onClick={handleExternalSubmit}>Submit Form</button>
+      <label htmlFor="title">Title : </label>
+      <input type="text" name="title" id="title" onChange={handleChange} />
+      <FormBuilder
+        form={formDefinition}
+        saveForm={(data) => console.log("data", data)}
+        onChange={(schema) => {
+          setState((prevState) => ({
+            ...prevState,
+            formData: JSON.stringify(schema.components)
+          })) 
+        }}
+      />
+      <label htmlFor="timeline">Timeline : </label>
+      <input
+        type="number"
+        name="timeline"
+        id="timeline"
+        onChange={handleChange}
+      />
+      <button onClick={handleSubmit}> Click here to submit</button>
     </div>
   );
 }
 
-export default QuestionForm;
+const mapDispatchToProps = (dispatch) => ({
+  actions: { ...bindActionCreators(actions , dispatch) },
+});
+
+const mapStateToProps = (state) => ({
+  question: state.question,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionForm);

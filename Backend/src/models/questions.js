@@ -5,21 +5,9 @@ const questionSchema = new Schema({
         type: String,
         required: true
     },
-    questions: [
-        {
-            questionTitle: {
-                type: String,
-                required: true,
-            },
-            optionType: {
-                type: String,
-                required: true,
-            },
-            options: {
-                type: [String || Number],
-            },
-        },
-    ],
+    questions: {
+        type: String
+    },
     timeline: {
         type: String,
         required: true

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import Card from "../../components/card";
+import { actions as user } from "../../redux/auth/authAction";
 import TextField from "../../components/controls/TextField";
 
 const SignUp = () => {

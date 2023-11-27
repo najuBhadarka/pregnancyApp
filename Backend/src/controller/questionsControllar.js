@@ -88,7 +88,9 @@ const getQuestionOnTimeline = async (req, res) => {
   try {
     const { startDate } = req.query;
     if (startDate == undefined) {
-      res.status(404).json({ status: false, message: "Please enter valid start date." });
+      res
+        .status(404)
+        .json({ status: false, message: "Please enter valid start date." });
     }
 
     const start = moment(startDate, "DD/MM/YYYY");
@@ -127,10 +129,42 @@ const submitAnswer = async (req, res) => {
   }
 };
 
+const createQuestionForm = async (req, res) => {
+  try {
+    const { title, formData, timeline } = req.body;
+    console.log(
+      "🚀 ~ file: questionsControllar.js:133 ~ createQuestionForm ~ timeline:",
+      timeline,
+    );
+    console.log(
+      "🚀 ~ file: questionsControllar.js:133 ~ createQuestionForm ~ formData:",
+      formData,
+    );
+    console.log(
+      "🚀 ~ file: questionsControllar.js:133 ~ createQuestionForm ~ title:",
+      title,
+    );
+    // const userId = req?.user?.id;
+    const createNewForm = new questionModel({
+      questions: formData,
+      title: title,
+      timeline: timeline,
+    });
+    await createNewForm.save();
+    res.status(200).json({
+      status: true,
+      message: "Form created successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, message: error });
+  }
+};
+
 export {
   addQuestions,
   updateQuestion,
   deleteQuestion,
   getQuestionOnTimeline,
   submitAnswer,
+  createQuestionForm,
 };

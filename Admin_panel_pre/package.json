@@ -31,6 +31,7 @@
     "react-dom": "^17.0.2",
     "react-draft-wysiwyg": "^1.14.7",
     "react-dropzone": "^14.2.2",
+    "react-form-builder2": "^0.16.5",
     "react-formio": "^4.3.0",
     "react-leaflet": "^3.2.1",
     "react-redux": "^7.2.4",

@@ -2,6 +2,7 @@ import express from "express";
 import authenticateRoles from "../../middleware/auth.js";
 import {
   addQuestions,
+  createQuestionForm,
   deleteQuestion,
   getQuestionOnTimeline,
   submitAnswer,
@@ -20,30 +21,36 @@ questionnairesRoute.post(
   "/questionform",
   authenticateRoles(["admin"]),
   addQuestionsValidation,
-  addQuestions
+  addQuestions,
 );
 
 // Questionaires API' for Admin only
 questionnairesRoute.post(
   "/questionform",
   authenticateRoles(["admin"]),
-  addQuestions
+  addQuestions,
 );
 questionnairesRoute.put(
   "/updateQuestion/:id",
   authenticateRoles(["admin"]),
-  updateQuestion
+  updateQuestion,
 );
 questionnairesRoute.delete(
   "/deleteQuestion/:id",
   authenticateRoles(["admin"]),
-  deleteQuestion
+  deleteQuestion,
 );
 
 // user form subbmit
 questionnairesRoute.post(
   "/submitanswer",
   authenticateRoles(["user"]),
-  submitAnswer
+  submitAnswer,
+);
+
+questionnairesRoute.post(
+  "/create-form",
+  authenticateRoles(["admin"]),
+  createQuestionForm,
 );
 export default questionnairesRoute;

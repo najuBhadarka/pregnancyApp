@@ -45,6 +45,7 @@ export const endPoints = {
   GET_USER_LIST: "/user/user-list",
   GET_USER_BY_ID: "/user/get-user-details/:id",
   DELETE_DELIVERY_USER: "/api/v1/admin/deleteusers/:id",
+  CREATE_FORM: "/questionbook/create-form",
 
   // Category
   ADD_CATEGORY: "/api/v1/category/addcategory",
