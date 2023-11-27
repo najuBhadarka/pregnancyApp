@@ -23,32 +23,55 @@ function QuestionForm(props) {
 
   return (
     <div>
-      <label htmlFor="title">Title : </label>
-      <input type="text" name="title" id="title" onChange={handleChange} />
+      <div className="d-flex m-4 justify-content-around">
+        <div className="d-flex">
+          <label htmlFor="title" className="m-1">
+            Title:
+          </label>
+          <input
+            className="form-control"
+            placeholder="Please enter Question Form Name"
+            type="text"
+            name="title"
+            id="title"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="d-flex">
+          <label htmlFor="Timeline" className="m-1">
+            Timeline:
+          </label>
+          <input
+            className="form-control"
+            placeholder="Please enter the timeline"
+            type="number"
+            name="timeline"
+            id="timeline"
+            onChange={handleChange}
+          />
+        </div>
+        <button onClick={handleSubmit} className="btn btn-primary">
+          {" "}
+          Click here to submit
+        </button>
+      </div>
+
       <FormBuilder
         form={formDefinition}
         saveForm={(data) => console.log("data", data)}
         onChange={(schema) => {
           setState((prevState) => ({
             ...prevState,
-            formData: JSON.stringify(schema.components)
-          })) 
+            formData: JSON.stringify(schema),
+          }));
         }}
       />
-      <label htmlFor="timeline">Timeline : </label>
-      <input
-        type="number"
-        name="timeline"
-        id="timeline"
-        onChange={handleChange}
-      />
-      <button onClick={handleSubmit}> Click here to submit</button>
     </div>
   );
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: { ...bindActionCreators(actions , dispatch) },
+  actions: { ...bindActionCreators(actions, dispatch) },
 });
 
 const mapStateToProps = (state) => ({
