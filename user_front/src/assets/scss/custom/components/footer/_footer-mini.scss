@@ -1,0 +1,28 @@
+.footer {
+  font-size: $footer-font-size;
+  background: $white;
+  position: relative;
+  .footer-body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0.5rem calc(var(--bs-gutter-x, 0.75rem) * 3);
+    @include media-breakpoint-down(md) {
+      justify-content: center;
+    }
+  }
+}
+
+@include media-breakpoint-down(xl) {
+  .footer {
+    margin-top: 100px;
+    .footer-body {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      left: auto;
+      right: auto;
+      background: #f5e8e2;
+    }
+  }
+}

@@ -1,0 +1,221 @@
+.App {
+  text-align: left;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.site-header{
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+:root {
+  --input-height: 35px;
+}
+
+body {
+  margin: 0px;
+  font-family: 'Rubik';
+}
+
+@font-face {
+  font-family: Rubik;
+}
+
+.LoginContainer{
+  width: 400px;
+}
+
+.MainContainer{
+  height: calc(100vh - 40px);
+  width: calc(100vw - 40px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.CompanyContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.CompanyLogoConatiner{
+  padding-right: 10px;
+}
+
+.CompanyLogoImg{
+  height: 60px;
+}
+
+.CompanyName{
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+.LoginHeaderTitle{
+  font-size: 25px;
+  padding-bottom: 5px;
+  font-weight: bold;
+}
+
+.FormContainer{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height: max-content;
+}
+
+.FormContainer .InputContainer{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: max-content;
+}
+
+.InputContainer .label{
+  display: block;
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.InputContainer .input{
+  width: calc(100% - 6px);
+  line-height: var(--input-height);
+  font-size: large;
+  border-radius: 5px;
+  border: 1px solid grey;
+}
+
+.InputContainer .PasswordInputContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0px;
+}
+
+.InputContainer .PasswordInputContainer .input{
+  width: 90%;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-right: 0px;
+}
+
+.InputContainer .PasswordInputContainer .ShowPasswordButton{
+  cursor: pointer;
+  width: 10%;
+  height: calc(var(--input-height) + 4px);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 1px solid grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-left: 0px;
+}
+
+.InputContainer .PasswordInputContainer .ShowPasswordButton:hover svg{
+  fill: black;
+}
+
+.InputContainer .PasswordLabel{
+  font-weight: bold;
+  color: gray;
+  font-size: 13px;
+  padding-top: 5px;
+}
+
+.InputContainer.RememberForgotContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.InputContainer .CheckboxInput{
+  margin: 0px;
+  width: 18px;
+  height: 18px;
+}
+
+.ForgotPasswordContainer{
+  color: red;
+  cursor: pointer;
+}
+
+.ButtonsContainer .SignInButtonContainer .SigninButton:hover{
+  background-color: #2863b4;
+}
+
+.ButtonsContainer .SignInButtonContainer .SigninButton{
+  width: 100%;
+  background-color: #2d70ce;
+  color: white;
+  border-radius: 10px;
+  border: 0px;
+  padding: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.ButtonsContainer .OthersButtonContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.ButtonsContainer .OthersButtonContainer button{
+  width: 48%;
+  font-size: 15px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 7px;
+  border: 0px;
+}
+
+.FooterContainer{
+  padding-top: 30px;
+  text-align: center;
+}
+
+.SignUpLink{
+  color: #2d70ce;
+  cursor: pointer;
+}

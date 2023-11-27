@@ -4,6 +4,7 @@ import {
   addQuestions,
   createQuestionForm,
   deleteQuestion,
+  getQuestionForm,
   getQuestionOnTimeline,
   submitAnswer,
   updateQuestion,
@@ -53,4 +54,9 @@ questionnairesRoute.post(
   authenticateRoles(["admin"]),
   createQuestionForm,
 );
+
+questionnairesRoute.get(
+  "/get-form",
+  getQuestionForm
+)
 export default questionnairesRoute;

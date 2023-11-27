@@ -132,18 +132,6 @@ const submitAnswer = async (req, res) => {
 const createQuestionForm = async (req, res) => {
   try {
     const { title, formData, timeline } = req.body;
-    console.log(
-      "🚀 ~ file: questionsControllar.js:133 ~ createQuestionForm ~ timeline:",
-      timeline,
-    );
-    console.log(
-      "🚀 ~ file: questionsControllar.js:133 ~ createQuestionForm ~ formData:",
-      formData,
-    );
-    console.log(
-      "🚀 ~ file: questionsControllar.js:133 ~ createQuestionForm ~ title:",
-      title,
-    );
     // const userId = req?.user?.id;
     const createNewForm = new questionModel({
       questions: formData,
@@ -160,6 +148,21 @@ const createQuestionForm = async (req, res) => {
   }
 };
 
+const getQuestionForm = async (req, res) => {
+  try {
+    const FormData = await questionModel.findOne({
+      timeline: "5"
+    });
+    res.status(200).json({
+      status: true,
+      data: FormData
+    });
+  } catch (error) {
+    console.log("error:", error)
+    res.status(500).json({ status: false, message: error });
+  }
+};
+
 export {
   addQuestions,
   updateQuestion,
@@ -167,4 +170,5 @@ export {
   getQuestionOnTimeline,
   submitAnswer,
   createQuestionForm,
+  getQuestionForm
 };
