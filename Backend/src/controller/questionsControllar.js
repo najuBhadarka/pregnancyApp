@@ -132,17 +132,30 @@ const submitAnswer = async (req, res) => {
 const createQuestionForm = async (req, res) => {
   try {
     const { title, formData, timeline } = req.body;
-    // const userId = req?.user?.id;
-    const createNewForm = new questionModel({
-      questions: formData,
-      title: title,
-      timeline: timeline,
-    });
-    await createNewForm.save();
-    res.status(200).json({
-      status: true,
-      message: "Form created successfully",
-    });
+    const isFormExist = await questionModel.find();
+    if(isFormExist && isFormExist.length > 0) {
+      const formId = isFormExist[0]._id
+      await questionModel.findOneAndUpdate({
+        _id: formId
+      }, {
+        questions: formData
+      });
+      res.status(200).json({
+        status: true,
+        message: "Form created successfully",
+      });
+    } else{
+      const createNewForm = new questionModel({
+        questions: formData,
+        title: title,
+        timeline: timeline,
+      });
+      await createNewForm.save();
+      res.status(200).json({
+        status: true,
+        message: "Form created successfully",
+      });
+    }
   } catch (error) {
     res.status(500).json({ status: false, message: error });
   }
@@ -150,12 +163,13 @@ const createQuestionForm = async (req, res) => {
 
 const getQuestionForm = async (req, res) => {
   try {
-    const FormData = await questionModel.findOne({
-      timeline: "5"
+    const formData = await questionModel.findOne({
+      timeline: "2"
     });
+    console.log("FormData", formData)
     res.status(200).json({
       status: true,
-      data: FormData
+      data: formData
     });
   } catch (error) {
     console.log("error:", error)

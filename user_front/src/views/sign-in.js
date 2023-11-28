@@ -27,7 +27,7 @@ const SignIn = () => {
         };
 
         axios({
-            url: "http://localhost:3000/v1/auth/login",
+            url: "http://64.227.172.35:3000/v1/auth/login",
             method: "POST",
             data: loginData,
         })

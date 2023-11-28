@@ -2,7 +2,7 @@
   "name": "aanch-foodbazar-web",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/admin",
+  "homepage": "/indaco/admin",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@reduxjs/toolkit": "^1.8.2",

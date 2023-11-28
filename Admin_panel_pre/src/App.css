@@ -37,3 +37,6 @@
   }
 }
 
+.custom-form-builder .form-actions button[type="submit"] {
+  display: none;
+}

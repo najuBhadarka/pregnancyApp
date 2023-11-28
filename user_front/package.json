@@ -2,6 +2,7 @@
   "name": "user_front",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/indaco/user",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@reduxjs/toolkit": "^1.8.2",

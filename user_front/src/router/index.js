@@ -5,9 +5,6 @@ import FormRender from "../views/FormRender";
 const Routers = [
     {
         path: "/",
-        element: <SignIn />
-    }, {
-        path: "/form-test",
         element: <FormRender />
     }
 ];
