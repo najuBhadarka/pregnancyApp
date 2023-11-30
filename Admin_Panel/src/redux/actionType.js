@@ -1,0 +1,9 @@
+// Auth Actions
+
+export const SIGN_IN = 'SIGN_IN'
+export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS'
+export const SIGN_IN_FAILED = 'SIGN_IN_FAILED'
+
+export const GET_USER_LIST = 'GET_USER_LIST'
+export const GET_USER_LIST_SUCCESS = 'GET_USER_LIST_SUCCESS'
+export const GET_USER_LIST_FAILED = 'GET_USER_LIST_FAILED'

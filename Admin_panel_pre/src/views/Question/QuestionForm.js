@@ -6,6 +6,7 @@ import { actions } from "../../redux/questionaries/questionariesAction.js";
 import axios from "axios";
 
 function QuestionForm(props) {
+  console.log("🚀 ~ file: QuestionForm.js:9 ~ QuestionForm ~ props:", props)
   const [state, setState] = useState({ formData: [], timeline: "2" });
   const [formDefinition, setFormDefinition] = useState({formValue: {}, title: '', timeline: ''});
   const handleSubmit = () => {

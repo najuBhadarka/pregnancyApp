@@ -11,8 +11,14 @@ const questionariesReducer = createSlice({
   initialState,
   reducers: {
     createForm(state) {
-      console.log("here--------", state)
       state.loading = false;
+    },
+    getQuestionsList(state) {
+      state.loading = true;
+    },
+    setQuestionsList(state, { payload }){
+      state.loading = false;
+      state.data = payload;
     },
     actionFalied(state, { payload }) {
       state.loading = false;

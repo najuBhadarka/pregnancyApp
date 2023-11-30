@@ -21,6 +21,7 @@ import Maintenance from "../views/errors/maintenance";
 import Default from "../layouts/dashboard/default";
 import UserAdd from "../views/user/user-add";
 import QuestionForm from "../views/Question/QuestionForm";
+import { QuestionsList } from "../views/Question/QuestionsList";
 
 const Routers = [
   {
@@ -37,7 +38,7 @@ const Routers = [
 
       // QuestionBook
       { path: "/question/form", element: <QuestionForm /> },
-
+      { path: "/question/list", element: <QuestionsList /> },
 
       { path: "/", element: <Admin /> },
       { path: "*", element: <Error404 /> },

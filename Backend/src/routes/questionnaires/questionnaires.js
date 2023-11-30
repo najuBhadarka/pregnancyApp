@@ -2,16 +2,14 @@ import express from "express";
 import authenticateRoles from "../../middleware/auth.js";
 import {
   addQuestions,
-  createQuestionForm,
   deleteQuestion,
+  getAllQuestionsList,
   getQuestionForm,
   getQuestionOnTimeline,
   submitAnswer,
   updateQuestion,
 } from "../../controller/questionsControllar.js";
 import { addQuestionsValidation } from "../../validations/questionBookValidation.js";
-import guard from "express-jwt-permissions";
-let guardCheck = guard();
 let questionnairesRoute = express.Router();
 
 // Get the questionBook as per the timeline
@@ -19,18 +17,12 @@ questionnairesRoute.get("/getquestions", getQuestionOnTimeline);
 
 // To get all the qusetionsBooks
 questionnairesRoute.post(
-  "/questionform",
-  authenticateRoles(["admin"]),
+  "/create-form",
+  // authenticateRoles(["admin"]),
   addQuestionsValidation,
   addQuestions,
 );
 
-// Questionaires API' for Admin only
-questionnairesRoute.post(
-  "/questionform",
-  authenticateRoles(["admin"]),
-  addQuestions,
-);
 questionnairesRoute.put(
   "/updateQuestion/:id",
   authenticateRoles(["admin"]),
@@ -49,14 +41,16 @@ questionnairesRoute.post(
   submitAnswer,
 );
 
-questionnairesRoute.post(
-  "/create-form",
-  authenticateRoles(["admin"]),
-  createQuestionForm,
+questionnairesRoute.get(
+  "/get-form",
+  authenticateRoles(["user"]),
+  getQuestionForm,
 );
 
 questionnairesRoute.get(
-  "/get-form",
-  getQuestionForm
-)
+  "/get-questionaries-list",
+  authenticateRoles(["admin"]),
+  getAllQuestionsList,
+);
+
 export default questionnairesRoute;

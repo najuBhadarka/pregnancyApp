@@ -129,51 +129,34 @@ const submitAnswer = async (req, res) => {
   }
 };
 
-const createQuestionForm = async (req, res) => {
+const getQuestionForm = async (req, res) => {
   try {
-    const { title, formData, timeline } = req.body;
-    const isFormExist = await questionModel.find();
-    if(isFormExist && isFormExist.length > 0) {
-      const formId = isFormExist[0]._id
-      await questionModel.findOneAndUpdate({
-        _id: formId
-      }, {
-        questions: formData
-      });
-      res.status(200).json({
-        status: true,
-        message: "Form created successfully",
-      });
-    } else{
-      const createNewForm = new questionModel({
-        questions: formData,
-        title: title,
-        timeline: timeline,
-      });
-      await createNewForm.save();
-      res.status(200).json({
-        status: true,
-        message: "Form created successfully",
-      });
-    }
+    const formData = await questionModel.findOne({
+      timeline: "2",
+    });
+    console.log("FormData", formData);
+    res.status(200).json({
+      status: true,
+      data: formData,
+    });
   } catch (error) {
+    console.log("error:", error);
     res.status(500).json({ status: false, message: error });
   }
 };
 
-const getQuestionForm = async (req, res) => {
+const getAllQuestionsList = async (req, res) => {
   try {
-    const formData = await questionModel.findOne({
-      timeline: "2"
-    });
-    console.log("FormData", formData)
-    res.status(200).json({
-      status: true,
-      data: formData
-    });
+    const questionList = await questionModel.find();
+    if (questionList && questionList.length == 0) {
+      res
+        .status(404)
+        .json({ status: false, datA: [], message: "No Questionaries found !" });
+    } else {
+      res.status(200).json({ status: true, data: questionList });
+    }
   } catch (error) {
-    console.log("error:", error)
-    res.status(500).json({ status: false, message: error });
+    res.status(200).json({ status: false, message: "Something went wrong !" });
   }
 };
 
@@ -183,6 +166,6 @@ export {
   deleteQuestion,
   getQuestionOnTimeline,
   submitAnswer,
-  createQuestionForm,
-  getQuestionForm
+  getQuestionForm,
+  getAllQuestionsList
 };

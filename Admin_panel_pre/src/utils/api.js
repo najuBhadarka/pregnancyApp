@@ -1,5 +1,5 @@
 import axios from "axios";
-export const API_URL = 'http://64.227.172.35:3000/v1';
+export const API_URL = 'http://localhost:3000/v1';
 export const IMAGE_URL = process.env.REACT_APP_IMAGE_URL;
 
 let store;
@@ -45,6 +45,7 @@ export const endPoints = {
   GET_USER_BY_ID: "/user/get-user-details/:id",
   DELETE_DELIVERY_USER: "/api/v1/admin/deleteusers/:id",
   CREATE_FORM: "/questionbook/create-form",
+  GET_QUESTIONS_LIST: "/questionbook/get-questionaries-list",
 
   // Category
   ADD_CATEGORY: "/api/v1/category/addcategory",

@@ -12,6 +12,8 @@ import mobileImg1 from "./images/mobile-bg.png";
 
 const FormRender = () => {
   const [formData, setFormData] = useState();
+  const [filledFormData, setFilledFormData] = useState(null);
+
   console.log("formData:", formData);
   const navigate = useNavigate();
 
@@ -31,7 +33,10 @@ const FormRender = () => {
         console.log(err);
       });
   }, []);
-
+  const handleSubmit = (submission) => {
+    console.log("Form Submitted:", submission);
+    setFilledFormData(submission);
+  };
   return (
     <div>
       <div>
@@ -147,18 +152,21 @@ const FormRender = () => {
                       <span className="text-info">{formData?.timeline}</span>
                     </h3>
                   </div>
-                  <Form
-                    form={formData?.formDataJSON}
-                    onSubmit={(submission) =>
-                      console.log("submission1", submission)
-                    }
-                    submission={(data) => console.log("etest", data)}
-                  />
+                  <Form form={formData?.formDataJSON} onSubmit={handleSubmit} />
                 </div>
               </div>
             </div>
           </div>
         </div>
+        {filledFormData && (
+          <div>
+            <h2>Filled Form Details</h2>
+            <Form
+              form={formData?.formDataJSON}
+              submission={filledFormData}
+            />
+          </div>
+        )}
         {/*footer section*/}
         <div className="footer-section">
           <img src={footerImg} alt="footer" className="desktop" />
