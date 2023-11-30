@@ -1,9 +1,22 @@
 // Auth Actions
-
 export const SIGN_IN = 'SIGN_IN'
 export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS'
 export const SIGN_IN_FAILED = 'SIGN_IN_FAILED'
 
+// GET User List
 export const GET_USER_LIST = 'GET_USER_LIST'
 export const GET_USER_LIST_SUCCESS = 'GET_USER_LIST_SUCCESS'
 export const GET_USER_LIST_FAILED = 'GET_USER_LIST_FAILED'
+
+// Create form
+export const CREATE_FORM = 'CREATE_FORM'
+export const CREATE_FORM_SUCCESS = 'CREATE_FORM_SUCCESS'
+export const CREATE_FORM_FAILED = 'CREATE_FORM_FAILED'
+
+export const GET_FORM = 'GET_FORM'
+export const GET_FORM_SUCCESS = 'GET_FORM_SUCCESS'
+export const GET_FORM_FAILED = 'GET_FORM_FAILED'
+
+export const GET_FORM_LIST = 'GET_FORM_LIST'
+export const GET_FORM_LIST_SUCCESS = 'GET_FORM_LIST_SUCCESS'
+export const GET_FORM_LIST_FAILED = 'GET_FORM_LIST_FAILED'

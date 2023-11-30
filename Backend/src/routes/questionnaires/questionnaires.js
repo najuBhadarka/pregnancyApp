@@ -1,7 +1,7 @@
 import express from "express";
 import authenticateRoles from "../../middleware/auth.js";
 import {
-  addQuestions,
+  addQuestionsTemp,
   deleteQuestion,
   getAllQuestionsList,
   getQuestionForm,
@@ -20,7 +20,7 @@ questionnairesRoute.post(
   "/create-form",
   // authenticateRoles(["admin"]),
   addQuestionsValidation,
-  addQuestions,
+  addQuestionsTemp,
 );
 
 questionnairesRoute.put(
@@ -43,7 +43,7 @@ questionnairesRoute.post(
 
 questionnairesRoute.get(
   "/get-form",
-  authenticateRoles(["user"]),
+  authenticateRoles(["admin"]),
   getQuestionForm,
 );
 

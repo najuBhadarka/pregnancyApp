@@ -33,6 +33,12 @@ const _nav = [
     to: '/question/create-form',
     icon: <CIcon icon={cilAddressBook} customClassName="nav-icon" />,
   },
+  {
+    component: CNavItem,
+    name: 'Questions List',
+    to: '/question/questions-list',
+    icon: <CIcon icon={cilAddressBook} customClassName="nav-icon" />,
+  },
 ]
 
 export default _nav

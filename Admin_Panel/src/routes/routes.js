@@ -1,4 +1,5 @@
 import React from 'react'
+import QuestionsList from 'src/views/pages/Question/QuestionList.js'
 
 const Dashboard = React.lazy(() => import('../views/dashboard/Dashboard.js'))
 const MainLayout = React.lazy(() => import('../layout/MainLayout.js'))
@@ -23,6 +24,10 @@ const routes = [
       {
         path: '/question/create-form',
         element: <QuestionForm />,
+      },
+      {
+        path: '/question/questions-list',
+        element: <QuestionsList />,
       },
     ],
   },

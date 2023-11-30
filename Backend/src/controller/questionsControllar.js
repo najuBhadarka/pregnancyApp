@@ -2,6 +2,7 @@ import { validationResult } from "express-validator";
 import questionModel from "../models/questions.js";
 import moment from "moment";
 import answerModel from "../models/answerSheet.js";
+import mongoose from "mongoose";
 
 const addQuestions = async (req, res) => {
   try {
@@ -160,6 +161,50 @@ const getAllQuestionsList = async (req, res) => {
   }
 };
 
+const addQuestionsTemp = async (req, res) => {
+  try {
+    const { title, questions, timeline } = req.body;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array().map((ele) => ({ name: ele.path, msg: ele.msg })),
+      });
+    }
+    const findForm = await questionModel.find();
+    if (findForm && findForm.length > 0) {
+      await questionModel.updateOne(
+        {
+          _id: findForm[0]._id.toString(),
+        },
+        {
+          title: title,
+          questions: questions,
+        },
+      );
+      const udpatedForm = await questionModel.findOne({
+        _id: findForm[0]._id.toString(),
+      });
+      res.status(200).json({
+        status: true,
+        message: "Question Updated successfully.",
+        data: udpatedForm,
+      });
+    } else {
+      const newQuestion = new questionModel({
+        title,
+        questions,
+        timeline,
+      });
+      await newQuestion.save();
+      res
+        .status(200)
+        .json({ status: true, message: "Question added successfully." });
+    }
+  } catch (error) {
+    res.status(500).json({ status: false, message: error });
+  }
+};
+
 export {
   addQuestions,
   updateQuestion,
@@ -167,5 +212,6 @@ export {
   getQuestionOnTimeline,
   submitAnswer,
   getQuestionForm,
-  getAllQuestionsList
+  getAllQuestionsList,
+  addQuestionsTemp,
 };

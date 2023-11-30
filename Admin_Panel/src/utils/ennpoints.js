@@ -10,4 +10,5 @@ export const endPoints = {
   GET_USER_BY_ID: '/user/get-user-details/:id',
   CREATE_FORM: '/questionbook/create-form',
   GET_QUESTIONS_LIST: '/questionbook/get-questionaries-list',
+  GET_FORM: '/questionbook/get-form',
 }
