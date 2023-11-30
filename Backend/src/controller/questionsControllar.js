@@ -135,13 +135,11 @@ const getQuestionForm = async (req, res) => {
     const formData = await questionModel.findOne({
       timeline: "2",
     });
-    console.log("FormData", formData);
     res.status(200).json({
       status: true,
       data: formData,
     });
   } catch (error) {
-    console.log("error:", error);
     res.status(500).json({ status: false, message: error });
   }
 };
@@ -198,7 +196,7 @@ const addQuestionsTemp = async (req, res) => {
       await newQuestion.save();
       res
         .status(200)
-        .json({ status: true, message: "Question added successfully." });
+        .json({ status: true, message: "Question added successfully.",  data: newQuestion });
     }
   } catch (error) {
     res.status(500).json({ status: false, message: error });

@@ -14,18 +14,30 @@ import {
   CTableRow,
 } from '@coreui/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserList } from 'src/redux/user/userAction'
+import { deleteUser, getUserList, updateUserStatus } from '../../../redux/user/userAction';
+import { useNavigate } from 'react-router-dom'
 
 const UserList = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const userList = useSelector((state) => state?.UserReducer?.userData)
-  console.log('🚀 ~ file: userList.js:40 ~ UserList ~ data:', userList)
+
   useEffect(() => {
     dispatch(getUserList())
   }, [])
 
-  const handleStatus = () => {}
+  const handleDeleteUser = (userId, isDeleted) => {
+    dispatch(deleteUser({ id: userId, body: { isDeleted: isDeleted } }));
+  };
+
+  const handleUpdateState = (e, id) => {
+    dispatch(updateUserStatus({
+      body: { status: e.target.value },
+      ids: id,
+    }));
+  };
+
   return (
     <CRow>
       <CCol xs>
@@ -47,35 +59,44 @@ const UserList = () => {
               <CTableBody>
                 {userList && userList?.length > 0
                   ? userList?.map((item, index) => (
-                      <CTableRow v-for="item in tableItems" key={index}>
-                        <CTableDataCell>{item._id}</CTableDataCell>
-                        <CTableDataCell>
-                          {item.firstName} {item.lastName}
-                        </CTableDataCell>{' '}
-                        <CTableDataCell>{item.email}</CTableDataCell>{' '}
-                        <CTableDataCell>{item.contact}</CTableDataCell>{' '}
-                        <CTableDataCell>{item.userName}</CTableDataCell>{' '}
-                        <CTableDataCell>
-                          <CButton
-                            component="input"
-                            type="reset"
-                            color={item.status == 'active' ? 'danger' : 'success'}
-                            value={item.status == 'active' ? 'InActive' : 'Active'}
-                            onClick={handleStatus}
-                          />
-                        </CTableDataCell>{' '}
-                        <CTableDataCell>
-                          <CButton
-                            component="input"
-                            type="reset"
-                            className="mr-1"
-                            color="primary"
-                            value="Edit"
-                          />
-                          <CButton component="input" type="reset" color="danger" value="Delete" />
-                        </CTableDataCell>{' '}
-                      </CTableRow>
-                    ))
+                    <CTableRow v-for="item in tableItems" key={index}>
+                      <CTableDataCell>{item._id}</CTableDataCell>
+                      <CTableDataCell>
+                        {item.firstName} {item.lastName}
+                      </CTableDataCell>{' '}
+                      <CTableDataCell>{item.email}</CTableDataCell>{' '}
+                      <CTableDataCell>{item.contact}</CTableDataCell>{' '}
+                      <CTableDataCell>{item.userName}</CTableDataCell>{' '}
+                      <CTableDataCell>
+                        <CButton
+                          component="input"
+                          type="reset"
+                          color={item.status == 'active' ? 'danger' : 'success'}
+                          value={
+                            item?.status == "active" ? "inactive" : "active"
+                          }
+                          onClick={(e) => handleUpdateState(e, item?._id)}
+                        />
+                      </CTableDataCell>{' '}
+                      <CTableDataCell>
+                        <CButton
+                          component="input"
+                          type="reset"
+                          className="mr-1"
+                          color="primary"
+                          value="Edit"
+                          onClick={() => navigate(`/user/update/${item._id}`)}
+                        />
+                        <CButton
+                          component="input"
+                          type="reset"
+                          color="danger"
+                          value="Delete"
+                          onClick={() => handleDeleteUser(item?._id, true)}
+                        />
+                      </CTableDataCell>{' '}
+                    </CTableRow>
+                  ))
                   : null}
               </CTableBody>
             </CTable>

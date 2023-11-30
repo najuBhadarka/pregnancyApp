@@ -7,6 +7,7 @@ const AuthLayout = React.lazy(() => import('../layout/AuthLayout.js'))
 const Login = React.lazy(() => import('../views/pages/login/Login.js'))
 const UserList = React.lazy(() => import('../views/pages/user/userList.js'))
 const QuestionForm = React.lazy(() => import('../views/pages/Question/QuestionForm.js'))
+const UserControl = React.lazy(() => import('../views/pages/user/userAdd.js'))
 
 const routes = [
   {
@@ -20,6 +21,11 @@ const routes = [
       {
         path: '/user/user-list',
         element: <UserList />,
+      },
+      ,
+      {
+        path: '/user/update/:id',
+        element: <UserControl mode={'Update'}/>,
       },
       {
         path: '/question/create-form',
