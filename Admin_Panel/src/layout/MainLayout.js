@@ -8,7 +8,7 @@ const MainLayout = () => {
   return (
     <>
       {!token ? (
-        <Navigate to={'/indaco/admin/auth/sign-in'} />
+        <Navigate to={'/auth/signIn'} />
       ) : (
         <div>
           <AppSidebar />

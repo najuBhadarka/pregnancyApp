@@ -64,7 +64,7 @@ const UserAdd = (props) => {
           body: updatedUserData,
           id: id,
           callBack: () => {
-            navigate('/indaco/admin/user/user-list')
+            navigate('/user/user-list')
           },
         }),
       )
@@ -107,7 +107,7 @@ const UserAdd = (props) => {
                 name="DOB"
                 type="date"
                 onChange={handleChange}
-                value={moment(initFormData?.DOB, 'DD/MM/YYYY').format('YYYY-MM-DD')}
+                value={moment(initFormData?.DOB, 'YYYY-MM-DD').format('yyyy-MM-DD')}
               />
             </CInputGroup>
             <CInputGroup className="mb-3">
@@ -133,7 +133,7 @@ const UserAdd = (props) => {
               type="reset"
               color="danger"
               value="Cancel"
-              onClick={() => navigate('/indaco/admin/user/user-list')}
+              onClick={() => navigate('/user/user-list')}
             />
           </CCardBody>
         </CCard>

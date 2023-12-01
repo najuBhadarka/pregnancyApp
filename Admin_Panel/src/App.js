@@ -1,7 +1,7 @@
-import React, { Suspense } from 'react'
-import { useRoutes } from 'react-router-dom'
+import React from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
+import RoutesPath from '../src/routes/routes'
 import './scss/style.scss'
-import routes from './routes/routes'
 
 const loading = (
   <div className="pt-3 text-center">
@@ -10,11 +10,10 @@ const loading = (
 )
 
 const App = () => {
-  const routesPath = useRoutes(routes)
   return (
-    <div className="App">
-      <Suspense fallback={loading}>{routesPath}</Suspense>
-    </div>
+    <Router basename="/indaco/admin">
+      <RoutesPath />
+    </Router>
   )
 }
 export default App

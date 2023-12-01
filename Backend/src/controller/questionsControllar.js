@@ -140,9 +140,7 @@ const getQuestionForm = async (req, res) => {
 const getQuestionFormByID = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log("id", id);
     const formData = await questionModel.findById(id);
-    console.log("formData", formData);
     res.status(200).json({
       status: true,
       data: formData,

@@ -24,12 +24,11 @@ const Login = () => {
   const navigate = useNavigate()
 
   const handleSubmit = () => {
-    console.log('test')
     disptach(
       login({
         state,
         callBack: () => {
-          navigate('/indaco/admin')
+          navigate('/')
         },
       }),
     )

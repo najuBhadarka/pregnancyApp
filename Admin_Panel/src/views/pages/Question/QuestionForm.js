@@ -55,7 +55,7 @@ const QuestionForm = ({ mode }) => {
           state,
           id: id,
           callBack: () => {
-            navigate('/indaco/admin/question/questions-list')
+            navigate('/question/questions-list')
           },
         }),
       )
@@ -64,7 +64,7 @@ const QuestionForm = ({ mode }) => {
         createForm({
           state,
           callBack: () => {
-            navigate('/indaco/admin/question/questions-list')
+            navigate('/question/questions-list')
           },
         }),
       )

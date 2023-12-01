@@ -27,7 +27,7 @@ const QuestionsList = () => {
   }, [dispatch])
 
   const editForm = (id) => {
-    navigate(`/indaco/admin/question/update-form/${id}`)
+    navigate(`/question/update-form/${id}`)
   }
 
   const handleDeleteForm = (userId, isDeleted) => {
@@ -46,7 +46,7 @@ const QuestionsList = () => {
               className="mr-1"
               color="success"
               value="Add Form"
-              onClick={() => navigate('/indaco/admin/question/create-form')}
+              onClick={() => navigate('/question/create-form')}
             />
           </CCardHeader>
           <CCardBody>
@@ -62,29 +62,29 @@ const QuestionsList = () => {
               <CTableBody>
                 {questionsList && questionsList?.length > 0
                   ? questionsList?.map((item, index) => (
-                    <CTableRow v-for="item in tableItems" key={index}>
-                      <CTableDataCell>{item._id}</CTableDataCell>
-                      <CTableDataCell>{item.title}</CTableDataCell>{' '}
-                      <CTableDataCell>{item.timeline}</CTableDataCell>{' '}
-                      <CTableDataCell>
-                        <CButton
-                          component="input"
-                          type="reset"
-                          className="mr-1"
-                          color="primary"
-                          value="Edit"
-                          onClick={() => editForm(item._id)}
-                        />
-                        <CButton
-                          component="input"
-                          type="reset"
-                          color="danger"
-                          onClick={() => handleDeleteForm(item?._id, true)}
-                          value="Delete"
-                        />
-                      </CTableDataCell>{' '}
-                    </CTableRow>
-                  ))
+                      <CTableRow v-for="item in tableItems" key={index}>
+                        <CTableDataCell>{item._id}</CTableDataCell>
+                        <CTableDataCell>{item.title}</CTableDataCell>{' '}
+                        <CTableDataCell>{item.timeline}</CTableDataCell>{' '}
+                        <CTableDataCell>
+                          <CButton
+                            component="input"
+                            type="reset"
+                            className="mr-1"
+                            color="primary"
+                            value="Edit"
+                            onClick={() => editForm(item._id)}
+                          />
+                          <CButton
+                            component="input"
+                            type="reset"
+                            color="danger"
+                            onClick={() => handleDeleteForm(item?._id, true)}
+                            value="Delete"
+                          />
+                        </CTableDataCell>{' '}
+                      </CTableRow>
+                    ))
                   : null}
               </CTableBody>
             </CTable>

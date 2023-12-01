@@ -17,7 +17,7 @@ const AppHeaderDropdown = () => {
   const navigate = useNavigate()
   const handleLogOut = () => {
     localStorage.removeItem('token')
-    navigate('/indaco/admin/auth/sign-in')
+    navigate('/auth/signIn')
   }
 
   return (
@@ -27,7 +27,7 @@ const AppHeaderDropdown = () => {
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
-        <CDropdownItem href="#" onClick={handleLogOut}>
+        <CDropdownItem onClick={handleLogOut}>
           <CIcon icon={cilLockLocked} className="me-2" />
           LogOut
         </CDropdownItem>
