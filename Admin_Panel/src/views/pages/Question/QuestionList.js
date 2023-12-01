@@ -14,20 +14,21 @@ import {
   CTableRow,
 } from '@coreui/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteForm, getQuestionsList, updateForm } from '../../../redux/questionaries/questionariesAction'
+import { deleteForm, getQuestionsList } from '../../../redux/questionaries/questionariesAction'
 import { useNavigate } from 'react-router-dom'
 
 const QuestionsList = () => {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const questionsList = useSelector((state) => state?.QuestionariesReducer?.questionsList?.data)
+  const questionsList = useSelector((state) => state?.QuestionariesReducer?.questionsList)
+  console.log('questionsList', questionsList)
   useEffect(() => {
     dispatch(getQuestionsList())
   }, [dispatch])
 
   const editForm = (id) => {
-    dispatch(updateForm(id))
+    navigate(`/indaco/admin/question/update-form/${id}`)
   }
 
   const handleDeleteForm = (userId, isDeleted) => {
@@ -38,14 +39,15 @@ const QuestionsList = () => {
     <CRow>
       <CCol xs>
         <CCard className="mb-4">
-          <CCardHeader>Questionaries List
+          <CCardHeader>
+            Questionaries List
             <CButton
               component="input"
               type="reset"
               className="mr-1"
               color="success"
               value="Add Form"
-              onClick={() => navigate("/indaco/admin/question/create-form")}
+              onClick={() => navigate('/indaco/admin/question/create-form')}
             />
           </CCardHeader>
           <CCardBody>
@@ -61,23 +63,29 @@ const QuestionsList = () => {
               <CTableBody>
                 {questionsList && questionsList?.length > 0
                   ? questionsList?.map((item, index) => (
-                    <CTableRow v-for="item in tableItems" key={index}>
-                      <CTableDataCell>{item._id}</CTableDataCell>
-                      <CTableDataCell>{item.title}</CTableDataCell>{' '}
-                      <CTableDataCell>{item.timeline}</CTableDataCell>{' '}
-                      <CTableDataCell>
-                        <CButton
-                          component="input"
-                          type="reset"
-                          className="mr-1"
-                          color="primary"
-                          value="Edit"
-                          onClick={() => editForm(item._id)}
-                        />
-                        <CButton component="input" type="reset" color="danger" onClick={() => handleDeleteForm(item?._id, true)} value="Delete" />
-                      </CTableDataCell>{' '}
-                    </CTableRow>
-                  ))
+                      <CTableRow v-for="item in tableItems" key={index}>
+                        <CTableDataCell>{item._id}</CTableDataCell>
+                        <CTableDataCell>{item.title}</CTableDataCell>{' '}
+                        <CTableDataCell>{item.timeline}</CTableDataCell>{' '}
+                        <CTableDataCell>
+                          <CButton
+                            component="input"
+                            type="reset"
+                            className="mr-1"
+                            color="primary"
+                            value="Edit"
+                            onClick={() => editForm(item._id)}
+                          />
+                          <CButton
+                            component="input"
+                            type="reset"
+                            color="danger"
+                            onClick={() => handleDeleteForm(item?._id, true)}
+                            value="Delete"
+                          />
+                        </CTableDataCell>{' '}
+                      </CTableRow>
+                    ))
                   : null}
               </CTableBody>
             </CTable>

@@ -122,7 +122,7 @@ function QuestionariesReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        questionsList: state?.questionsList?.data?.filter((item) => {
+        questionsList: state?.questionsList?.filter((item) => {
           return item?._id !== action.payload ? item : ''
         }),
       }

@@ -59,9 +59,11 @@ const UserAdd = (props) => {
         updateUser({
           body: updatedUserData,
           id: id,
+          callBack: () => {
+            navigate('/indaco/admin/user/user-list')
+          },
         }),
       )
-      navigate('/user/user-list')
     }
   }
 
@@ -127,7 +129,7 @@ const UserAdd = (props) => {
               type="reset"
               color="danger"
               value="Cancel"
-              onClick={() => navigate('/user/user-list')}
+              onClick={() => navigate('/indaco/admin/user/user-list')}
             />
           </CCardBody>
         </CCard>

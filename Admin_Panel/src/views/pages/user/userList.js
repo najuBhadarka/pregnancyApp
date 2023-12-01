@@ -85,7 +85,7 @@ const UserList = () => {
                             className="mr-1"
                             color="primary"
                             value="Edit"
-                            onClick={() => navigate(`/user/update/${item._id}`)}
+                            onClick={() => navigate(`/indaco/admin/user/update/${item._id}`)}
                           />
                           <CButton
                             component="input"

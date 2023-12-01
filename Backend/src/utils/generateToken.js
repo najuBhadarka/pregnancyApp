@@ -11,10 +11,7 @@ const generateToken = (email, role, userId) => {
         id: userId,
       },
     },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: "3600s",
-    }
+    process.env.JWT_SECRET
   );
 };
 

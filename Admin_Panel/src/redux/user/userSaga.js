@@ -50,12 +50,14 @@ function* getUserById({ payload }) {
 }
 
 function* updateUser({ payload }) {
+  console.log('payload', payload)
   try {
     const response = yield call(api.put, endPoints.UPDATE_USER, payload.body, {
       urlParams: { id: payload.id },
     })
     if (response) {
       yield put(updateUserSuccess(response.data.userDetails))
+      yield call(payload.callBack)
     }
   } catch (error) {
     if (error) {
@@ -83,9 +85,6 @@ function* updateUserStatus({ payload }) {
       urlParams: { id: payload.ids },
     })
     yield put(updateUserStatusSuccess(updateUser))
-    if (updateUser.data) {
-      payload.callback()
-    }
   } catch (error) {
     yield put(updateUserStatusFailed(error))
   }

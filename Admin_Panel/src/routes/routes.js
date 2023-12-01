@@ -28,7 +28,11 @@ const routes = [
       },
       {
         path: '/indaco/admin/question/create-form',
-        element: <QuestionForm />,
+        element: <QuestionForm mode={'Add'} />,
+      },
+      {
+        path: '/indaco/admin/question/update-form/:id',
+        element: <QuestionForm mode={'update'} />,
       },
       {
         path: '/indaco/admin/question/questions-list',

@@ -2,7 +2,6 @@ import { validationResult } from "express-validator";
 import questionModel from "../models/questions.js";
 import moment from "moment";
 import answerModel from "../models/answerSheet.js";
-import mongoose from "mongoose";
 
 const addQuestions = async (req, res) => {
   try {
@@ -30,21 +29,17 @@ const addQuestions = async (req, res) => {
 const updateQuestion = async (req, res) => {
   try {
     const questionBookId = req?.params?.id;
-    const { questionId } = req?.query;
-    const { questionTitle, optionType, options } = req.body;
+    const { title, timeline, questions } = req.body;
     const findBookAndUpdate = await questionModel.findOneAndUpdate(
       {
         _id: questionBookId,
-        "questions._id": questionId,
       },
       {
-        $set: {
-          "questions.$.questionTitle": questionTitle,
-          "questions.$.optionType": optionType,
-          "questions.$.options": options,
-        },
+        questions: questions,
+        title: title,
+        timeline: timeline,
       },
-      { new: true },
+      { new: true }
     );
     if (!findBookAndUpdate) {
       return res
@@ -70,7 +65,7 @@ const deleteQuestion = async (req, res) => {
       {
         $pull: { questions: { _id: questionId } },
       },
-      { new: true },
+      { new: true }
     );
     if (!deletedQuestionBook) {
       return res
@@ -103,7 +98,7 @@ const getQuestionOnTimeline = async (req, res) => {
       {
         timeline: { $lte: monthsDiff },
       },
-      { __v: 0 },
+      { __v: 0 }
     );
     res.status(200).json({ status: true, data: findQuestionBook });
   } catch (error) {
@@ -132,9 +127,22 @@ const submitAnswer = async (req, res) => {
 
 const getQuestionForm = async (req, res) => {
   try {
-    const formData = await questionModel.findOne({
-      timeline: "2",
+    const formData = await questionModel.find({ isDeleted: false });
+    res.status(200).json({
+      status: true,
+      data: formData[0],
     });
+  } catch (error) {
+    res.status(500).json({ status: false, message: error });
+  }
+};
+
+const getQuestionFormByID = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log("id", id);
+    const formData = await questionModel.findById(id);
+    console.log("formData", formData);
     res.status(200).json({
       status: true,
       data: formData,
@@ -147,7 +155,7 @@ const getQuestionForm = async (req, res) => {
 const getAllQuestionsList = async (req, res) => {
   try {
     const questionList = await questionModel.find({
-      isDeleted: false
+      isDeleted: false,
     });
     if (questionList && questionList.length == 0) {
       res
@@ -179,7 +187,7 @@ const addQuestionsTemp = async (req, res) => {
         {
           title: title,
           questions: questions,
-        },
+        }
       );
       const udpatedForm = await questionModel.findOne({
         _id: findForm[0]._id.toString(),
@@ -196,9 +204,11 @@ const addQuestionsTemp = async (req, res) => {
         timeline,
       });
       await newQuestion.save();
-      res
-        .status(200)
-        .json({ status: true, message: "Question added successfully.", data: newQuestion });
+      res.status(200).json({
+        status: true,
+        message: "Question added successfully.",
+        data: newQuestion,
+      });
     }
   } catch (error) {
     res.status(500).json({ status: false, message: error });
@@ -210,24 +220,24 @@ const deleteForm = async (req, res) => {
     const formId = req.params.id;
     const { isDeleted } = req.body;
 
-    const findFormAndUpdate = await questionModel.findOneAndUpdate({
-      _id: formId,
-    }, {
-      isDeleted: isDeleted
-    });
+    const findFormAndUpdate = await questionModel.findOneAndUpdate(
+      {
+        _id: formId,
+      },
+      {
+        isDeleted: isDeleted,
+      }
+    );
     if (!findFormAndUpdate) {
-      return res
-        .status(404)
-        .json({ status: false, message: "Form not found" });
+      return res.status(404).json({ status: false, message: "Form not found" });
     }
     res
       .status(200)
       .json({ status: true, message: "Form deleted successfully" });
-  }
-  catch (error) {
+  } catch (error) {
     res.status(500).json({ status: false, message: error });
   }
-}
+};
 
 export {
   addQuestions,
@@ -238,5 +248,6 @@ export {
   getQuestionForm,
   getAllQuestionsList,
   addQuestionsTemp,
-  deleteForm
+  deleteForm,
+  getQuestionFormByID,
 };

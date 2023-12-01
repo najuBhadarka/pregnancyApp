@@ -1,28 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import { FormBuilder } from 'react-formio'
 import { useDispatch, useSelector } from 'react-redux'
-import { createForm, getForm } from 'src/redux/questionaries/questionariesAction'
+import { createForm, getFormById, updateForm } from 'src/redux/questionaries/questionariesAction'
 import { CButton, CCard, CCol, CRow, CCardHeader } from '@coreui/react'
+import { useNavigate, useParams } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-const QuestionForm = () => {
+const QuestionForm = ({ mode }) => {
+  const { id } = useParams()
   const dispatch = useDispatch()
   const singleFormData = useSelector((state) => state?.QuestionariesReducer?.singleForm)
 
+  const navigate = useNavigate()
+
   const [state, setState] = useState({
     formData: {},
-    timeline: 2,
+    timeline: 0,
   })
 
   useEffect(() => {
-    dispatch(getForm())
-  }, [dispatch])
+    if (mode === 'update') {
+      dispatch(getFormById(id))
+    }
+  }, [dispatch, mode, id])
 
   useEffect(() => {
-    setState({
-      timeline: singleFormData?.timeline,
-      title: singleFormData?.title,
-    })
-  }, [singleFormData])
+    if (mode === 'update') {
+      setState({
+        timeline: singleFormData?.timeline,
+        title: singleFormData?.title,
+        formData: singleFormData?.formData,
+      })
+    }
+  }, [singleFormData, mode])
 
   const handleChange = (e) => {
     setState((prevState) => ({
@@ -39,7 +49,26 @@ const QuestionForm = () => {
   }
 
   const handleSubmit = () => {
-    dispatch(createForm(state))
+    if (mode === 'update') {
+      dispatch(
+        updateForm({
+          state,
+          id: id,
+          callBack: () => {
+            navigate('/indaco/admin/question/questions-list')
+          },
+        }),
+      )
+    } else {
+      dispatch(
+        createForm({
+          state,
+          callBack: () => {
+            navigate('/indaco/admin/question/questions-list')
+          },
+        }),
+      )
+    }
   }
   return (
     <CRow>
@@ -73,20 +102,24 @@ const QuestionForm = () => {
                   type="number"
                   name="timeline"
                   id="timeline"
-                  value={2}
-                  disabled={true}
+                  value={state?.timeline || 0}
+                  onChange={handleChange}
                 />
               </div>
               <CButton color="success" className="px-4" onClick={handleSubmit}>
-                Click here to submit
+                Click here to {mode === 'update' ? 'Update' : 'Create'}
               </CButton>
             </div>
-            <FormBuilder form={singleFormData.formData || {}} onChange={handleChangeForForm} />
+            <FormBuilder form={state?.formData || {}} onChange={handleChangeForForm} />
           </div>
         </CCard>
       </CCol>
     </CRow>
   )
+}
+
+QuestionForm.propTypes = {
+  mode: PropTypes.string,
 }
 
 export default QuestionForm

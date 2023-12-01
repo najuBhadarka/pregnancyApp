@@ -14,6 +14,8 @@ import {
   createFormSuccess,
   deleteFormFailed,
   deleteFormSuccess,
+  getFormByIdFailed,
+  getFormByIdSuccess,
   getFormFailed,
   getFormSuccess,
   getQuestionsListFailed,
@@ -22,8 +24,7 @@ import {
 
 function* createForm({ payload }) {
   try {
-    payload.timeline = 2
-    const response = yield call(api.post, endPoints.CREATE_FORM, payload)
+    const response = yield call(api.post, endPoints.CREATE_FORM, payload.state)
     let data = {
       formData: response?.data?.data?.questions ? JSON.parse(response?.data?.data?.questions) : {},
       timeline: response?.data?.data?.timeline,
@@ -32,6 +33,7 @@ function* createForm({ payload }) {
 
     if (response) {
       yield put(createFormSuccess(data))
+      yield call(payload.callBack)
     }
   } catch (error) {
     if (error) {
@@ -62,7 +64,7 @@ function* getQuestionsList() {
   try {
     const response = yield call(api.get, endPoints.GET_QUESTIONS_LIST)
     if (response) {
-      yield put(getQuestionsListSuccess(response.data))
+      yield put(getQuestionsListSuccess(response.data.data))
     }
   } catch (error) {
     if (error) {
@@ -71,29 +73,34 @@ function* getQuestionsList() {
   }
 }
 
-function* getQuestionFormById(id) {
+function* getQuestionFormById({ payload }) {
   try {
-    const response = yield call(api.get, endPoints.GET_USER_BY_ID, {
-      urlParams: id,
+    const response = yield call(api.get, endPoints.GET_SINGLE_FORM, {
+      urlParams: { id: payload },
     })
+    let data = {
+      formData: response?.data?.data?.questions ? JSON.parse(response?.data?.data?.questions) : {},
+      timeline: response?.data?.data?.timeline,
+      title: response?.data?.data?.title,
+    }
     if (response) {
-      yield put(getQuestionsListSuccess(response.data))
+      yield put(getFormByIdSuccess(data))
     }
   } catch (error) {
     if (error) {
-      yield put(getQuestionsListFailed())
+      yield put(getFormByIdFailed())
     }
   }
 }
 
-function* updateQuestionForm(payload) {
-  console.log('payload', payload)
+function* updateQuestionForm({ payload }) {
   try {
-    const response = yield call(api.post, endPoints.UPDATE_FORM, {
-      urlParams: payload,
+    const response = yield call(api.put, endPoints.UPDATE_FORM, payload.state, {
+      urlParams: { id: payload.id },
     })
     if (response) {
       yield put(getQuestionsListSuccess(response.data))
+      yield call(payload.callBack)
     }
   } catch (error) {
     if (error) {

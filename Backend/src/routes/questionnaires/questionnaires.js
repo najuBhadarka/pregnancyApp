@@ -1,11 +1,12 @@
 import express from "express";
 import authenticateRoles from "../../middleware/auth.js";
 import {
-  addQuestionsTemp,
   deleteForm,
+  addQuestions,
   deleteQuestion,
   getAllQuestionsList,
   getQuestionForm,
+  getQuestionFormByID,
   getQuestionOnTimeline,
   submitAnswer,
   updateQuestion,
@@ -21,48 +22,47 @@ questionnairesRoute.post(
   "/create-form",
   // authenticateRoles(["admin"]),
   addQuestionsValidation,
-  addQuestionsTemp,
+  addQuestions
 );
 
 questionnairesRoute.put(
   "/updateQuestion/:id",
   authenticateRoles(["admin"]),
-  updateQuestion,
+  updateQuestion
 );
 questionnairesRoute.delete(
   "/deleteQuestion/:id",
   authenticateRoles(["admin"]),
-  deleteQuestion,
+  deleteQuestion
 );
 
 // user form subbmit
 questionnairesRoute.post(
   "/submitanswer",
   authenticateRoles(["user"]),
-  submitAnswer,
+  submitAnswer
 );
 
 questionnairesRoute.get(
   "/get-form",
-  authenticateRoles(["admin"]),
-  getQuestionForm,
+  getQuestionForm
 );
 
 questionnairesRoute.get(
   "/get-single-form/:id",
   authenticateRoles(["admin"]),
-  getQuestionForm,
-); 
+  getQuestionFormByID
+);
 questionnairesRoute.get(
   "/get-questionaries-list",
   authenticateRoles(["admin"]),
-  getAllQuestionsList,
+  getAllQuestionsList
 );
 
 questionnairesRoute.put(
   "/delete-form/:id",
   authenticateRoles(["admin"]),
-  deleteForm,
+  deleteForm
 );
 
 export default questionnairesRoute;
