@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import {
   CButton,
   CCard,
@@ -11,54 +12,55 @@ import {
   CRow,
 } from '@coreui/react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux';
-import { getUserById, updateUser } from '../../../redux/user/userAction';
+import { useDispatch, useSelector } from 'react-redux'
+import { getUserById, updateUser } from '../../../redux/user/userAction'
 
 const initialState = {
-  firstName: "",
-  lastName: "",
-  contact: "",
-  userName: "",
-  email: "",
-  DOB: "",
-  password: ""
-};
+  firstName: '',
+  lastName: '',
+  contact: '',
+  userName: '',
+  email: '',
+  DOB: '',
+  password: '',
+}
 
-const userAdd = (props) => {
-  const { id } = useParams();
+const UserAdd = (props) => {
+  const { id } = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const userDetails = useSelector((state) => state?.UserReducer?.userDetails)
-  const [initFormData, setInitFormData] = useState(initialState);
-
+  const [initFormData, setInitFormData] = useState(initialState)
 
   useEffect(() => {
-    if (props?.mode == "Update" && id) {
+    if (props?.mode === 'Update' && id) {
       dispatch(getUserById(id))
       setInitFormData(userDetails)
     }
-  }, [id, props?.mode, userDetails?.firstName])
+  }, [dispatch, id, props?.mode, userDetails?.firstName, userDetails])
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setInitFormData((prevState) => ({
       ...prevState,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleSubmit = () => {
-    if (props?.mode == 'Update' && id) {
+    if (props?.mode === 'Update' && id) {
       const updatedUserData = {
         firstName: initFormData.firstName,
         lastName: initFormData.lastName,
         DOB: initFormData.DOB,
-        contact: initFormData.contact
+        contact: initFormData.contact,
       }
-      dispatch(updateUser({
-        body: updatedUserData,
-        id: id
-      }));
+      dispatch(
+        updateUser({
+          body: updatedUserData,
+          id: id,
+        }),
+      )
       navigate('/user/user-list')
     }
   }
@@ -76,7 +78,7 @@ const userAdd = (props) => {
               <CFormInput
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-default"
-                name='firstName'
+                name="firstName"
                 onChange={handleChange}
                 value={initFormData?.firstName}
               />
@@ -86,7 +88,7 @@ const userAdd = (props) => {
               <CFormInput
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-default"
-                name='lastName'
+                name="lastName"
                 value={initFormData?.lastName}
                 onChange={handleChange}
               />
@@ -96,8 +98,8 @@ const userAdd = (props) => {
               <CFormInput
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-default"
-                name='DOB'
-                type='date'
+                name="DOB"
+                type="date"
                 onChange={handleChange}
                 value={initFormData?.DOB}
               />
@@ -107,18 +109,34 @@ const userAdd = (props) => {
               <CFormInput
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-default"
-                name='contact'
+                name="contact"
                 onChange={handleChange}
                 value={initFormData?.contact}
               />
             </CInputGroup>
-            <CButton component="input" className="mr-1" type="reset" onClick={handleSubmit} color="success" value={props?.mode == 'Update' ? "Update" : "Add"} />
-            <CButton component="input" type="reset" color="danger" value="Cancel" onClick={() => navigate('/user/user-list')} />
+            <CButton
+              component="input"
+              className="mr-1"
+              type="reset"
+              onClick={handleSubmit}
+              color="success"
+              value={props?.mode === 'Update' ? 'Update' : 'Add'}
+            />
+            <CButton
+              component="input"
+              type="reset"
+              color="danger"
+              value="Cancel"
+              onClick={() => navigate('/user/user-list')}
+            />
           </CCardBody>
         </CCard>
       </CCol>
     </CRow>
   )
 }
+UserAdd.propTypes = {
+  mode: PropTypes.string,
+}
 
-export default userAdd
+export default UserAdd

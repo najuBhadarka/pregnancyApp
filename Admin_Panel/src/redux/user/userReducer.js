@@ -1,4 +1,20 @@
-import { DELETE_USER, DELETE_USER_FAILED, DELETE_USER_SUCCESS, GET_USER_BY_ID, GET_USER_BY_ID_FAILED, GET_USER_BY_ID_SUCCESS, GET_USER_LIST, GET_USER_LIST_FAILED, GET_USER_LIST_SUCCESS, UPDATE_USER, UPDATE_USER_FAILED, UPDATE_USER_STATUS, UPDATE_USER_STATUS_FAILED, UPDATE_USER_STATUS_SUCCESS, UPDATE_USER_SUCCESS } from '../actionType'
+import {
+  DELETE_USER,
+  DELETE_USER_FAILED,
+  DELETE_USER_SUCCESS,
+  GET_USER_BY_ID,
+  GET_USER_BY_ID_FAILED,
+  GET_USER_BY_ID_SUCCESS,
+  GET_USER_LIST,
+  GET_USER_LIST_FAILED,
+  GET_USER_LIST_SUCCESS,
+  UPDATE_USER,
+  UPDATE_USER_FAILED,
+  UPDATE_USER_STATUS,
+  UPDATE_USER_STATUS_FAILED,
+  UPDATE_USER_STATUS_SUCCESS,
+  UPDATE_USER_SUCCESS,
+} from '../actionType'
 
 const initialState = {
   userData: null,
@@ -70,8 +86,8 @@ function UserReducer(state = initialState, action) {
         ...state,
         loading: false,
         userData: state?.userData?.filter((item) => {
-          return item?._id != action.payload ? item : "";
-        })
+          return item?._id !== action.payload ? item : ''
+        }),
       }
     case DELETE_USER_FAILED:
       return {
@@ -90,11 +106,11 @@ function UserReducer(state = initialState, action) {
         ...state,
         loading: false,
         userData: state?.userData?.map((ele) => {
-          if (ele._id == action.payload.data.userList._id) {
-            ele.status = action.payload.data.userList.status;
+          if (ele._id === action.payload.data.userList._id) {
+            ele.status = action.payload.data.userList.status
           }
-          return ele;
-        })
+          return ele
+        }),
       }
     case UPDATE_USER_STATUS_FAILED:
       return {

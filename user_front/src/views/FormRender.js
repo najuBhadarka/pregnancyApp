@@ -19,7 +19,7 @@ const FormRender = () => {
 
   useEffect(() => {
     axios({
-      url: "http://64.227.172.35:3000/v1/questionbook/get-form",
+      url: "http://localhost:3000/v1/questionbook/get-form",
       method: "GET",
     })
       .then((response) => {

@@ -48,6 +48,11 @@ questionnairesRoute.get(
 );
 
 questionnairesRoute.get(
+  "/get-single-form/:id",
+  authenticateRoles(["admin"]),
+  getQuestionForm,
+); 
+questionnairesRoute.get(
   "/get-questionaries-list",
   authenticateRoles(["admin"]),
   getAllQuestionsList,

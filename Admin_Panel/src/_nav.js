@@ -7,7 +7,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Dashboard',
-    to: '/',
+    to: '/indaco/admin',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
     badge: {
       color: 'info',
@@ -20,7 +20,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Users List',
-    to: '/user/user-list',
+    to: '/indaco/admin/user/user-list',
     icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
   },
   {
@@ -30,13 +30,13 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Questions Form',
-    to: '/question/create-form',
+    to: '/indaco/admin/question/create-form',
     icon: <CIcon icon={cilAddressBook} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Questions List',
-    to: '/question/questions-list',
+    to: '/indaco/admin/question/questions-list',
     icon: <CIcon icon={cilAddressBook} customClassName="nav-icon" />,
   },
 ]

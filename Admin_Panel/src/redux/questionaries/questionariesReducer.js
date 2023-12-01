@@ -3,11 +3,17 @@ import {
   CREATE_FORM_FAILED,
   CREATE_FORM_SUCCESS,
   GET_FORM,
+  GET_FORM_BY_ID,
+  GET_FORM_BY_ID_FAILED,
+  GET_FORM_BY_ID_SUCCESS,
   GET_FORM_FAILED,
   GET_FORM_LIST,
   GET_FORM_LIST_FAILED,
   GET_FORM_LIST_SUCCESS,
   GET_FORM_SUCCESS,
+  UPDATE_QUESTION_FORM,
+  UPDATE_QUESTION_FORM_FAILED,
+  UPDATE_QUESTION_FORM_SUCCESS,
 } from '../actionType'
 
 const initialState = {
@@ -65,6 +71,40 @@ function QuestionariesReducer(state = initialState, action) {
         questionsList: action.payload,
       }
     case GET_FORM_LIST_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: 'Something went wrong',
+      }
+    case UPDATE_QUESTION_FORM:
+      return {
+        ...state,
+        loading: true,
+      }
+    case UPDATE_QUESTION_FORM_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        singleForm: action.payload,
+      }
+    case UPDATE_QUESTION_FORM_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: 'Something went wrong',
+      }
+    case GET_FORM_BY_ID:
+      return {
+        ...state,
+        loading: true,
+      }
+    case GET_FORM_BY_ID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        singleForm: action.payload,
+      }
+    case GET_FORM_BY_ID_FAILED:
       return {
         ...state,
         loading: false,

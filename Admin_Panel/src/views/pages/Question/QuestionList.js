@@ -14,7 +14,7 @@ import {
   CTableRow,
 } from '@coreui/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getQuestionsList } from 'src/redux/questionaries/questionariesAction'
+import { getQuestionsList, updateForm } from 'src/redux/questionaries/questionariesAction'
 
 const QuestionsList = () => {
   const dispatch = useDispatch()
@@ -22,8 +22,11 @@ const QuestionsList = () => {
   const questionsList = useSelector((state) => state?.QuestionariesReducer?.questionsList?.data)
   useEffect(() => {
     dispatch(getQuestionsList())
-  }, [])
+  }, [dispatch])
 
+  const editForm = (id) => {
+    dispatch(updateForm(id))
+  }
   return (
     <CRow>
       <CCol xs>
@@ -53,6 +56,7 @@ const QuestionsList = () => {
                             className="mr-1"
                             color="primary"
                             value="Edit"
+                            onClick={() => editForm(item._id)}
                           />
                           <CButton component="input" type="reset" color="danger" value="Delete" />
                         </CTableDataCell>{' '}

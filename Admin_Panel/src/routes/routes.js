@@ -11,38 +11,37 @@ const UserControl = React.lazy(() => import('../views/pages/user/userAdd.js'))
 
 const routes = [
   {
-    path: '/',
+    path: '/indaco/admin',
     element: <MainLayout />,
     children: [
       {
-        path: '/',
+        path: '/indaco/admin',
         element: <Dashboard />,
       },
       {
-        path: '/user/user-list',
+        path: '/indaco/admin/user/user-list',
         element: <UserList />,
       },
-      ,
       {
-        path: '/user/update/:id',
-        element: <UserControl mode={'Update'}/>,
+        path: '/indaco/admin/user/update/:id',
+        element: <UserControl mode={'Update'} />,
       },
       {
-        path: '/question/create-form',
+        path: '/indaco/admin/question/create-form',
         element: <QuestionForm />,
       },
       {
-        path: '/question/questions-list',
+        path: '/indaco/admin/question/questions-list',
         element: <QuestionsList />,
       },
     ],
   },
   {
-    path: 'auth',
+    path: '/indaco/admin/auth',
     element: <AuthLayout />,
     children: [
       {
-        path: 'sign-in',
+        path: '/indaco/admin/auth/sign-in',
         element: <Login />,
       },
     ],

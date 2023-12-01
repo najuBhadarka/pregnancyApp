@@ -29,7 +29,7 @@ const Login = () => {
       login({
         state,
         callBack: () => {
-          navigate('/')
+          navigate('/indaco/admin')
         },
       }),
     )

@@ -15,7 +15,7 @@ const QuestionForm = () => {
 
   useEffect(() => {
     dispatch(getForm())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     setState({
