@@ -2,6 +2,9 @@ import {
   CREATE_FORM,
   CREATE_FORM_FAILED,
   CREATE_FORM_SUCCESS,
+  DELETE_FORM,
+  DELETE_FORM_FAILED,
+  DELETE_FORM_SUCCESS,
   GET_FORM,
   GET_FORM_BY_ID,
   GET_FORM_BY_ID_FAILED,
@@ -105,6 +108,25 @@ function QuestionariesReducer(state = initialState, action) {
         singleForm: action.payload,
       }
     case GET_FORM_BY_ID_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: 'Something went wrong',
+      }
+    case DELETE_FORM:
+      return {
+        ...state,
+        loading: true,
+      }
+    case DELETE_FORM_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        questionsList: state?.questionsList?.data?.filter((item) => {
+          return item?._id !== action.payload ? item : ''
+        }),
+      }
+    case DELETE_FORM_FAILED:
       return {
         ...state,
         loading: false,

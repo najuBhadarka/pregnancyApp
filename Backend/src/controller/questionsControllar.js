@@ -146,7 +146,9 @@ const getQuestionForm = async (req, res) => {
 
 const getAllQuestionsList = async (req, res) => {
   try {
-    const questionList = await questionModel.find();
+    const questionList = await questionModel.find({
+      isDeleted: false
+    });
     if (questionList && questionList.length == 0) {
       res
         .status(404)
@@ -196,12 +198,36 @@ const addQuestionsTemp = async (req, res) => {
       await newQuestion.save();
       res
         .status(200)
-        .json({ status: true, message: "Question added successfully.",  data: newQuestion });
+        .json({ status: true, message: "Question added successfully.", data: newQuestion });
     }
   } catch (error) {
     res.status(500).json({ status: false, message: error });
   }
 };
+
+const deleteForm = async (req, res) => {
+  try {
+    const formId = req.params.id;
+    const { isDeleted } = req.body;
+
+    const findFormAndUpdate = await questionModel.findOneAndUpdate({
+      _id: formId,
+    }, {
+      isDeleted: isDeleted
+    });
+    if (!findFormAndUpdate) {
+      return res
+        .status(404)
+        .json({ status: false, message: "Form not found" });
+    }
+    res
+      .status(200)
+      .json({ status: true, message: "Form deleted successfully" });
+  }
+  catch (error) {
+    res.status(500).json({ status: false, message: error });
+  }
+}
 
 export {
   addQuestions,
@@ -212,4 +238,5 @@ export {
   getQuestionForm,
   getAllQuestionsList,
   addQuestionsTemp,
+  deleteForm
 };

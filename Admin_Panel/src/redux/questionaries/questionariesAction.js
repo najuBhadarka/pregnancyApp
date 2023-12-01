@@ -2,6 +2,9 @@ import {
   CREATE_FORM,
   CREATE_FORM_FAILED,
   CREATE_FORM_SUCCESS,
+  DELETE_FORM,
+  DELETE_FORM_FAILED,
+  DELETE_FORM_SUCCESS,
   GET_FORM,
   GET_FORM_BY_ID,
   GET_FORM_BY_ID_FAILED,
@@ -115,6 +118,27 @@ export const getFormByIdSuccess = (data) => {
 export const getFormByIdFailed = (data) => {
   return {
     type: GET_FORM_BY_ID_FAILED,
+    payload: data,
+  }
+}
+
+export const deleteForm = (data) => {
+  return {
+    type: DELETE_FORM,
+    payload: data,
+  }
+}
+
+export const deleteFormSuccess = (data) => {
+  return {
+    type: DELETE_FORM_SUCCESS,
+    payload: data,
+  }
+}
+
+export const deleteFormFailed = (data) => {
+  return {
+    type: DELETE_FORM_FAILED,
     payload: data,
   }
 }

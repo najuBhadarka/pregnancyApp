@@ -29,12 +29,6 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Questions Form',
-    to: '/indaco/admin/question/create-form',
-    icon: <CIcon icon={cilAddressBook} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
     name: 'Questions List',
     to: '/indaco/admin/question/questions-list',
     icon: <CIcon icon={cilAddressBook} customClassName="nav-icon" />,

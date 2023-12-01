@@ -172,3 +172,9 @@ body > iframe {
   color: red;
   height: 30px;
 }
+
+
+.card-header{
+  display: flex;
+  justify-content: space-between;
+}

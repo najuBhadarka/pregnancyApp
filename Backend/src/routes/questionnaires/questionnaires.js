@@ -2,6 +2,7 @@ import express from "express";
 import authenticateRoles from "../../middleware/auth.js";
 import {
   addQuestionsTemp,
+  deleteForm,
   deleteQuestion,
   getAllQuestionsList,
   getQuestionForm,
@@ -56,6 +57,12 @@ questionnairesRoute.get(
   "/get-questionaries-list",
   authenticateRoles(["admin"]),
   getAllQuestionsList,
+);
+
+questionnairesRoute.put(
+  "/delete-form/:id",
+  authenticateRoles(["admin"]),
+  deleteForm,
 );
 
 export default questionnairesRoute;

@@ -2,6 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects'
 import api from 'src/utils/api'
 import {
   CREATE_FORM,
+  DELETE_FORM,
   GET_FORM,
   GET_FORM_BY_ID,
   GET_FORM_LIST,
@@ -11,6 +12,8 @@ import { endPoints } from 'src/utils/ennpoints'
 import {
   createFormFailed,
   createFormSuccess,
+  deleteFormFailed,
+  deleteFormSuccess,
   getFormFailed,
   getFormSuccess,
   getQuestionsListFailed,
@@ -69,7 +72,6 @@ function* getQuestionsList() {
 }
 
 function* getQuestionFormById(id) {
-  console.log('payload', id)
   try {
     const response = yield call(api.get, endPoints.GET_USER_BY_ID, {
       urlParams: id,
@@ -100,10 +102,24 @@ function* updateQuestionForm(payload) {
   }
 }
 
+function* deleteForm({ payload }) {
+  try {
+    const response = yield call(api.put, endPoints.DELETE_FORM, payload.body, {
+      urlParams: { id: payload.id },
+    })
+    if (response.status === 200) {
+      yield put(deleteFormSuccess(payload.id))
+    }
+  } catch (error) {
+    yield put(deleteFormFailed(error))
+  }
+}
+
 export function* questionariesSaga() {
   yield takeLatest(CREATE_FORM, createForm)
   yield takeLatest(GET_FORM, getForm)
   yield takeLatest(GET_FORM_LIST, getQuestionsList)
   yield takeLatest(UPDATE_QUESTION_FORM, updateQuestionForm)
   yield takeLatest(GET_FORM_BY_ID, getQuestionFormById)
+  yield takeLatest(DELETE_FORM, deleteForm)
 }
