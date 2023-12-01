@@ -14,6 +14,7 @@ import {
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserById, updateUser } from '../../../redux/user/userAction'
+import moment from 'moment'
 
 const initialState = {
   firstName: '',
@@ -35,9 +36,12 @@ const UserAdd = (props) => {
   useEffect(() => {
     if (props?.mode === 'Update' && id) {
       dispatch(getUserById(id))
-      setInitFormData(userDetails)
     }
-  }, [dispatch, id, props?.mode, userDetails?.firstName, userDetails])
+  }, [dispatch, id, props?.mode])
+
+  useEffect(() => {
+    setInitFormData(userDetails)
+  }, [userDetails, props?.mode, id])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -103,7 +107,7 @@ const UserAdd = (props) => {
                 name="DOB"
                 type="date"
                 onChange={handleChange}
-                value={initFormData?.DOB}
+                value={moment(initFormData?.DOB, 'DD/MM/YYYY').format('YYYY-MM-DD')}
               />
             </CInputGroup>
             <CInputGroup className="mb-3">

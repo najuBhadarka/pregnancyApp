@@ -68,7 +68,7 @@ function UserReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        userData: action.payload,
+        userDetails: null,
       }
     case UPDATE_USER_FAILED:
       return {
