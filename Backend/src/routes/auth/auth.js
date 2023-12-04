@@ -27,6 +27,7 @@ authRoute.get("/user-profile", authenticateRoles(["user", "admin"]), userProfile
 // Profile Update
 authRoute.put(
   "/update-profile/:userId",
+  authenticateRoles(["user", "admin"]),
   updateProfileValidation,
   updateProfile
 );

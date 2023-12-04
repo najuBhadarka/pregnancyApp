@@ -1,5 +1,4 @@
 import React from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
 import RoutesPath from '../src/routes/routes'
 import './scss/style.scss'
 
@@ -11,9 +10,9 @@ const loading = (
 
 const App = () => {
   return (
-    <Router basename="/indaco/admin">
+    <React.Suspense fallback={loading}>
       <RoutesPath />
-    </Router>
+    </React.Suspense>
   )
 }
 export default App

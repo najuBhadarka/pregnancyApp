@@ -20,7 +20,7 @@ questionnairesRoute.get("/getquestions", getQuestionOnTimeline);
 // To get all the qusetionsBooks
 questionnairesRoute.post(
   "/create-form",
-  // authenticateRoles(["admin"]),
+  authenticateRoles(["admin"]),
   addQuestionsValidation,
   addQuestions
 );
