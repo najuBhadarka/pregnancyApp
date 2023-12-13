@@ -151,19 +151,42 @@ const getQuestionFormByID = async (req, res) => {
 };
 
 const getAllQuestionsList = async (req, res) => {
+  const { pageNo, limit } = req.query;
+
+  // Convert pageNo and limit to integers
+  const pageNumber = parseInt(pageNo);
+  const pageSize = parseInt(limit); // Default limit to 10 if not provided
+  let skip = 0;
   try {
-    const questionList = await questionModel.find({
+    // Calculate the skip value based on the pageNo and limit
+    if (pageNumber == 0) {
+      skip = 0;
+    } else {
+      skip = pageNumber * pageSize;
+    }
+    const totalQuestionsCount = await questionModel.count({
       isDeleted: false,
     });
+    // Fetch users with pagination
+    const questionList = await questionModel
+      .find({
+        isDeleted: false,
+      })
+      .skip(skip)
+      .limit(pageSize);
     if (questionList && questionList.length == 0) {
       res
         .status(404)
-        .json({ status: false, datA: [], message: "No Questionaries found !" });
+        .json({ status: false, data: [], message: "No Questionaries found !" });
     } else {
-      res.status(200).json({ status: true, data: questionList });
+      res.status(200).json({
+        status: true,
+        data: questionList,
+        questionsCount: totalQuestionsCount,
+      });
     }
   } catch (error) {
-    res.status(200).json({ status: false, message: "Something went wrong !" });
+    res.status(500).json({ status: false, message: error.message });
   }
 };
 

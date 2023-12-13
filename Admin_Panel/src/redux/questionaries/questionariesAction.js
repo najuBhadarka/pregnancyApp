@@ -60,9 +60,10 @@ export const getFormFailed = (data) => {
   }
 }
 
-export const getQuestionsList = () => {
+export const getQuestionsList = (data) => {
   return {
     type: GET_FORM_LIST,
+    payload: data,
   }
 }
 

@@ -60,11 +60,14 @@ function* getForm() {
   }
 }
 
-function* getQuestionsList() {
+function* getQuestionsList({ payload }) {
   try {
-    const response = yield call(api.get, endPoints.GET_QUESTIONS_LIST)
+    const response = yield call(
+      api.get,
+      `${endPoints.GET_QUESTIONS_LIST}?pageNo=${payload.pageNo}&limit=${payload.limit}`,
+    )
     if (response) {
-      yield put(getQuestionsListSuccess(response.data.data))
+      yield put(getQuestionsListSuccess(response.data))
     }
   } catch (error) {
     if (error) {
