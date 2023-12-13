@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CButton,
   CCard,
@@ -19,7 +19,8 @@ import { useNavigate } from 'react-router-dom'
 import TablePagination from '@mui/material/TablePagination'
 
 const UserList = () => {
-  const [page, setPage] = React.useState(0)
+  const [page, setPage] = useState(0)
+  const [searchQuery, setSearchQuery] = useState('');
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -54,6 +55,19 @@ const UserList = () => {
     setPage(0)
   }
 
+  const filteredUserList = userData?.userList?.filter(item => {
+    const fullName = `${item.firstName} ${item.lastName}`.toLowerCase();
+    const firstNameMatch = item.firstName.toLowerCase().includes(searchQuery.toLowerCase());
+    const lastNameMatch = item.lastName.toLowerCase().includes(searchQuery.toLowerCase());
+    const fullNameMatch = fullName.includes(searchQuery.toLowerCase());
+    const emailMatch = item.email.toLowerCase().includes(searchQuery.toLowerCase());
+    const contactMatch = (typeof item.contact === 'string' || typeof item.contact === 'number') &&
+      item.contact.toString().toLowerCase().includes(searchQuery.toLowerCase());
+    const userNameMatch = item.userName.toLowerCase().includes(searchQuery.toLowerCase());
+
+    return firstNameMatch || lastNameMatch || fullNameMatch || emailMatch || contactMatch || userNameMatch;
+  });
+
   return (
     <CRow>
       <CCol xs>
@@ -64,14 +78,21 @@ const UserList = () => {
             <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit">
               <i className="ri-search-line"></i>
             </button>
-            <input id="searchQueryInput" type="text" name="searchQueryInput" placeholder="Search" />
+            <input
+              id="searchQueryInput"
+              type="text"
+              name="searchQueryInput"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </div>
 
           <CCardBody>
             <CTable align="middle" className="mb-0" responsive>
               <CTableHead className="table-head">
                 <CTableRow>
-                  <CTableHeaderCell>Profile</CTableHeaderCell>
+                  <CTableHeaderCell>Sr. No</CTableHeaderCell>
                   <CTableHeaderCell>Name</CTableHeaderCell>
                   <CTableHeaderCell>Email</CTableHeaderCell>
                   <CTableHeaderCell>Contact</CTableHeaderCell>
@@ -81,62 +102,46 @@ const UserList = () => {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {userData?.userList && userData?.userList?.length > 0
-                  ? userData?.userList?.map((item, index) => (
-                      <CTableRow v-for="item in tableItems" key={index}>
-                        <CTableDataCell>{item._id}</CTableDataCell>
-                        <CTableDataCell>
-                          {item.firstName} {item.lastName}
-                        </CTableDataCell>{' '}
-                        <CTableDataCell>{item.email}</CTableDataCell>{' '}
-                        <CTableDataCell>{item.contact}</CTableDataCell>{' '}
-                        <CTableDataCell>{item.userName}</CTableDataCell>{' '}
-                        <CTableDataCell>
-                          <CButton
-                            component="input"
-                            type="reset"
-                            color={item.status === 'active' ? 'danger' : 'success'}
-                            className="status-btn"
-                            value={item?.status === 'active' ? 'inactive' : 'active'}
-                            onClick={(e) => handleUpdateState(e, item?._id)}
-                          />
-                          {/* <CButton
-                            color={item.status === 'active' ? 'danger' : 'success'}
-                            value={item?.status === 'active' ? 'inactive' : 'active'}
-                            onClick={(e) => handleUpdateState(e, item?._id)}
-                          >
-                           
-                          </CButton> */}
-                        </CTableDataCell>{' '}
-                        <CTableDataCell>
-                          {/* <CButton
-                            component="input"
-                            type="reset"
-                            className="mr-1"
-                            color="primary"
-                            value="Edit"
-                            onClick={() => navigate(`/user/update/${item._id}`)}
-                          /> */}
-                          <CButton
-                            color="link"
-                            onClick={() => navigate(`/user/update/${item._id}`)}
-                          >
-                            <i className="ri-edit-2-line"></i>
-                          </CButton>
-                          {/* <CButton
-                            component="input"
-                            type="reset"
-                            color="danger"
-                            value="Delete"
-                            onClick={() => handleDeleteUser(item?._id, true)}
-                          /> */}
-                          <CButton color="link" onClick={() => handleDeleteUser(item?._id, true)}>
-                            <i className="ri-delete-bin-2-fill red"></i>
-                          </CButton>
-                        </CTableDataCell>{' '}
-                      </CTableRow>
-                    ))
-                  : null}
+                {filteredUserList && filteredUserList?.length > 0
+                  ? filteredUserList?.map((item, index) => (
+                    <CTableRow v-for="item in tableItems" key={index}>
+                      <CTableDataCell>{index + 1}</CTableDataCell>
+                      <CTableDataCell>
+                        {item.firstName} {item.lastName}
+                      </CTableDataCell>{' '}
+                      <CTableDataCell>{item.email}</CTableDataCell>{' '}
+                      <CTableDataCell>{item.contact}</CTableDataCell>{' '}
+                      <CTableDataCell>{item.userName}</CTableDataCell>{' '}
+                      <CTableDataCell>
+                        <CButton
+                          component="input"
+                          type="reset"
+                          color={item.status === 'active' ? 'danger' : 'success'}
+                          className="status-btn"
+                          value={item?.status === 'active' ? 'inactive' : 'active'}
+                          onClick={(e) => handleUpdateState(e, item?._id)}
+                        />
+                      </CTableDataCell>{' '}
+                      <CTableDataCell>
+                        <CButton
+                          color="link"
+                          onClick={() => navigate(`/user/update/${item._id}`)}
+                        >
+                          <i className="ri-edit-2-line"></i>
+                        </CButton>
+                        <CButton color="link" onClick={() => handleDeleteUser(item?._id, true)}>
+                          <i className="ri-delete-bin-2-fill red"></i>
+                        </CButton>
+                      </CTableDataCell>{' '}
+                    </CTableRow>
+                  ))
+                  :
+                  <>
+                    <CTableRow v-for="item in tableItems">
+                      <CTableDataCell colSpan={7} className='text-center font-weight-bold'>No matching users found</CTableDataCell>
+                    </CTableRow>
+                  </>
+                }
               </CTableBody>
             </CTable>
           </CCardBody>

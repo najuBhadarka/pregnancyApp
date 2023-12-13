@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CButton,
   CCard,
@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router-dom'
 const QuestionsList = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [searchQuery, setSearchQuery] = useState('');
 
   const questionsList = useSelector((state) => state?.QuestionariesReducer?.questionsList)
   useEffect(() => {
@@ -33,6 +34,13 @@ const QuestionsList = () => {
   const handleDeleteForm = (userId, isDeleted) => {
     dispatch(deleteForm({ id: userId, body: { isDeleted: isDeleted } }))
   }
+
+  const filteredQuestionsList = questionsList?.filter(item => {
+    const fullTitle = item.title.toLowerCase();
+    const title = fullTitle.includes(searchQuery.toLowerCase());
+
+    return title
+  });
 
   return (
     <CRow>
@@ -50,61 +58,53 @@ const QuestionsList = () => {
             />
           </CCardHeader>
           <div className="searchBar">
-          <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit">
-            <i className="ri-search-line"></i>
+            <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit">
+              <i className="ri-search-line"></i>
             </button>
             <input
               id="searchQueryInput"
               type="text"
               name="searchQueryInput"
               placeholder="Search"
-              
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-           
+
           </div>
           <CCardBody>
             <CTable align="middle" className="mb-0" responsive>
               <CTableHead className="table-head">
                 <CTableRow>
-                  <CTableHeaderCell>Id</CTableHeaderCell>
+                  <CTableHeaderCell>Sr. No</CTableHeaderCell>
                   <CTableHeaderCell>Title</CTableHeaderCell>
                   <CTableHeaderCell>Timeline</CTableHeaderCell>
                   <CTableHeaderCell>Action</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {questionsList && questionsList?.length > 0
-                  ? questionsList?.map((item, index) => (
-                      <CTableRow v-for="item in tableItems" key={index}>
-                        <CTableDataCell>{item._id}</CTableDataCell>
-                        <CTableDataCell>{item.title}</CTableDataCell>{' '}
-                        <CTableDataCell>{item.timeline}</CTableDataCell>{' '}
-                        <CTableDataCell>
-                          {/* <CButton
-                            component="input"
-                            type="reset"
-                            className="mr-1"
-                            color="primary"
-                            value="Edit"
-                            onClick={() => editForm(item._id)}
-                          /> */}
-                          <CButton color="link" onClick={() => editForm(item._id)}>
-                            <i className="ri-edit-2-line"></i>
-                          </CButton>
-                          {/* <CButton
-                            component="input"
-                            type="reset"
-                            color="danger"
-                            onClick={() => handleDeleteForm(item?._id, true)}
-                            value="Delete"
-                          /> */}
-                          <CButton color="link" onClick={() => handleDeleteForm(item?._id, true)}>
-                            <i className="ri-delete-bin-2-fill red"></i>
-                          </CButton>
-                        </CTableDataCell>{' '}
-                      </CTableRow>
-                    ))
-                  : null}
+                {filteredQuestionsList && filteredQuestionsList?.length > 0
+                  ? filteredQuestionsList?.map((item, index) => (
+                    <CTableRow v-for="item in tableItems" key={index}>
+                      <CTableDataCell>{index + 1}</CTableDataCell>
+                      <CTableDataCell>{item.title}</CTableDataCell>{' '}
+                      <CTableDataCell>{item.timeline}</CTableDataCell>{' '}
+                      <CTableDataCell>
+                        <CButton color="link" onClick={() => editForm(item._id)}>
+                          <i className="ri-edit-2-line"></i>
+                        </CButton>
+                        <CButton color="link" onClick={() => handleDeleteForm(item?._id, true)}>
+                          <i className="ri-delete-bin-2-fill red"></i>
+                        </CButton>
+                      </CTableDataCell>{' '}
+                    </CTableRow>
+                  ))
+                  :
+                  <>
+                    <CTableRow v-for="item in tableItems">
+                      <CTableDataCell colSpan={4} className='text-center font-weight-bold'>No matching form found</CTableDataCell>
+                    </CTableRow>
+                  </>
+                }
               </CTableBody>
             </CTable>
           </CCardBody>
