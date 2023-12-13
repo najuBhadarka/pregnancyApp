@@ -16,15 +16,18 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteForm, getQuestionsList } from '../../../redux/questionaries/questionariesAction'
 import { useNavigate } from 'react-router-dom'
+import TablePagination from '@mui/material/TablePagination'
 
 const QuestionsList = () => {
+  const [page, setPage] = React.useState(0)
+  const [rowsPerPage, setRowsPerPage] = React.useState(10)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('');
 
-  const questionsList = useSelector((state) => state?.QuestionariesReducer?.questionsList)
+  const questionsData = useSelector((state) => state?.QuestionariesReducer?.questionsList)
   useEffect(() => {
-    dispatch(getQuestionsList())
+    dispatch(getQuestionsList({ pageNo: page, limit: rowsPerPage }))
   }, [dispatch])
 
   const editForm = (id) => {
@@ -35,13 +38,23 @@ const QuestionsList = () => {
     dispatch(deleteForm({ id: userId, body: { isDeleted: isDeleted } }))
   }
 
-  const filteredQuestionsList = questionsList?.filter(item => {
+  const filteredQuestionsList = questionsData?.data?.filter(item => {
     const fullTitle = item.title.toLowerCase();
     const title = fullTitle.includes(searchQuery.toLowerCase());
 
     return title
   });
 
+  const handleChangePage = (event, newPage) => {
+    dispatch(getQuestionsList({ pageNo: newPage, limit: rowsPerPage }))
+    setPage(newPage)
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10))
+    dispatch(getQuestionsList({ pageNo: 0, limit: parseInt(event.target.value, 10) }))
+    setPage(0)
+  }
   return (
     <CRow>
       <CCol xs>
@@ -109,6 +122,14 @@ const QuestionsList = () => {
             </CTable>
           </CCardBody>
         </CCard>
+        <TablePagination
+          component="div"
+          count={questionsData?.questionsCount}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </CCol>
     </CRow>
   )
