@@ -21,23 +21,23 @@ const RoutesPath = () => {
           element: <Dashboard />,
         },
         {
-          path: '/user/user-list',
+          path: 'user/user-list',
           element: <UserList />,
         },
         {
-          path: '/user/update/:id',
+          path: 'user/update/:id',
           element: <UserControl mode={'Update'} />,
         },
         {
-          path: '/question/create-form',
+          path: 'question/create-form',
           element: <QuestionForm mode={'Add'} />,
         },
         {
-          path: '/question/update-form/:id',
+          path: 'question/update-form/:id',
           element: <QuestionForm mode={'update'} />,
         },
         {
-          path: '/question/questions-list',
+          path: 'question/questions-list',
           element: <QuestionsList />,
         },
       ],

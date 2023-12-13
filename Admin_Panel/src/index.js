@@ -5,12 +5,13 @@ import { createRoot } from 'react-dom/client'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { HashRouter as Router } from 'react-router-dom'
 import store from './redux/store'
 import './index.css'
+import './assets/font/font.css'
 
 createRoot(document.getElementById('root')).render(
-  <Router basename="/indaco/admin">
+  <Router>
     <Provider store={store}>
       <App />
     </Provider>

@@ -1,18 +1,18 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+import { CSidebar, CSidebarBrand, CSidebarNav } from '@coreui/react'
+import { CImage } from '@coreui/react'
 
 import { AppSidebarNav } from './AppSidebarNav'
 
-import { sygnet } from 'src/assets/brand/sygnet'
+import Logo from '../assets/images/indaco-logo.png'
 
 import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
-
 // sidebar nav config
 import navigation from '../_nav'
+import AppHeader from './AppHeader'
 
 const AppSidebar = () => {
   const dispatch = useDispatch()
@@ -29,18 +29,16 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        {/* <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} /> */}
-        <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} />
+        <div className="clearfix">
+          <CImage src={Logo} alt="Indaco-Logo" />
+        </div>
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
           <AppSidebarNav items={navigation} />
         </SimpleBar>
       </CSidebarNav>
-      <CSidebarToggler
-        className="d-none d-lg-flex"
-        onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })}
-      />
+      <AppHeader />
     </CSidebar>
   )
 }

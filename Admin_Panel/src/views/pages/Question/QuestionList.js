@@ -37,21 +37,34 @@ const QuestionsList = () => {
   return (
     <CRow>
       <CCol xs>
-        <CCard className="mb-4">
-          <CCardHeader>
+        <CCard className="mb-4 list-data mt-5">
+          <CCardHeader className="t-heading">
             Questionaries List
             <CButton
               component="input"
               type="reset"
-              className="mr-1"
+              className="mr-1 add-f"
               color="success"
               value="Add Form"
               onClick={() => navigate('/question/create-form')}
             />
           </CCardHeader>
+          <div className="searchBar">
+          <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit">
+            <i className="ri-search-line"></i>
+            </button>
+            <input
+              id="searchQueryInput"
+              type="text"
+              name="searchQueryInput"
+              placeholder="Search"
+              
+            />
+           
+          </div>
           <CCardBody>
-            <CTable align="middle" className="mb-0 border" hover responsive>
-              <CTableHead color="light">
+            <CTable align="middle" className="mb-0" responsive>
+              <CTableHead className="table-head">
                 <CTableRow>
                   <CTableHeaderCell>Id</CTableHeaderCell>
                   <CTableHeaderCell>Title</CTableHeaderCell>
@@ -67,21 +80,27 @@ const QuestionsList = () => {
                         <CTableDataCell>{item.title}</CTableDataCell>{' '}
                         <CTableDataCell>{item.timeline}</CTableDataCell>{' '}
                         <CTableDataCell>
-                          <CButton
+                          {/* <CButton
                             component="input"
                             type="reset"
                             className="mr-1"
                             color="primary"
                             value="Edit"
                             onClick={() => editForm(item._id)}
-                          />
-                          <CButton
+                          /> */}
+                          <CButton color="link" onClick={() => editForm(item._id)}>
+                            <i className="ri-edit-2-line"></i>
+                          </CButton>
+                          {/* <CButton
                             component="input"
                             type="reset"
                             color="danger"
                             onClick={() => handleDeleteForm(item?._id, true)}
                             value="Delete"
-                          />
+                          /> */}
+                          <CButton color="link" onClick={() => handleDeleteForm(item?._id, true)}>
+                            <i className="ri-delete-bin-2-fill red"></i>
+                          </CButton>
                         </CTableDataCell>{' '}
                       </CTableRow>
                     ))

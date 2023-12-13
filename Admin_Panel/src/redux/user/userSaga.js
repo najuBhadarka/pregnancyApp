@@ -21,11 +21,15 @@ import {
   updateUserSuccess,
 } from './userAction'
 
-function* getUserList() {
+function* getUserList({ payload }) {
+  console.log('payload-------', payload)
   try {
-    const response = yield call(api.get, endPoints.GET_USER_LIST)
+    const response = yield call(
+      api.get,
+      `${endPoints.GET_USER_LIST}?pageNo=${payload.pageNo}&limit=${payload.limit}`,
+    )
     if (response) {
-      yield put(getUserListSuccess(response.data.userList))
+      yield put(getUserListSuccess(response.data))
     }
   } catch (error) {
     if (error) {

@@ -1,14 +1,36 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --theme-color: #435E9B;
+  --light-bg-color :#fff;
+  --light-gray-color: #EDF2F6;
+  --text-light:#fff;
+  --text-dark:#000;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+
+body {
+  margin: 0;
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Acumin Pro';
 }
+
+.t-heading {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 30px;
+  padding: 15px 0;
+  background: transparent;
+}
+
+.red {
+  color: #e55353;
+}
+
+/* code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+} */
 .maindiv {
   display: flex;
   align-items: center;
@@ -173,8 +195,217 @@ body > iframe {
   height: 30px;
 }
 
-
 .card-header{
   display: flex;
   justify-content: space-between;
+}
+
+/***sidebar***/
+
+.sidebar-brand  {
+  background: transparent;
+  justify-content: start;
+}
+
+.sidebar-toggler {
+  background: transparent;
+}
+
+.sidebar {
+  background: var(--theme-color);
+  padding: 32px 16px 32px 32px;
+}
+
+.sidebar-nav {
+  background: var(--theme-color);
+  overflow-x: inherit;
+  overflow-y: inherit;
+  padding-top: 48px;
+}
+
+.sidebar .sidebar-nav .nav-item {
+  padding: 0 0 10px 0; 
+}
+
+.sidebar .sidebar-nav .nav-link {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: var(--text-light);
+  padding: 12px 0 12px 0;
+  text-decoration: none;
+  position: relative;
+  /* overflow: hidden; */
+  display: inline-block;
+  text-decoration: none;
+
+}
+
+.sidebar .sidebar-nav .nav-link:after {
+  background: none repeat scroll 0 0 transparent;
+  content: "";
+  position: absolute;
+  bottom: 8px;
+  left: -100%;
+  width: 100%;
+  height: 3px;
+  background: var(--light-bg-color);
+  transition: left .8s;
+}
+
+.sidebar .sidebar-nav .nav-link:hover:after , 
+.sidebar .sidebar-nav .nav-link.active:after {
+  left: 0; 
+
+}
+
+.sidebar .sidebar-nav .nav-link.active {
+  background: transparent;
+  font-weight: 700;
+}
+
+.sidebar-nav .nav-link:hover {
+  background: transparent;
+}
+
+.list-data {
+  border: none;
+  background: transparent;
+  padding: 0 10px;
+  margin-top: 40px;
+
+}
+
+.list-data .card-body {
+  background: var(--light-bg-color);
+  margin-top: 5px;
+  box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.10);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.status-btn {
+  padding: 2px 8px;
+  color: var(--text-light);
+  font-size: 14px;
+  text-transform: capitalize;
+  font-weight: 600;
+  line-height: 20px;
+  height: 25px;
+}
+
+.status-btn .btn {
+  box-shadow: none;
+} 
+
+.status-btn:hover {
+  color: var(--text-light);
+}
+
+.list-data i {
+  font-size: 20px;
+}
+
+.list-data .btn.btn-link {
+  padding: 0 15px 0 0;
+  color: var(--text-dark);
+}
+
+.table thead.table-head th {
+  vertical-align: bottom;
+  border-bottom: none;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: uppercase;
+  background: var(--light-gray-color);
+  border-radius: 9px;
+
+  background: var(--light-gray-color);
+  margin-left: 20px;
+  border-left: 4px solid #fff;
+  border-right: 4px solid #fff;
+  height: 40px;
+  padding: 8px;
+}
+
+.list-data .table td, .list-data .table th {
+  vertical-align: middle;
+}
+
+.list-data thead, .list-data tbody, .list-data tfoot, .list-data tr, .list-data td, .list-data th {
+  border: none;
+}
+
+.btn-success.focus, .btn-success:focus,
+.btn-danger.focus, .btn-danger:focus ,
+.btn-success:not(:disabled):not(.disabled).active:focus, 
+.btn-success:not(:disabled):not(.disabled):active:focus, 
+.show>.btn-success.dropdown-toggle:focus ,
+.btn-danger:not(:disabled):not(.disabled).active:focus, 
+.btn-danger:not(:disabled):not(.disabled):active:focus, 
+.show>.btn-danger.dropdown-toggle:focus{
+  box-shadow: none;
+}
+
+.card-header.t-heading {
+  border: none;
+}
+
+.add-f {
+  color: #fff;
+  font-size: 14px;
+  height: 35px;
+  font-weight: 600;
+  padding: 8px 10px;
+}
+
+ul.header-nav.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/***searchbar***/
+
+.searchBar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+#searchQueryInput {
+  height: 45px;
+  background: var(--light-bg-color);
+  outline: none;
+  border: none;
+  border-radius: 30px;
+  width: 436px;
+  padding: 8px 25px 5px 40px;
+  font-size: 1rem;
+  margin-bottom: 25px;
+}
+
+button#searchQuerySubmit i {
+  position: absolute;
+  top: 8px;
+  left: 13px;
+}
+
+#searchQuerySubmit {
+  /* width: 3.5rem;
+  height: 2.8rem;
+  margin-left: -3.5rem;
+  background: none; */
+  border: none;
+  padding: 0;
+  /* outline: none; */
+}
+
+#searchQuerySubmit:hover {
+  cursor: pointer;
 }

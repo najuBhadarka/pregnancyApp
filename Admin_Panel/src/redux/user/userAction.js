@@ -19,6 +19,7 @@ import {
 export const getUserList = (data) => {
   return {
     type: GET_USER_LIST,
+    payload: data
   }
 }
 
