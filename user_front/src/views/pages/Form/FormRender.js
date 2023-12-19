@@ -1,5 +1,4 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form } from "react-formio";
 import "../../../assets/css/bootstrap.min.css";
@@ -9,9 +8,8 @@ import footerImg from "../../../assets/images/footer.png";
 import mobileImg from "../../../assets/images/m-img.png";
 import workingImg from "../../../assets/images/01.png";
 import mobileImg1 from "../../../assets/images/mobile-bg.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getForm, submitForm } from "../../../redux/questionaries/questionariesAction";
-import { useSelector } from "react-redux";
 
 const FormRender = () => {
   const formData = useSelector((state) => state?.QuestionariesReducer?.singleForm)

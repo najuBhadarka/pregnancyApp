@@ -1,5 +1,5 @@
 import axios from 'axios'
-export const API_URL = 'http://192.168.1.16:3000/v1'
+export const API_URL = 'http://64.227.172.35:3000/v1'
 export const IMAGE_URL = process.env.REACT_APP_IMAGE_URL
 
 let store
