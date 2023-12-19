@@ -10,6 +10,9 @@ import {
   getQuestionOnTimeline,
   submitAnswer,
   updateQuestion,
+  getUserFormResult,
+  submitAnwser,
+  getAnswerSheet,
 } from "../../controller/questionsControllar.js";
 import { addQuestionsValidation } from "../../validations/questionBookValidation.js";
 let questionnairesRoute = express.Router();
@@ -43,10 +46,7 @@ questionnairesRoute.post(
   submitAnswer
 );
 
-questionnairesRoute.get(
-  "/get-form",
-  getQuestionForm
-);
+questionnairesRoute.get("/get-form", getQuestionForm);
 
 questionnairesRoute.get(
   "/get-single-form/:id",
@@ -65,4 +65,21 @@ questionnairesRoute.put(
   deleteForm
 );
 
+questionnairesRoute.get(
+  "/get-result-list",
+  authenticateRoles(["admin"]),
+  getUserFormResult
+);
+
+questionnairesRoute.post(
+  "/submit-question-form",
+  authenticateRoles(["user"]),
+  submitAnwser
+);
+
+questionnairesRoute.get(
+  "/get-answer-sheet",
+  authenticateRoles(["admin"]),
+  getAnswerSheet
+);
 export default questionnairesRoute;

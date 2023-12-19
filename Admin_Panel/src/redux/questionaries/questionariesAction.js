@@ -5,6 +5,12 @@ import {
   DELETE_FORM,
   DELETE_FORM_FAILED,
   DELETE_FORM_SUCCESS,
+  GET_ANSWER_LIST,
+  GET_ANSWER_LIST_BY_ID,
+  GET_ANSWER_LIST_BY_ID_FAILED,
+  GET_ANSWER_LIST_BY_ID_SUCCESS,
+  GET_ANSWER_LIST_FAILED,
+  GET_ANSWER_LIST_SUCCESS,
   GET_FORM,
   GET_FORM_BY_ID,
   GET_FORM_BY_ID_FAILED,
@@ -141,5 +147,45 @@ export const deleteFormFailed = (data) => {
   return {
     type: DELETE_FORM_FAILED,
     payload: data,
+  }
+}
+
+export const getAnswerList = (data) => {
+  return {
+    type: GET_ANSWER_LIST,
+    payload: data,
+  }
+}
+
+export const getAnswerListSuccess = (data) => {
+  return {
+    type: GET_ANSWER_LIST_SUCCESS,
+    payload: data,
+  }
+}
+
+export const getAnswerListFailed = () => {
+  return {
+    type: GET_ANSWER_LIST_FAILED,
+  }
+}
+
+export const getAnswerListById = (id) => {
+  return {
+    type: GET_ANSWER_LIST_BY_ID,
+    payload: id,
+  }
+}
+
+export const getAnswerListByIdSuccess = (data) => {
+  return {
+    type: GET_ANSWER_LIST_BY_ID_SUCCESS,
+    payload: data,
+  }
+}
+
+export const getAnswerListByIdFailed = () => {
+  return {
+    type: GET_ANSWER_LIST_BY_ID_FAILED,
   }
 }

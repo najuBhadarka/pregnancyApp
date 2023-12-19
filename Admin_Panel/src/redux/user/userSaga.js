@@ -75,7 +75,7 @@ function* deleteUser({ payload }) {
       urlParams: { id: payload.id },
     })
     if (response.status === 200) {
-      yield put(deleteUserSuccess(payload.id))
+      yield put(deleteUserSuccess({ id: payload.id, totalUserCount: response.data.totalUserCount }))
     }
   } catch (error) {
     yield put(deleteUserFailed(error))

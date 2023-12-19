@@ -14,4 +14,6 @@ export const endPoints = {
   UPDATE_FORM: '/questionbook/updateQuestion/:id',
   GET_SINGLE_FORM: '/questionbook/get-single-form/:id',
   DELETE_FORM: '/questionbook/delete-form/:id',
+  GET_ANSWER_LIST: '/questionbook/get-result-list',
+  GET_ANSWER_BY_ID: '/questionbook/get-answer-sheet',
 }

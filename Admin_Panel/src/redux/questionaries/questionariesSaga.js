@@ -3,6 +3,8 @@ import api from 'src/utils/api'
 import {
   CREATE_FORM,
   DELETE_FORM,
+  GET_ANSWER_LIST,
+  GET_ANSWER_LIST_BY_ID,
   GET_FORM,
   GET_FORM_BY_ID,
   GET_FORM_LIST,
@@ -14,6 +16,10 @@ import {
   createFormSuccess,
   deleteFormFailed,
   deleteFormSuccess,
+  getAnswerListByIdFailed,
+  getAnswerListByIdSuccess,
+  getAnswerListFailed,
+  getAnswerListSuccess,
   getFormByIdFailed,
   getFormByIdSuccess,
   getFormFailed,
@@ -118,13 +124,44 @@ function* deleteForm({ payload }) {
       urlParams: { id: payload.id },
     })
     if (response.status === 200) {
-      yield put(deleteFormSuccess(payload.id))
+      yield put(
+        deleteFormSuccess({ id: payload.id, questionsCount: response.data.totalQuestionCount }),
+      )
     }
   } catch (error) {
     yield put(deleteFormFailed(error))
   }
 }
 
+function* getAnswerList({ payload }) {
+  try {
+    const response = yield call(
+      api.get,
+      `${endPoints.GET_ANSWER_LIST}?pageNo=${payload.pageNo}&limit=${payload.limit}`,
+    )
+    if (response) {
+      yield put(getAnswerListSuccess(response.data))
+    }
+  } catch (error) {
+    if (error) {
+      yield put(getAnswerListFailed())
+    }
+  }
+}
+
+function* getAnswerById({ payload }) {
+  try {
+    const response = yield call(api.get, `${endPoints.GET_ANSWER_BY_ID}?answerId=${payload}`)
+    console.log('response', response)
+    if (response) {
+      yield put(getAnswerListByIdSuccess(response.data))
+    }
+  } catch (error) {
+    if (error) {
+      yield put(getAnswerListByIdFailed())
+    }
+  }
+}
 export function* questionariesSaga() {
   yield takeLatest(CREATE_FORM, createForm)
   yield takeLatest(GET_FORM, getForm)
@@ -132,4 +169,6 @@ export function* questionariesSaga() {
   yield takeLatest(UPDATE_QUESTION_FORM, updateQuestionForm)
   yield takeLatest(GET_FORM_BY_ID, getQuestionFormById)
   yield takeLatest(DELETE_FORM, deleteForm)
+  yield takeLatest(GET_ANSWER_LIST, getAnswerList)
+  yield takeLatest(GET_ANSWER_LIST_BY_ID, getAnswerById)
 }

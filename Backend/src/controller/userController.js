@@ -14,7 +14,8 @@ const userList = async (req, res) => {
     } else {
       skip = pageNumber * pageSize;
     }
-    const totalUserCount = await userModel.count({
+    const totalUserCount = await userModel.countDocuments({
+      role: "user",
       isDeleted: false,
     });
     // Fetch users with pagination
@@ -52,9 +53,17 @@ const deleteUser = async (req, res) => {
     if (!findUserAndUpdate) {
       return res.status(404).json({ status: false, message: "User not found" });
     }
+    const totalUserCount = await userModel.count({
+      role: "user",
+      isDeleted: false,
+    });
     res
       .status(200)
-      .json({ status: true, message: "User deleted successfully" });
+      .json({
+        status: true,
+        message: "User deleted successfully",
+        totalUserCount: totalUserCount,
+      });
   } catch (error) {
     res.status(500).json({ status: false, message: error });
   }

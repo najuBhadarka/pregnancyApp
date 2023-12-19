@@ -1,6 +1,5 @@
 import React from 'react'
 import { useRoutes } from 'react-router-dom'
-import QuestionsList from 'src/views/pages/Question/QuestionList.js'
 
 const Dashboard = React.lazy(() => import('../views/dashboard/Dashboard.js'))
 const MainLayout = React.lazy(() => import('../layout/MainLayout.js'))
@@ -9,6 +8,9 @@ const Login = React.lazy(() => import('../views/pages/login/Login.js'))
 const UserList = React.lazy(() => import('../views/pages/user/userList.js'))
 const QuestionForm = React.lazy(() => import('../views/pages/Question/QuestionForm.js'))
 const UserControl = React.lazy(() => import('../views/pages/user/userAdd.js'))
+const QuestionsList = React.lazy(() => import('../views/pages/Question/QuestionList.js'))
+const AnswerList = React.lazy(() => import('../views/pages/Question/AnswerList.js'))
+const PreviewAnwserSheet = React.lazy(() => import('../views/pages/Question/PreviewAnwserSheet.js'))
 
 const RoutesPath = () => {
   return useRoutes([
@@ -39,6 +41,14 @@ const RoutesPath = () => {
         {
           path: 'question/questions-list',
           element: <QuestionsList />,
+        },
+        {
+          path: 'question/result-list',
+          element: <AnswerList />,
+        },
+        {
+          path: 'question/preview-answersheet/:id',
+          element: <PreviewAnwserSheet />,
         },
       ],
     },
