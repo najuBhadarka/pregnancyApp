@@ -2,41 +2,37 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form } from "react-formio";
-import "./css/bootstrap.min.css";
-import "./css/style.css";
-import logImg from "./images/logo.png";
-import footerImg from "./images/footer.png";
-import mobileImg from "./images/m-img.png";
-import workingImg from "./images/01.png";
-import mobileImg1 from "./images/mobile-bg.png";
+import "../../../assets/css/bootstrap.min.css";
+import "../../../assets/css/style.css";
+import logImg from "../../../assets/images/logo.png";
+import footerImg from "../../../assets/images/footer.png";
+import mobileImg from "../../../assets/images/m-img.png";
+import workingImg from "../../../assets/images/01.png";
+import mobileImg1 from "../../../assets/images/mobile-bg.png";
+import { useDispatch } from "react-redux";
+import { getForm, submitForm } from "../../../redux/questionaries/questionariesAction";
+import { useSelector } from "react-redux";
 
 const FormRender = () => {
-  const [formData, setFormData] = useState();
-  const [filledFormData, setFilledFormData] = useState(null);
-
-  console.log("formData:", formData);
+  const formData = useSelector((state) => state?.QuestionariesReducer?.singleForm)
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    axios({
-      url: "http://64.227.172.35:3000/v1/questionbook/get-form",
-      method: "GET",
-    })
-      .then((response) => {
-        setFormData({
-          formDataJSON: JSON.parse(response?.data?.data.questions),
-          title: response?.data?.data?.title,
-          timeline: response?.data?.data?.timeline,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(getForm())
   }, []);
+
   const handleSubmit = (submission) => {
-    console.log("Form Submitted:", submission);
-    setFilledFormData(submission);
+    const submitedData = {
+      title: formData?.title,
+      timeline: formData?.timeline,
+      answer: { formData: JSON.stringify(formData?.formData), submission: JSON.stringify(submission) }
+    }
+    dispatch(submitForm(submitedData))
+    console.log("submitedData:", submitedData)
   };
+
+
   return (
     <div>
       <div>
@@ -55,7 +51,6 @@ const FormRender = () => {
                 </a>
               </div>
               <label htmlFor="menu-btn" className="menu-icon">
-                {/* <span><a href="#"><i class="ri-notification-2-line"></i></a></span> */}
                 <span className="menu-icon__line" />
               </label>
               <ul className="nav-links">
@@ -86,6 +81,9 @@ const FormRender = () => {
                   <a href="#">
                     <i className="ri-notification-2-line" />
                   </a>
+                  <a href="#" onClick={() => navigate('/')}>
+                    <i className="ri-logout-box-line"></i>
+                  </a>
                 </li>
                 <li className="nav-link">
                   <div className="text-center mt-50 mb-50 mobile">
@@ -99,12 +97,6 @@ const FormRender = () => {
                     <img src={mobileImg} alt="m-img" className="img-fluid" />
                   </div>
                 </li>
-                {/* <li className="nav-link information-privacy mobile">
-                  <a href="#">
-                    Informativa Privacy
-                    <br />e trattamento dei dati
-                  </a>
-                </li> */}
               </ul>
             </div>
           </div>
@@ -152,21 +144,12 @@ const FormRender = () => {
                       <span className="text-info">{formData?.timeline}</span>
                     </h3>
                   </div>
-                  <Form form={formData?.formDataJSON} onSubmit={handleSubmit} />
+                  <Form form={formData?.formData} onSubmit={handleSubmit} />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {filledFormData && (
-          <div>
-            <h2>Filled Form Details</h2>
-            <Form
-              form={formData?.formDataJSON}
-              submission={filledFormData}
-            />
-          </div>
-        )}
         {/*footer section*/}
         <div className="footer-section">
           <img src={footerImg} alt="footer" className="desktop" />
