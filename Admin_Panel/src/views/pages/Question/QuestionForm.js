@@ -71,7 +71,7 @@ const QuestionForm = ({ mode }) => {
     }
   }
   return (
-    <CRow>
+    <CRow className="mt-5">
       <CCol xs>
         <CCard className="mb-4">
           <CCardHeader>Question Form</CCardHeader>

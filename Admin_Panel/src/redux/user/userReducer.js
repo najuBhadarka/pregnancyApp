@@ -17,7 +17,8 @@ import {
 } from '../actionType'
 
 const initialState = {
-  userData: null,
+  userList: null,
+  totalUserCount: 0,
   userDetails: null,
   loading: false,
   error: null,
@@ -34,7 +35,8 @@ function UserReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        userData: action.payload,
+        userList: action.payload.userList,
+        totalUserCount: action.payload.totalUserCount,
       }
     case GET_USER_LIST_FAILED:
       return {
@@ -82,12 +84,14 @@ function UserReducer(state = initialState, action) {
         loading: true,
       }
     case DELETE_USER_SUCCESS:
+      console.log('payload------', action.payload)
       return {
         ...state,
         loading: false,
-        userData: state?.userData?.filter((item) => {
-          return item?._id !== action.payload ? item : ''
+        userList: state?.userList?.filter((item) => {
+          return item?._id !== action.payload.id ? item : ''
         }),
+        totalUserCount: action.payload.totalUserCount,
       }
     case DELETE_USER_FAILED:
       return {
@@ -105,7 +109,7 @@ function UserReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        userData: state?.userData?.map((ele) => {
+        userList: state?.userList?.map((ele) => {
           if (ele._id === action.payload.data.userList._id) {
             ele.status = action.payload.data.userList.status
           }

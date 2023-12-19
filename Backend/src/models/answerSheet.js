@@ -1,35 +1,36 @@
 import mongoose, { Schema } from "mongoose";
 
 const answerSchema = new Schema({
-    userId:{
-        type:String,
-        required:true
+  userId: {
+    type: String,
+    required: true,
+  },
+  formId: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  answer: {
+    formData: {
+      type: String,
     },
-    formData: [
-        {
-            question: {
-                type: String,
-                required: true,
-            },
-            answer: {
-                type: String,
-                required: true,
-            },
-            type: {
-                type: String,
-                required: true
-            },
-            options: {
-                type: [String || Number],
-            }
-        },
-    ],
-    timeline: {
-        type: String,
-        required: true
-    }
-})
+    submission: {
+      type: String,
+    },
+  },
+  timeline: {
+    type: String,
+    required: true,
+  },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
+});
 
-const answerModel = mongoose.model('answerSheet', answerSchema)
+const answerModel = mongoose.model("answerSheet", answerSchema);
 
 export default answerModel;

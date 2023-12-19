@@ -19,7 +19,7 @@ import {
 export const getUserList = (data) => {
   return {
     type: GET_USER_LIST,
-    payload: data
+    payload: data,
   }
 }
 
@@ -80,6 +80,7 @@ export const updateUserFailed = (data) => {
 }
 
 export const deleteUser = (data) => {
+  console.log('data-----', data)
   return {
     type: DELETE_USER,
     payload: data,
@@ -87,6 +88,7 @@ export const deleteUser = (data) => {
 }
 
 export const deleteUserSuccess = (data) => {
+  console.log('data in success---', data)
   return {
     type: DELETE_USER_SUCCESS,
     payload: data,

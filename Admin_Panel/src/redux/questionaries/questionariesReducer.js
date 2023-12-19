@@ -5,6 +5,12 @@ import {
   DELETE_FORM,
   DELETE_FORM_FAILED,
   DELETE_FORM_SUCCESS,
+  GET_ANSWER_LIST,
+  GET_ANSWER_LIST_BY_ID,
+  GET_ANSWER_LIST_BY_ID_FAILED,
+  GET_ANSWER_LIST_BY_ID_SUCCESS,
+  GET_ANSWER_LIST_FAILED,
+  GET_ANSWER_LIST_SUCCESS,
   GET_FORM,
   GET_FORM_BY_ID,
   GET_FORM_BY_ID_FAILED,
@@ -20,8 +26,12 @@ import {
 } from '../actionType'
 
 const initialState = {
+  answerList: null,
   questionsList: null,
+  questionsCount: 0,
+  answerListCount: 0,
   singleForm: {},
+  singleAnswerForm: {},
   loading: false,
   error: null,
 }
@@ -71,7 +81,8 @@ function QuestionariesReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        questionsList: action.payload,
+        questionsList: action.payload.data,
+        questionsCount: action.payload.questionsCount,
       }
     case GET_FORM_LIST_FAILED:
       return {
@@ -123,10 +134,46 @@ function QuestionariesReducer(state = initialState, action) {
         ...state,
         loading: false,
         questionsList: state?.questionsList?.filter((item) => {
-          return item?._id !== action.payload ? item : ''
+          return item?._id !== action.payload.id ? item : ''
         }),
+        questionsCount: action.payload.questionsCount,
       }
     case DELETE_FORM_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: 'Something went wrong',
+      }
+    case GET_ANSWER_LIST:
+      return {
+        ...state,
+        loading: true,
+      }
+    case GET_ANSWER_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        answerList: action.payload.data,
+        answerListCount: action.payload.answerListCount,
+      }
+    case GET_ANSWER_LIST_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: 'Something went wrong',
+      }
+    case GET_ANSWER_LIST_BY_ID:
+      return {
+        ...state,
+        loading: true,
+      }
+    case GET_ANSWER_LIST_BY_ID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        singleAnswerForm: action.payload.data,
+      }
+    case GET_ANSWER_LIST_BY_ID_FAILED:
       return {
         ...state,
         loading: false,

@@ -72,7 +72,7 @@ const UserAdd = (props) => {
   }
 
   return (
-    <CRow>
+    <CRow className="mt-5">
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>

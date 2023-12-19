@@ -1,5 +1,5 @@
 import React from 'react'
-import { CContainer, CHeaderBrand, CHeaderNav } from '@coreui/react'
+import { CHeaderBrand, CHeaderNav } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
 import { AppHeaderDropdown } from './header/index'
