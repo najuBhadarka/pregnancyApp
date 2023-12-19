@@ -24,12 +24,12 @@ const FormRender = () => {
 
   const handleSubmit = (submission) => {
     const submitedData = {
+      formId: formData?.formId,
       title: formData?.title,
       timeline: formData?.timeline,
       answer: { formData: JSON.stringify(formData?.formData), submission: JSON.stringify(submission) }
     }
     dispatch(submitForm(submitedData))
-    console.log("submitedData:", submitedData)
   };
 
 

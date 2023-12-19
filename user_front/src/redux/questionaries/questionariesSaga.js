@@ -16,6 +16,7 @@ function* getForm() {
   try {
     const response = yield call(api.get, endPoints.GET_FORM)
     let data = {
+      formId: response?.data?.data?._id,
       formData: response?.data?.data?.questions ? JSON.parse(response?.data?.data?.questions) : {},
       timeline: response?.data?.data?.timeline,
       title: response?.data?.data?.title,
