@@ -3,7 +3,7 @@ name: Deploy to DigitalOcean
 on:
   push:
     branches:
-      - main  # or your default branch name
+      - master  # or your default branch name
 
 jobs:
   deploy:
@@ -26,5 +26,5 @@ jobs:
         username: ${{ secrets.DIGITALOCEAN_USERNAME }}
         key: ${{ secrets.DIGITALOCEAN_PRIVATE_KEY }}
         script: |
-          cd /var/www/html/indaco/user
+          cd /var/www/html/indaco/
           git pull origin main
