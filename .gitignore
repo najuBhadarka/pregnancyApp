@@ -1,4 +1,9 @@
-/Admin_panel_pre/node_modules
-/Backend/node_modules
-/user_panel/node_modules
-/Backend/.env
+Admin_Panel/node_modules/
+user_front/node_modules/
+
+Admin_Panel/build/
+user_front/build/
+
+
+Backend/node_modules/
+Backend/.env
