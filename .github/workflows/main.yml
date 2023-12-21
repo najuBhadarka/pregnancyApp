@@ -1,0 +1,55 @@
+name: Deploy Frontends to DigitalOcean
+
+on:
+  push:
+    branches:
+      - master
+    # paths:
+    #   - '/user_front/**'
+    #   - '/Admin_Panel/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Build user_front
+    - name: Build User Frontend
+      run: |
+        cd user_front
+        npm install
+        npm run build
+
+    # Deploy user_front build to DigitalOcean
+    - name: Deploy User Frontend to DigitalOcean
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.STAGING_HOST }}
+        username: ${{ secrets.STAGING_USERNAME }}
+        key: ${{ secrets.STAGING_PRIVATE_KEY }}
+        script: |
+          rm -rf /var/www/html/indaco/user/
+          cp -r user_front/build/* /var/www/html/indaco/user/
+          # Restart the web server or any other required steps
+
+    # Build admin_panel
+    - name: Build Admin Panel
+      run: |
+        cd Admin_Panel
+        npm install
+        npm run build
+
+    # Deploy admin_panel build to DigitalOcean
+    - name: Deploy Admin Panel to DigitalOcean
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.STAGING_HOST }}
+        username: ${{ secrets.STAGING_USERNAME }}
+        key: ${{ secrets.STAGING_PRIVATE_KEY }}
+        script: |
+          rm -rf /var/www/html/indaco/admin/
+          cp -r admin_panel/build/* /var/www/html/indaco/admin/
+          # Restart the web server or any other required steps
