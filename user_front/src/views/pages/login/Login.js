@@ -81,6 +81,13 @@ const Login = () => {
                                                 </CButton>
                                             </CCol>
                                             <CCol xs={6} className="text-right">
+                                                <CButton color="link" className="px-0" onClick={() => navigate('/sign-up')}>
+                                                    Don't have an account? Register now
+                                                </CButton>
+                                            </CCol>
+                                        </CRow>
+                                        <CRow>
+                                            <CCol>
                                                 <CButton color="link" className="px-0">
                                                     Forgot password?
                                                 </CButton>
